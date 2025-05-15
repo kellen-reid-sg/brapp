@@ -1,0 +1,662 @@
+[
+  {
+    "id": "warm-01",
+    "name": "Dynamic Stretching Circle",
+    "component": "Warm-up",
+    "skillFocus": ["Mobility", "Coordination"],
+    "difficulty": "Beginner",
+    "description": "Players form a circle and perform a sequence of dynamic stretches to prepare the body for training.",
+    "duration": 10,
+    "equipment": ["Cones"],
+    "diagramImageUrl": "/images/drills/warm-01.png",
+    "setupInstructions": [
+      "Place cones in a large circle",
+      "Position players evenly around the circle",
+      "Coach stands in the middle to demonstrate movements"
+    ],
+    "coachingPoints": [
+      "Ensure proper form during each movement",
+      "Maintain a steady pace throughout the sequence",
+      "Focus on controlled movements rather than speed"
+    ],
+    "progressions": [
+      "Add a ball to perform touches between stretches",
+      "Incorporate partner stretches",
+      "Add light jogging between movements"
+    ]
+  },
+  {
+    "id": "warm-02",
+    "name": "Passing Gates",
+    "component": "Warm-up",
+    "skillFocus": ["Passing", "Movement"],
+    "difficulty": "Beginner",
+    "description": "Players pass through small gates made of cones while moving around the field, focusing on accurate passing and continuous movement.",
+    "duration": 15,
+    "equipment": ["Cones", "Balls"],
+    "diagramImageUrl": "/images/drills/warm-02.png",
+    "setupInstructions": [
+      "Set up 8-10 gates (two cones 2 yards apart) randomly across a 30x30 yard area",
+      "Divide players into pairs with one ball per pair",
+      "Pairs spread out across the area"
+    ],
+    "coachingPoints": [
+      "Emphasize clean first touch away from pressure",
+      "Encourage communication between partners",
+      "Focus on passing with proper weight and accuracy"
+    ],
+    "progressions": [
+      "Add a time challenge: how many gates can be passed through in 60 seconds",
+      "Require alternating feet for passes",
+      "Add defenders who try to intercept passes"
+    ]
+  },
+  {
+    "id": "poss-01",
+    "name": "4v2 Rondo",
+    "component": "Possession",
+    "skillFocus": ["Passing", "Movement", "Decision Making"],
+    "difficulty": "Intermediate",
+    "description": "A classic possession exercise where 4 attackers keep the ball away from 2 defenders in a confined space, focusing on quick decision making and precise passing.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Bibs"],
+    "diagramImageUrl": "/images/drills/poss-01.png",
+    "setupInstructions": [
+      "Create a 10x10 yard square with cones",
+      "Position 4 attackers on the outside of the square",
+      "Place 2 defenders inside the square",
+      "Provide attackers with one ball"
+    ],
+    "coachingPoints": [
+      "Maintain proper spacing between attackers",
+      "Play one or two-touch passes when possible",
+      "Create passing angles to support the player with the ball",
+      "Keep the ball moving to make defenders work"
+    ],
+    "progressions": [
+      "Limit to one-touch passing only",
+      "Add a third defender",
+      "Award points for splitting defenders with a pass"
+    ]
+  },
+  {
+    "id": "poss-02",
+    "name": "Possession Grid with Targets",
+    "component": "Possession",
+    "skillFocus": ["Passing", "Receiving", "Supporting"],
+    "difficulty": "Advanced",
+    "description": "Teams compete to maintain possession while trying to connect passes to target players positioned outside the grid.",
+    "duration": 25,
+    "equipment": ["Cones", "Balls", "Bibs"],
+    "diagramImageUrl": "/images/drills/poss-02.png",
+    "setupInstructions": [
+      "Create a 30x30 yard grid",
+      "Divide players into two equal teams (5v5 or 6v6)",
+      "Position 2 target players from each team on opposite sides of the grid",
+      "Give one team possession of the ball to start"
+    ],
+    "coachingPoints": [
+      "Create triangles and diamonds in possession",
+      "Scan the field before receiving the ball",
+      "Use appropriate passing techniques based on distance and pressure",
+      "Move immediately after passing to create new options"
+    ],
+    "progressions": [
+      "Award extra points for connecting with both target players in sequence",
+      "Limit touches based on player position or zone",
+      "Allow target players to move along their designated sideline"
+    ]
+  },
+  {
+    "id": "fin-01",
+    "name": "1v1 to Goal",
+    "component": "Finishing",
+    "skillFocus": ["Shooting", "Dribbling", "1v1 Skills"],
+    "difficulty": "Intermediate",
+    "description": "Attackers face defenders in 1v1 situations, focusing on beating opponents and finishing with quality shots on goal.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Goals", "Bibs"],
+    "diagramImageUrl": "/images/drills/fin-01.png",
+    "setupInstructions": [
+      "Set up a 15x20 yard grid with a full-size goal at one end",
+      "Position goalkeeper in the goal",
+      "Create a starting cone 20 yards from goal for attackers",
+      "Set up a defender starting position 5 yards ahead of attacker"
+    ],
+    "coachingPoints": [
+      "Encourage attackers to be decisive and commit to their moves",
+      "Emphasize change of pace and direction to beat defenders",
+      "Focus on shooting technique and placement rather than power",
+      "Keep head up to read defender and goalkeeper positioning"
+    ],
+    "progressions": [
+      "Add a recovery defender chasing from behind",
+      "Set time limit of 8 seconds to finish the attack",
+      "Vary starting positions to create different angles"
+    ]
+  },
+  {
+    "id": "fin-02",
+    "name": "Crossing and Finishing Circuit",
+    "component": "Finishing",
+    "skillFocus": ["Crossing", "Finishing", "Timing Runs"],
+    "difficulty": "Advanced",
+    "description": "A dynamic drill focusing on delivering quality crosses and converting them with well-timed runs and accurate finishes.",
+    "duration": 30,
+    "equipment": ["Cones", "Balls", "Goals", "Mannequins"],
+    "diagramImageUrl": "/images/drills/fin-02.png",
+    "setupInstructions": [
+      "Set up a full-size goal with goalkeeper",
+      "Create crossing channels on both wings with cones",
+      "Position mannequins as passive defenders in the box",
+      "Create starting positions for crossers on wings and finishers centrally"
+    ],
+    "coachingPoints": [
+      "Vary crossing delivery (driven, floated, cut-back)",
+      "Time runs to arrive as the ball arrives, not before",
+      "Attack the space between defenders",
+      "Focus on different finishing techniques based on cross type"
+    ],
+    "progressions": [
+      "Add live defenders instead of mannequins",
+      "Require combination play before crossing",
+      "Limit touches for finishers (one-touch only)"
+    ]
+  },
+  {
+    "id": "def-01",
+    "name": "Defensive Shadow Work",
+    "component": "Defending",
+    "skillFocus": ["Defensive Positioning", "Footwork", "Pressure"],
+    "difficulty": "Beginner",
+    "description": "Players work in pairs with one player shadowing the other's movements to develop defensive footwork and positioning.",
+    "duration": 15,
+    "equipment": ["Cones"],
+    "diagramImageUrl": "/images/drills/def-01.png",
+    "setupInstructions": [
+      "Create 10x10 yard grid for each pair",
+      "Designate one player as leader and one as defender",
+      "Leader starts with ball at feet but doesn't dribble"
+    ],
+    "coachingPoints": [
+      "Maintain proper defensive stance with knees bent",
+      "Stay balanced and on balls of feet",
+      "Keep proper distance from attacker (arm's length)",
+      "Shuffle feet rather than crossing them"
+    ],
+    "progressions": [
+      "Allow leader to move the ball with feet",
+      "Expand to 2v2 shadow defending",
+      "Add directional focus toward a goal to protect"
+    ]
+  },
+  {
+    "id": "def-02",
+    "name": "Channel Defending",
+    "component": "Defending",
+    "skillFocus": ["Defensive Pressure", "Channeling", "Team Defense"],
+    "difficulty": "Intermediate",
+    "description": "Defenders work on channeling attackers away from dangerous areas and toward sidelines or support defenders.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Bibs", "Small Goals"],
+    "diagramImageUrl": "/images/drills/def-02.png",
+    "setupInstructions": [
+      "Create a 30x20 yard field with a goal at one end",
+      "Set up a central 'danger zone' with cones",
+      "Position two defenders against two attackers",
+      "Place small counter-attack goals at opposite end"
+    ],
+    "coachingPoints": [
+      "Position body to show attacker away from central zone",
+      "Communicate constantly between defenders",
+      "Delay the attack when outnumbered, don't dive in",
+      "Keep compact spacing between defenders"
+    ],
+    "progressions": [
+      "Add a third attacker to create 3v2 situation",
+      "Reward defenders for winning ball and scoring in counter goals",
+      "Start with attack already in progress rather than from static position"
+    ]
+  },
+  {
+    "id": "tech-01",
+    "name": "Technical Circuit",
+    "component": "Technical Ball Work",
+    "skillFocus": ["Dribbling", "Ball Control", "First Touch"],
+    "difficulty": "Intermediate",
+    "description": "Players move through a series of technical stations focused on different ball skills, spending 3-4 minutes at each before rotating.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Ladders", "Hurdles"],
+    "diagramImageUrl": "/images/drills/tech-01.png",
+    "setupInstructions": [
+      "Create 4-6 stations in a circuit formation",
+      "Station 1: Dribbling through cones",
+      "Station 2: Ball mastery exercises",
+      "Station 3: First touch and control drills",
+      "Station 4: Feints and moves practice"
+    ],
+    "coachingPoints": [
+      "Focus on quality repetitions rather than speed",
+      "Keep body position low and balanced during exercises",
+      "Use both feet equally throughout all stations",
+      "Encourage creativity and expression in the final station"
+    ],
+    "progressions": [
+      "Add time challenges at each station",
+      "Include small 1v1 competition elements",
+      "Combine skills from multiple stations into sequences"
+    ]
+  },
+  {
+    "id": "tech-02",
+    "name": "Four Corner Technical Practice",
+    "component": "Technical Ball Work",
+    "skillFocus": ["Ball Mastery", "Turning", "Tight Control"],
+    "difficulty": "Beginner",
+    "description": "Players perform technical skills in a defined area with continuous movement between four corners, focusing on close control and quick direction changes.",
+    "duration": 15,
+    "equipment": ["Cones", "Balls"],
+    "diagramImageUrl": "/images/drills/tech-02.png",
+    "setupInstructions": [
+      "Set up a 15x15 yard square with cones at each corner",
+      "Each player with a ball starting at one of the corners",
+      "Mark each corner with a different color if possible"
+    ],
+    "coachingPoints": [
+      "Keep head up while dribbling to see open spaces",
+      "Use different surfaces of the foot for control",
+      "Execute sharp turns at each corner",
+      "Maintain close control throughout the exercise"
+    ],
+    "progressions": [
+      "Call out specific turns to perform at each corner",
+      "Add defenders who try to win the ball",
+      "Incorporate specific ball mastery moves between corners"
+    ]
+  },
+  {
+    "id": "pass-01",
+    "name": "Triangle Passing Combinations",
+    "component": "Passing",
+    "skillFocus": ["Short Passing", "Give and Go", "Communication"],
+    "difficulty": "Beginner",
+    "description": "Players work in groups of three forming triangles to practice various passing combinations and patterns with movement.",
+    "duration": 15,
+    "equipment": ["Cones", "Balls"],
+    "diagramImageUrl": "/images/drills/pass-01.png",
+    "setupInstructions": [
+      "Create triangles with cones (10 yards per side)",
+      "Position one player at each cone with one ball per triangle",
+      "Set up multiple triangles to accommodate all players"
+    ],
+    "coachingPoints": [
+      "Pass to the correct foot (usually the furthest from the defender)",
+      "Communicate before passing with verbal and visual cues",
+      "Move immediately after passing",
+      "Maintain proper passing technique with head up and follow through"
+    ],
+    "progressions": [
+      "Add specific passing patterns (e.g., all one-touch)",
+      "Incorporate movement between multiple triangles",
+      "Add passive then active defenders"
+    ]
+  },
+  {
+    "id": "pass-02",
+    "name": "Pass and Move Grid",
+    "component": "Passing",
+    "skillFocus": ["Passing Accuracy", "Movement", "Scanning"],
+    "difficulty": "Intermediate",
+    "description": "Players work in a grid making passes and moving into space, focusing on accuracy, weight of pass, and intelligent movement patterns.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Bibs"],
+    "diagramImageUrl": "/images/drills/pass-02.png",
+    "setupInstructions": [
+      "Create a 25x25 yard grid",
+      "Split players into two teams with different colored bibs",
+      "Start with 2-3 balls depending on player numbers"
+    ],
+    "coachingPoints": [
+      "Scan the area before receiving the ball",
+      "Pass to teammates and follow your pass with a supporting run",
+      "Vary passing speed based on distance and positioning",
+      "Create passing angles by moving into space"
+    ],
+    "progressions": [
+      "Only allow passes to opposite-colored bibs",
+      "Add touch restrictions (two-touch, one-touch)",
+      "Introduce passive defenders"
+    ]
+  },
+  {
+    "id": "ssg-01",
+    "name": "3v3 End Zone Game",
+    "component": "Small-Sided Games",
+    "skillFocus": ["Possession", "Transition", "Support Play"],
+    "difficulty": "Intermediate",
+    "description": "Teams compete in a small-sided format where points are scored by successfully dribbling into the opponent's end zone, encouraging quick transitions and creativity.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Bibs"],
+    "diagramImageUrl": "/images/drills/ssg-01.png",
+    "setupInstructions": [
+      "Create a 25x20 yard playing area",
+      "Mark 3-yard end zones at each end",
+      "Divide players into teams of 3 (multiple games can run simultaneously)"
+    ],
+    "coachingPoints": [
+      "Look for opportunities to attack the end zone quickly",
+      "Support teammates in possession with angled runs",
+      "Transition quickly from defense to attack when winning the ball",
+      "Use width and depth to create space"
+    ],
+    "progressions": [
+      "Award extra points for combinations before scoring",
+      "Add neutral players to create overloads",
+      "Limit touches to increase speed of play"
+    ]
+  },
+  {
+    "id": "ssg-02",
+    "name": "4v4 Four Goal Game",
+    "component": "Small-Sided Games",
+    "skillFocus": ["Decision Making", "Game Awareness", "Defending"],
+    "difficulty": "Intermediate",
+    "description": "Teams play 4v4 with four small goals positioned around the field, encouraging players to attack and defend in multiple directions.",
+    "duration": 25,
+    "equipment": ["Cones", "Balls", "Bibs", "Small Goals"],
+    "diagramImageUrl": "/images/drills/ssg-02.png",
+    "setupInstructions": [
+      "Set up a 30x30 yard square",
+      "Place four small goals at the middle of each side (facing inward)",
+      "Create two teams of 4 players with different colored bibs"
+    ],
+    "coachingPoints": [
+      "Constantly scan the field to identify open goals",
+      "Switch point of attack quickly to exploit open space",
+      "Defend the closest goal when out of possession",
+      "Use teammates to create overloads and goal-scoring opportunities"
+    ],
+    "progressions": [
+      "Assign each team two specific goals to attack and two to defend",
+      "Add a neutral player to create 5v4 situations",
+      "Award bonus points for scoring in all goals consecutively"
+    ]
+  },
+  {
+    "id": "scrim-01",
+    "name": "Progressive Scrimmage",
+    "component": "Scrimmage",
+    "skillFocus": ["Game Situations", "Team Shape", "Transitions"],
+    "difficulty": "Intermediate",
+    "description": "A structured full-sided scrimmage that begins with restricted conditions that gradually open up to full play, allowing players to apply skills in increasingly game-like situations.",
+    "duration": 30,
+    "equipment": ["Cones", "Balls", "Bibs", "Goals"],
+    "diagramImageUrl": "/images/drills/scrim-01.png",
+    "setupInstructions": [
+      "Set up appropriate sized field based on player numbers (half field for smaller groups)",
+      "Create balanced teams with different colored bibs",
+      "Position full-size goals at each end"
+    ],
+    "coachingPoints": [
+      "Maintain team shape in both attacking and defending phases",
+      "Apply quick transitions when possession changes",
+      "Use width and depth to create and exploit space",
+      "Apply principles practiced in earlier drills"
+    ],
+    "progressions": [
+      "Phase 1: Require 5 passes before scoring",
+      "Phase 2: Allow free play in the attacking third only",
+      "Phase 3: Fully unrestricted play"
+    ]
+  },
+  {
+    "id": "scrim-02",
+    "name": "Conditioned Match Play",
+    "component": "Scrimmage",
+    "skillFocus": ["Match Tactics", "Game Intelligence", "Problem Solving"],
+    "difficulty": "Advanced",
+    "description": "A game-realistic scrimmage with specific conditions or constraints designed to emphasize particular aspects of play or tactical concepts.",
+    "duration": 25,
+    "equipment": ["Cones", "Balls", "Bibs", "Goals"],
+    "diagramImageUrl": "/images/drills/scrim-02.png",
+    "setupInstructions": [
+      "Set up a field appropriate to player numbers",
+      "Divide players into balanced teams",
+      "Establish clear conditions for the game (e.g., one-touch finishing)"
+    ],
+    "coachingPoints": [
+      "Focus on applying the conditioned elements effectively",
+      "Encourage players to verbalize and solve problems together",
+      "Maintain competitive intensity throughout",
+      "Look for opportunities to apply practiced techniques in game situations"
+    ],
+    "progressions": [
+      "Vary conditions every 5-8 minutes",
+      "Add/remove players to create numerical advantages",
+      "Introduce zones where specific conditions apply"
+    ]
+  },
+  {
+    "id": "att-01",
+    "name": "Overload Attack Waves",
+    "component": "Attacking Play",
+    "skillFocus": ["Combination Play", "Creating Chances", "Finishing"],
+    "difficulty": "Intermediate",
+    "description": "Attacking groups enter in waves against fewer defenders, focusing on exploiting numerical advantages and creating scoring opportunities.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Bibs", "Goal"],
+    "diagramImageUrl": "/images/drills/att-01.png",
+    "setupInstructions": [
+      "Set up a 30x40 yard field with a full-size goal at one end",
+      "Position defenders in the defensive half",
+      "Organize attackers into groups of 3 or 4 at the opposite end",
+      "Coach starts with a supply of balls"
+    ],
+    "coachingPoints": [
+      "Use quick movement and passes to disorganize the defense",
+      "Look for numerical advantage situations (2v1, 3v2)",
+      "Decision making: when to pass vs. when to dribble",
+      "Create and exploit space with off-ball movement"
+    ],
+    "progressions": [
+      "Begin with 3v1, progress to 3v2",
+      "Add recovery defenders who chase back",
+      "Set a time limit for each attacking wave (8-10 seconds)"
+    ]
+  },
+  {
+    "id": "att-02",
+    "name": "Wide Play and Crossing",
+    "component": "Attacking Play",
+    "skillFocus": ["Wing Play", "Crossing", "Box Movement"],
+    "difficulty": "Advanced",
+    "description": "Focus on attacking from wide areas with an emphasis on quality crossing and intelligent movement in the penalty area.",
+    "duration": 25,
+    "equipment": ["Cones", "Balls", "Bibs", "Goal"],
+    "diagramImageUrl": "/images/drills/att-02.png",
+    "setupInstructions": [
+      "Create wide channels on both sides of the field",
+      "Set up a penalty area with a full-size goal and goalkeeper",
+      "Position 2-3 attackers in the box and 1-2 defenders",
+      "Designate players as wide attackers/crossers"
+    ],
+    "coachingPoints": [
+      "Vary crossing techniques based on defensive positioning",
+      "Time runs into the box to meet crosses",
+      "Create separation from defenders with sharp movement",
+      "Look for cut-back opportunities when defense collapses"
+    ],
+    "progressions": [
+      "Add fullbacks to create 1v1 situations with wide players",
+      "Require combination play before crossing",
+      "Introduce specific crossing targets (near post, far post, cut-back)"
+    ]
+  },
+  {
+    "id": "pat-01",
+    "name": "Third-Man Running Pattern",
+    "component": "Pattern Play",
+    "skillFocus": ["Off-Ball Movement", "Timing Runs", "Combination Play"],
+    "difficulty": "Intermediate",
+    "description": "A structured passing pattern focusing on the concept of third-man runs, where a player not directly involved in the initial pass becomes the target for the next sequence.",
+    "duration": 15,
+    "equipment": ["Cones", "Balls"],
+    "diagramImageUrl": "/images/drills/pat-01.png",
+    "setupInstructions": [
+      "Set up a 30x30 yard grid",
+      "Position players in specific locations to create passing triangles",
+      "Use different colored cones to mark starting positions"
+    ],
+    "coachingPoints": [
+      "Focus on pass accuracy and weight",
+      "Time runs to arrive as the ball is played",
+      "Communicate with verbal and non-verbal cues",
+      "Maintain proper body position to see the field"
+    ],
+    "progressions": [
+      "Add passive defenders",
+      "Increase speed of execution",
+      "Combine multiple patterns into more complex sequences"
+    ]
+  },
+  {
+    "id": "pat-02",
+    "name": "Positional Rotation Pattern",
+    "component": "Pattern Play",
+    "skillFocus": ["Positional Awareness", "Rotation", "Timing"],
+    "difficulty": "Advanced",
+    "description": "Players execute a predetermined sequence of passes and movements with specific position rotations, simulating game situations and building team coordination.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Mannequins"],
+    "diagramImageUrl": "/images/drills/pat-02.png",
+    "setupInstructions": [
+      "Set up in a formation section (e.g., midfield and attack)",
+      "Position mannequins as passive defenders",
+      "Assign starting positions for all players",
+      "Mark rotation paths with cones if needed"
+    ],
+    "coachingPoints": [
+      "Move immediately after passing to create new options",
+      "Maintain team shape throughout the rotation",
+      "Execute with proper timing to create space for teammates",
+      "Scan before receiving to know your next action"
+    ],
+    "progressions": [
+      "Begin with set pattern, then allow creative variations",
+      "Add active defenders to increase realism",
+      "Create transition to finish with a shot on goal"
+    ]
+  },
+  {
+    "id": "set-01",
+    "name": "Corner Kick Variations",
+    "component": "Set Pieces",
+    "skillFocus": ["Dead Ball Delivery", "Movement Patterns", "Finishing"],
+    "difficulty": "Intermediate",
+    "description": "Practice a variety of corner kick routines with specific movement patterns and delivery types, focusing on creating scoring opportunities from set pieces.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Bibs", "Goal"],
+    "diagramImageUrl": "/images/drills/set-01.png",
+    "setupInstructions": [
+      "Set up a full-size goal with goalkeeper",
+      "Position attackers in and around the penalty area",
+      "Set up defenders to create realistic opposition",
+      "Prepare multiple balls for corner kick delivery"
+    ],
+    "coachingPoints": [
+      "Focus on consistent, quality delivery to target areas",
+      "Time runs to arrive as the ball reaches the target zone",
+      "Use blocking and screening movements to create space",
+      "Practice both in-swinging and out-swinging deliveries"
+    ],
+    "progressions": [
+      "Begin with unopposed practice, then add defenders",
+      "Introduce specific routines (near post, far post, short corners)",
+      "Practice defensive clearances and counter-attacks"
+    ]
+  },
+  {
+    "id": "set-02",
+    "name": "Free Kick Organization",
+    "component": "Set Pieces",
+    "skillFocus": ["Dead Ball Accuracy", "Wall Formation", "Team Coordination"],
+    "difficulty": "Advanced",
+    "description": "Comprehensive training for both attacking and defending free kicks around the penalty area, focusing on technique, coordination, and execution.",
+    "duration": 25,
+    "equipment": ["Cones", "Balls", "Free Kick Mannequins", "Goal"],
+    "diagramImageUrl": "/images/drills/set-02.png",
+    "setupInstructions": [
+      "Set up a full-size goal with goalkeeper",
+      "Position free kick mannequins to form a defensive wall",
+      "Mark different free kick positions around the penalty area",
+      "Assign specific roles to players (takers, wall, runners)"
+    ],
+    "coachingPoints": [
+      "For takers: Focus on technique, accuracy and communication",
+      "For defenders: Proper wall setup and covering open spaces",
+      "Execute deception moves and dummy runs",
+      "Maintain concentration and discipline throughout the routine"
+    ],
+    "progressions": [
+      "Replace mannequins with active defenders",
+      "Practice specific routines for different areas of the field",
+      "Add goalkeeping coaching specific to free kick situations"
+    ]
+  },
+  {
+    "id": "fit-01",
+    "name": "Interval Dribbling Circuit",
+    "component": "Fitness & Conditioning",
+    "skillFocus": ["Aerobic Capacity", "Speed Endurance", "Ball Control"],
+    "difficulty": "Intermediate",
+    "description": "A high-intensity interval training circuit that combines dribbling and technical skills with fitness development, maintaining ball contact throughout.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Timing Clock"],
+    "diagramImageUrl": "/images/drills/fit-01.png",
+    "setupInstructions": [
+      "Create a continuous circuit with multiple stations",
+      "Include dribbling slalom, sprints, and recovery areas",
+      "Each player with a ball",
+      "Set work:rest intervals (e.g., 30 seconds work, 15 seconds rest)"
+    ],
+    "coachingPoints": [
+      "Maintain technical quality even when fatigued",
+      "Push intensity during work intervals",
+      "Use appropriate recovery techniques during rest periods",
+      "Focus on proper running mechanics and body position"
+    ],
+    "progressions": [
+      "Increase work intervals or decrease rest periods",
+      "Add complexity to technical elements",
+      "Incorporate competitive elements between players"
+    ]
+  },
+  {
+    "id": "fit-02",
+    "name": "Position-Specific Conditioning Game",
+    "component": "Fitness & Conditioning",
+    "skillFocus": ["Game-Specific Fitness", "Positional Awareness", "Recovery"],
+    "difficulty": "Advanced",
+    "description": "A small-sided game format designed to replicate the physical demands of specific positions, combining tactical understanding with position-specific conditioning requirements.",
+    "duration": 25,
+    "equipment": ["Cones", "Balls", "Bibs", "Small Goals"],
+    "diagramImageUrl": "/images/drills/fit-02.png",
+    "setupInstructions": [
+      "Create a playing area appropriately sized for player numbers",
+      "Establish position-specific zones or channels",
+      "Assign specific positional roles to players",
+      "Set game duration and rest intervals"
+    ],
+    "coachingPoints": [
+      "Emphasize realistic movement patterns for each position",
+      "Encourage appropriate high-intensity actions (sprints, recovery runs)",
+      "Focus on tactical decision-making while fatigued",
+      "Maintain positional discipline throughout"
+    ],
+    "progressions": [
+      "Add specific conditioning challenges for certain positions",
+      "Incorporate overload situations that increase physical demands",
+      "Reduce recovery time between games as fitness improves"
+    ]
+  }
+]
