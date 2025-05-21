@@ -71,7 +71,7 @@ const CreateSessionPage = () => {
       <div className="p-8">
         {/* Session Duration Selector */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold italic mb-6" style={{color: '#16a34a'}}>TOTAL SESSION DURATION</h2>
+          <h2 className="text-2xl font-bold italic mb-6 text-center border-2 border-white py-2 rounded-full" style={{color: '#16a34a', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff'}}>TOTAL SESSION DURATION</h2>
           <div className="relative">
             <div className="flex flex-col items-center justify-center py-6">
               {/* Duration input with pagination style - EXTRA LARGE VERSION */}
@@ -145,66 +145,109 @@ const CreateSessionPage = () => {
 
         {/* Players Available Input */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold italic mb-4" style={{color: '#16a34a'}}>PLAYERS AVAILABLE</h2>
-          <div>
-            <div className="flex flex-col items-center">
-              <div className="relative w-full">
-                <input
-                  type="number"
-                  value={sessionData.playerCount === 0 ? '' : sessionData.playerCount}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value === '') {
-                      handleChange('playerCount', 0);
-                    } else {
-                      const numValue = parseInt(value, 10);
-                      if (!isNaN(numValue) && numValue >= 1) {
-                        handleChange('playerCount', numValue);
-                      }
-                    }
-                  }}
-                  min="1"
-                  placeholder="Enter number of players"
-                  className="w-full py-2 px-3 bg-white border border-gray-300 rounded text-center text-xl focus:outline-none"
-                />
-
+          <h2 className="text-2xl font-bold italic mb-6 text-center border-2 border-white py-2 rounded-full" style={{color: '#16a34a', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff'}}>PLAYERS AVAILABLE</h2>
+          <div className="relative">
+            <div className="flex flex-col items-center justify-center py-6">
+              {/* Player count input with pagination style */}
+              <div className="mb-4">
+                <div className="flex flex-row items-center justify-center">
+                  <button 
+                    onClick={() => {
+                      const newCount = Math.max(1, sessionData.playerCount - 1);
+                      handleChange('playerCount', newCount);
+                    }}
+                    className="bg-white border-2 border-gray-300 hover:bg-gray-100 flex items-center justify-center" 
+                    disabled={sessionData.playerCount <= 1}
+                    aria-label="Decrease player count"
+                    style={{borderRadius: '8px 0 0 8px', margin: 0, height: '55px', width: '55px'}}
+                  >
+                    <span style={{fontSize: '30px', display: 'flex', alignItems: 'center'}}>«</span>
+                  </button>
+                  
+                  <div className="bg-white border-y-2 border-gray-300 flex items-center justify-center" style={{width: '55px', height: '48px', margin: 0, padding: 0, overflow: 'hidden'}}>
+                    <input
+                      type="number"
+                      value={sessionData.playerCount}
+                      onChange={(e) => {
+                        const value = parseInt(e.target.value, 10);
+                        if (!isNaN(value)) {
+                          // Clamp value between 1 and 30
+                          const clampedValue = Math.min(30, Math.max(1, value));
+                          handleChange('playerCount', clampedValue);
+                        }
+                      }}
+                      min="1"
+                      max="30"
+                      style={{width: '100%', height: '100%', border: 'none', backgroundColor: 'white', color: '#16a34a', fontSize: '24px', fontWeight: 'bold', textAlign: 'center', appearance: 'textfield', padding: '0 0 0 12px', margin: 0}}
+                      className="focus:outline-none"
+                    />
+                  </div>
+                  
+                  <button 
+                    onClick={() => {
+                      const newCount = Math.min(30, sessionData.playerCount + 1);
+                      handleChange('playerCount', newCount);
+                    }}
+                    className="bg-white border-2 border-gray-300 hover:bg-gray-100 flex items-center justify-center"
+                    disabled={sessionData.playerCount >= 30}
+                    aria-label="Increase player count"
+                    style={{borderRadius: '0 8px 8px 0', margin: 0, height: '55px', width: '55px'}}
+                  >
+                    <span style={{fontSize: '30px', display: 'flex', alignItems: 'center'}}>»</span>
+                  </button>
+                </div>
               </div>
-              <p className="text-sm text-gray-700 mt-2 text-center">Enter the number of players available for the session</p>
+              
+              {/* Players label */}
+              <div className="text-2xl text-gray-600 font-medium mt-3 mb-3">players</div>
             </div>
           </div>
         </div>
 
         {/* Team Level Selector */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold italic mb-4" style={{color: '#16a34a'}}>TEAM LEVEL</h2>
-          <div>
-            <div className="flex flex-col items-center">
-              <div className="grid grid-cols-2 gap-1 w-full">
-                {['Recreational', 'Intermediate', 'Advanced', 'Elite'].map((level) => (
-                  <button
-                    key={level}
-                    onClick={() => handleChange('teamLevel', level)}
-                    className={`py-2 px-3 ${sessionData.teamLevel === level ? 'bg-[#16a34a] text-white' : 'bg-white text-gray-700 border border-gray-300'} font-medium transition-colors`}
-                  >
-                    {level}
-                  </button>
-                ))}
-              </div>
-              <p className="text-sm text-gray-700 mt-2 text-center">Select the skill level of your team</p>
+          <h2 className="text-2xl font-bold italic mb-6 text-center border-2 border-white py-2 rounded-full" style={{color: '#16a34a', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff'}}>TEAM LEVEL</h2>
+          <div className="flex flex-col items-center">
+            <div className="flex flex-row items-center justify-center gap-4 w-full max-w-xl">
+              {['Recreational', 'Intermediate', 'Advanced', 'Elite'].map((level) => (
+                <button
+                  key={level}
+                  onClick={() => handleChange('teamLevel', level)}
+                  className={`py-3 px-5 rounded-full text-lg transition-colors ${sessionData.teamLevel === level 
+                    ? 'bg-[#16a34a] border-2 border-[#16a34a]' 
+                    : 'bg-white text-[#16a34a] border-2 border-gray-300 hover:border-gray-400'}`}
+                  style={{
+                    minWidth: '120px', 
+                    height: '50px', 
+                    fontWeight: 800,
+                    color: sessionData.teamLevel === level ? 'white' : '#16a34a'
+                  }}
+                >
+                  {level}
+                </button>
+              ))}
             </div>
+            <p className="text-sm text-gray-700 mt-4 text-center">Select the skill level of your team</p>
           </div>
         </div>
 
-        {/* Next button */}
-        <div className="flex justify-end">
+        {/* Navigation buttons */}
+        <div className="flex justify-between mt-16">
+          <button
+            onClick={() => router.push('/')}
+            className="bg-white text-black py-2 px-6 rounded-full flex items-center justify-center transition-colors border-2 border-gray-300 hover:border-gray-400"
+            style={{minWidth: '130px', height: '45px'}}
+          >
+            <span style={{fontSize: '22px', display: 'flex', alignItems: 'center', marginRight: '8px'}}>«</span>
+            <span style={{fontWeight: 800, fontStyle: 'italic', letterSpacing: '0.5px', textTransform: 'uppercase', fontSize: '16px'}}>HOME</span>
+          </button>
           <button
             onClick={handleNext}
-            className="text-white py-2 px-4 rounded-md flex items-center transition-colors" style={{backgroundColor: '#16a34a', ':hover': {backgroundColor: '#15803d'}}}
+            className="bg-white text-black py-2 px-6 rounded-full flex items-center justify-center transition-colors border-2 border-gray-300 hover:border-gray-400"
+            style={{minWidth: '130px', height: '45px'}}
           >
-            Next
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 10 10.293 7.707a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg>
+            <span style={{fontWeight: 800, fontStyle: 'italic', letterSpacing: '0.5px', textTransform: 'uppercase', fontSize: '16px'}}>NEXT</span>
+            <span style={{fontSize: '22px', display: 'flex', alignItems: 'center', marginLeft: '8px'}}>»</span>
           </button>
         </div>
       </div>
