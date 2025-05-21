@@ -71,7 +71,7 @@ const CreateSessionPage = () => {
       <div className="p-8">
         {/* Session Duration Selector */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold italic mb-6 text-center border-2 border-white py-2 rounded-full" style={{color: '#16a34a', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff'}}>TOTAL SESSION DURATION</h2>
+          <h2 className="text-2xl font-bold italic mb-6 text-center border-2 border-white py-2 rounded-full" style={{color: '#16a34a'}}>TOTAL SESSION DURATION</h2>
           <div className="relative">
             <div className="flex flex-col items-center justify-center py-6">
               {/* Duration input with pagination style - EXTRA LARGE VERSION */}
@@ -145,7 +145,7 @@ const CreateSessionPage = () => {
 
         {/* Players Available Input */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold italic mb-6 text-center border-2 border-white py-2 rounded-full" style={{color: '#16a34a', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff'}}>PLAYERS AVAILABLE</h2>
+          <h2 className="text-2xl font-bold italic mb-6 text-center border-2 border-white py-2 rounded-full" style={{color: '#16a34a'}}>PLAYERS AVAILABLE</h2>
           <div className="relative">
             <div className="flex flex-col items-center justify-center py-6">
               {/* Player count input with pagination style */}
@@ -206,7 +206,7 @@ const CreateSessionPage = () => {
 
         {/* Team Level Selector */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold italic mb-6 text-center border-2 border-white py-2 rounded-full" style={{color: '#16a34a', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff'}}>TEAM LEVEL</h2>
+          <h2 className="text-2xl font-bold italic mb-6 text-center border-2 border-white py-2 rounded-full" style={{color: '#16a34a'}}>TEAM LEVEL</h2>
           <div className="flex flex-col items-center">
             <div className="flex flex-row items-center justify-center gap-4 w-full max-w-xl">
               {['Recreational', 'Intermediate', 'Advanced', 'Elite'].map((level) => (
