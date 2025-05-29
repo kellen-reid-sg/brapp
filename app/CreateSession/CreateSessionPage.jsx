@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Navbar from '../component/Navbar';
 
 const CreateSessionPage = () => {
   const router = useRouter();
@@ -53,7 +54,9 @@ const CreateSessionPage = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto py-8 px-4">
+    <>
+      <Navbar />
+      <div className="max-w-2xl mx-auto py-8 px-4">
       <div className="br-header-container">
         <h1 className="br-main-heading">Create Single Session</h1>
         <p className="br-subheading">Design a training session for your team</p>
@@ -251,7 +254,8 @@ const CreateSessionPage = () => {
           </button>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

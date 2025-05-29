@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Navbar from '../component/Navbar';
 import DrillSelectionModal from '../component/DrillSelectionModal';
 import DrillCardCompact from '../component/DrillCardCompact';
 
@@ -159,6 +160,12 @@ const BuildSessionPage = () => {
   
   // Handle next button
   const handleNext = () => {
+    // Validate required fields
+    if (!sessionData.name || !sessionData.date) {
+      alert('Please fill in both Session Name and Session Date before proceeding.');
+      return;
+    }
+    
     // Update session data with the time allocations, preserving their order
     const updatedSessionData = {
       ...sessionData,
@@ -233,65 +240,125 @@ const BuildSessionPage = () => {
       : 'text-red-600';
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4">
-      <h1 className="text-2xl font-bold text-center text-green-700 mb-6">Create Single Session</h1>
+    <>
+      <Navbar />
+      <div className="max-w-4xl mx-auto py-8 px-4">
+      <div className="br-header-container">
+        <h1 className="br-main-heading">Create Single Session</h1>
+        <p className="br-subheading">Design a training session for your team</p>
+      </div>
       
       {/* Progress indicator */}
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div className="flex-1 border-t-2 border-green-500"></div>
-          <div className="flex-shrink-0 mx-2 text-green-500 font-bold">Step 3: Build Session</div>
+          <div className="flex-shrink-0 mx-2 text-green-500 font-bold" style={{fontFamily: '"Arial Black", "Helvetica Neue", sans-serif', fontStyle: 'italic', transform: 'skew(-5deg)'}}>Step 3: Build Session</div>
           <div className="flex-1 border-t-2 border-gray-300"></div>
         </div>
       </div>
-      
-      {/* Session Name and Date Inputs */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <label htmlFor="sessionName" className="block text-lg font-semibold mb-2">Session Name</label>
-            <input
-              type="text"
-              id="sessionName"
-              placeholder="Enter a name for your session"
-              value={sessionData.name || ''}
-              onChange={(e) => setSessionData({...sessionData, name: e.target.value})}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="sessionDate" className="block text-lg font-semibold mb-2">Session Date</label>
-            <input
-              type="date"
-              id="sessionDate"
-              value={sessionData.date || ''}
-              onChange={(e) => setSessionData({...sessionData, date: e.target.value})}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              min={new Date().toISOString().split('T')[0]} // Set min date to today
-            />
-          </div>
+  
+  {/* Session Name and Date Inputs */}
+  <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+    <div className="grid grid-cols-2 gap-6">
+      <div>
+        <h2 className="text-2xl font-bold italic mb-6 text-center border-2 border-white py-2 rounded-full" style={{color: '#16a34a'}}>
+          SESSION NAME
+        </h2>
+        <div className="flex justify-center">
+          <input
+            type="text"
+            id="sessionName"
+            placeholder="Enter a name for your session *"
+            value={sessionData.name || ''}
+            onChange={(e) => setSessionData({...sessionData, name: e.target.value})}
+            className="bg-white border-2 border-gray-300 rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-center"
+            style={{width: '450px', height: '50px'}}
+            required
+          />
         </div>
       </div>
+      
+      <div>
+        <h2 className="text-2xl font-bold italic mb-6 text-center border-2 border-white py-2 rounded-full" style={{color: '#16a34a'}}>
+          SESSION DATE
+        </h2>
+        <div className="flex justify-center">
+          <input
+            type="date"
+            id="sessionDate"
+            placeholder="mm/dd/yyyy *"
+            value={sessionData.date || ''}
+            onChange={(e) => setSessionData({...sessionData, date: e.target.value})}
+            className="bg-white border-2 border-gray-300 rounded-full p-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-center"
+            style={{width: '450px', height: '50px'}}
+            min={new Date().toISOString().split('T')[0]}
+            required
+          />
+        </div>
+      </div>
+    </div>
+  </div>
 
-      {/* Session Overview Card */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h2 className="text-lg font-semibold mb-4">Session Overview</h2>
+      {/* Session Overview */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold italic mb-6 text-center border-2 border-white py-2 rounded-full" style={{color: '#16a34a'}}>SESSION OVERVIEW</h2>
         
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="border rounded-lg p-4 text-center">
-            <p className="text-sm text-gray-500">Total Duration</p>
-            <p className="text-2xl font-bold text-green-700">{totalDuration} min</p>
+        <div style={{
+          display: 'flex', 
+          flexWrap: 'wrap', 
+          gap: '24px',
+          marginBottom: '32px',
+          justifyContent: 'center'
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '200px',
+            height: '120px',
+            padding: '16px 8px',
+            borderRadius: '20px',
+            backgroundColor: 'white',
+            border: '1px solid #d1d5db',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+          }}>
+            <div style={{ textAlign: 'center', fontSize: '18px', fontWeight: '500', color: '#000', marginBottom: '8px' }}>Total Duration</div>
+            <div style={{ textAlign: 'center', fontSize: '32px', fontWeight: '700', color: '#16a34a' }}>{totalDuration} min</div>
           </div>
           
-          <div className="border rounded-lg p-4 text-center">
-            <p className="text-sm text-gray-500">Components</p>
-            <p className="text-2xl font-bold text-green-700">{selectedComponents.length}</p>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '200px',
+            height: '120px',
+            padding: '16px 8px',
+            borderRadius: '20px',
+            backgroundColor: 'white',
+            border: '1px solid #d1d5db',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+          }}>
+            <div style={{ textAlign: 'center', fontSize: '18px', fontWeight: '500', color: '#000', marginBottom: '8px' }}>Components</div>
+            <div style={{ textAlign: 'center', fontSize: '32px', fontWeight: '700', color: '#16a34a' }}>{selectedComponents.length}</div>
           </div>
           
-          <div className="border rounded-lg p-4 text-center">
-            <p className="text-sm text-gray-500">Players Available</p>
-            <p className="text-2xl font-bold text-green-700">{sessionData.playerCount || '–'}</p>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '200px',
+            height: '120px',
+            padding: '16px 8px',
+            borderRadius: '20px',
+            backgroundColor: 'white',
+            border: '1px solid #d1d5db',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+          }}>
+            <div style={{ textAlign: 'center', fontSize: '18px', fontWeight: '500', color: '#000', marginBottom: '8px' }}>Players Available</div>
+            <div style={{ textAlign: 'center', fontSize: '32px', fontWeight: '700', color: '#16a34a' }}>{sessionData.playerCount || '16'}</div>
           </div>
         </div>
         
@@ -310,152 +377,158 @@ const BuildSessionPage = () => {
         )}
       </div>
 
-      {/* Component Cards */}
-      <div className="space-y-4 mb-8">
+      {/* Component Cards - Updated styling */}
+      <div style={{display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '32px', maxWidth: '800px', margin: '0 auto'}}>
         {allocations.map((component, index) => (
-          <div key={component.id} className="bg-white rounded-lg shadow-md overflow-hidden relative">
-            {/* Reorder buttons on the left */}
-            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gray-50 border-r flex flex-col items-center justify-center">
+          <div key={component.id} style={{display: 'flex', alignItems: 'center', gap: '16px'}}>
+            {/* Move up/down arrows - positioned to the left */}
+            <div style={{display: 'flex', flexDirection: 'column', gap: '4px'}}>
               <button 
                 onClick={() => moveComponentUp(index)}
                 disabled={index === 0}
-                data-testid="move-up-button"
-                className={`w-8 h-8 flex items-center justify-center text-gray-500 ${index === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:text-gray-700 hover:bg-gray-100'}`}
+                style={{
+                  width: '24px',
+                  height: '24px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  cursor: index === 0 ? 'not-allowed' : 'pointer',
+                  opacity: index === 0 ? 0.3 : 1,
+                  fontSize: '18px',
+                  color: '#6b7280'
+                }}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
-                </svg>
+                ▲
               </button>
               <button 
                 onClick={() => moveComponentDown(index)}
                 disabled={index === allocations.length - 1}
-                data-testid="move-down-button"
-                className={`w-8 h-8 flex items-center justify-center text-gray-500 ${index === allocations.length - 1 ? 'opacity-30 cursor-not-allowed' : 'hover:text-gray-700 hover:bg-gray-100'}`}
+                style={{
+                  width: '24px',
+                  height: '24px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  cursor: index === allocations.length - 1 ? 'not-allowed' : 'pointer',
+                  opacity: index === allocations.length - 1 ? 0.3 : 1,
+                  fontSize: '18px',
+                  color: '#6b7280'
+                }}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
+                ▼
               </button>
             </div>
-            
-            <div className="ml-8">
-              <div className="bg-gray-50 px-4 py-3 border-b flex justify-between items-center">
-                <h3 className="font-medium flex items-center" data-testid="component-name">
-                  <span className="mr-2">{component.icon}</span>
-                  {component.name}
-                </h3>
-                <div className="flex items-center space-x-4">
-                  {/* Duration Editor */}
-                  <div className="flex items-center space-x-1">
-                    <button 
-                      onClick={() => updateDuration(component.id, component.duration - 5)}
-                      className="w-6 h-6 flex items-center justify-center bg-gray-200 rounded-full text-gray-700 hover:bg-gray-300"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                      </svg>
-                    </button>
-                    
-                    <input 
-                      type="number" 
-                      value={component.duration}
-                      onChange={(e) => {
-                        const val = parseInt(e.target.value, 10);
-                        if (!isNaN(val)) {
-                          updateDuration(component.id, val);
-                        }
-                      }}
-                      min="5"
-                      className="w-12 text-center border rounded py-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    />
-                    
-                    <button 
-                      onClick={() => updateDuration(component.id, component.duration + 5)}
-                      className="w-6 h-6 flex items-center justify-center bg-gray-200 rounded-full text-gray-700 hover:bg-gray-300"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
-                      </svg>
-                    </button>
-                    
-                    <span className="text-sm text-gray-500 ml-1">min</span>
-                  </div>
+
+            {/* Component card */}
+            <div style={{backgroundColor: '#f9fafb', borderRadius: '16px', border: '1px solid #e5e7eb', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', flex: 1}}>
+              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px'}}>
+                {/* Component name and icon */}
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                  <span style={{marginRight: '12px', fontSize: '20px'}}>{component.icon}</span>
+                  <span style={{fontWeight: 'bold', fontSize: '20px', color: '#1f2937'}}>{component.name}</span>
                 </div>
-              </div>
               
-              <div className="p-4">
-                {/* Display selected drills */}
-                {component.drills.length > 0 && (
-                  <div className="mb-4">
-                    {component.drills.map((drill, drillIndex) => (
-                      <DrillCardCompact
-                        key={`${drill.id}-${drillIndex}`}
-                        drill={drill}
-                        onRemove={() => removeDrillFromComponent(component.id, drillIndex)}
-                      />
-                    ))}
-                  </div>
-                )}
-                
-                {/* Add drill button */}
+              {/* Duration controls */}
+              <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
                 <button 
-                  className="w-full border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-green-500 hover:text-green-600 transition-colors"
-                  onClick={() => openDrillModal(component)}
+                  onClick={() => updateDuration(component.id, component.duration - 1)}
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: 'white',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '6px',
+                    color: '#374151',
+                    cursor: 'pointer',
+                    fontSize: '18px'
+                  }}
                 >
-                  <div className="text-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    <span className="font-medium">Add Drill</span>
-                  </div>
+                  −
                 </button>
+                
+                <span style={{fontSize: '20px', fontWeight: 'bold', margin: '0 8px', minWidth: '24px', textAlign: 'center', color: 'black'}}>{component.duration}</span>
+                
+                <button 
+                  onClick={() => updateDuration(component.id, component.duration + 1)}
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: 'white',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '6px',
+                    color: '#374151',
+                    cursor: 'pointer',
+                    fontSize: '18px'
+                  }}
+                >
+                  +
+                </button>
+                
+                <span style={{fontSize: '14px', color: '#6b7280', marginLeft: '4px'}}>min</span>
               </div>
+            </div>
+            
+            {/* Drill section */}
+            <div className="mt-4">
+              {/* Display selected drills */}
+              {component.drills.length > 0 && (
+                <div className="mb-3 space-y-2">
+                  {component.drills.map((drill, drillIndex) => (
+                    <DrillCardCompact
+                      key={`${drill.id}-${drillIndex}`}
+                      drill={drill}
+                      onRemove={() => removeDrillFromComponent(component.id, drillIndex)}
+                    />
+                  ))}
+                </div>
+              )}
+              
+              {/* Add drill button */}
+              <button 
+                className="w-full border-2 border-dashed rounded-lg px-4 py-2 text-center transition-colors flex flex-col items-center justify-center"
+                style={{borderColor: '#16a34a'}}
+                onClick={() => openDrillModal(component)}
+              >
+                <div className="flex flex-col items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{color: '#16a34a'}}>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  <span className="font-medium text-sm text-black">Add Drill (Required) *</span>
+                </div>
+              </button>
+            </div>
             </div>
           </div>
         ))}
       </div>
       
-      {/* Navigation Buttons */}
-      <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+      {/* Navigation buttons */}
+      <div className="flex justify-between mt-16">
         <button
           onClick={handleBack}
-          className="px-6 py-2 bg-gray-200 text-gray-700 rounded font-medium hover:bg-gray-300 flex items-center"
+          className="bg-white text-black py-2 px-6 rounded-full flex items-center justify-center transition-colors border-2 border-gray-300 hover:border-gray-400"
+          style={{minWidth: '130px', height: '45px'}}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
-          </svg>
-          Back
+          <span style={{fontSize: '22px', display: 'flex', alignItems: 'center', marginRight: '8px'}}>«</span>
+          <span style={{fontWeight: 800, fontStyle: 'italic', letterSpacing: '0.5px', textTransform: 'uppercase', fontSize: '16px'}}>BACK</span>
         </button>
-
-        {/* Save Session Template Button */}
-        <button
-          onClick={() => {
-            // Check if session has a name
-            if (!sessionData.name) {
-              alert('Please name your session before saving as a template.');
-              return;
-            }
-            
-            // In a real app, would save to database/localStorage here
-            console.log('Saving session template:', sessionData);
-            alert(`Session template "${sessionData.name}" saved! Find it in My Sessions.`);
-          }}
-          className="px-6 py-2 bg-blue-600 text-white rounded font-medium hover:bg-blue-700 flex items-center"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z" />
-          </svg>
-          Save as Template
-        </button>
-
         <button
           onClick={handleNext}
-          className="px-6 py-2 bg-green-600 text-white rounded font-medium hover:bg-green-700 flex items-center"
+          className="bg-white text-black py-2 px-6 rounded-full flex items-center justify-center transition-colors border-2 border-gray-300 hover:border-gray-400"
+          style={{minWidth: '130px', height: '45px'}}
         >
-          Next
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 10 10.293 7.707a1 1 0 010-1.414z" clipRule="evenodd" />
-          </svg>
+          <span style={{fontWeight: 800, fontStyle: 'italic', letterSpacing: '0.5px', textTransform: 'uppercase', fontSize: '16px'}}>NEXT</span>
+          <span style={{fontSize: '22px', display: 'flex', alignItems: 'center', marginLeft: '8px'}}>»</span>
         </button>
       </div>
       
@@ -469,7 +542,8 @@ const BuildSessionPage = () => {
           onSelectDrill={addDrillToComponent}
         />
       )}
-    </div>
+      </div>
+    </>
   );
 };
 

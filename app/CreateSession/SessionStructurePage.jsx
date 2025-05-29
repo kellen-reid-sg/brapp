@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Navbar from '../component/Navbar';
 
 const SessionStructurePage = () => {
   const router = useRouter();
@@ -69,7 +70,9 @@ const SessionStructurePage = () => {
   const selectedCount = components.filter(c => c.selected).length;
 
   return (
-    <div className="max-w-2xl mx-auto py-8 px-4">
+    <>
+      <Navbar />
+      <div className="max-w-2xl mx-auto py-8 px-4">
       <div className="br-header-container">
         <h1 className="br-main-heading">Create Single Session</h1>
         <p className="br-subheading">Design a training session for your team</p>
@@ -173,7 +176,8 @@ const SessionStructurePage = () => {
           </button>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 
