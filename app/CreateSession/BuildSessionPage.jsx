@@ -189,23 +189,38 @@ const BuildSessionPage = () => {
   
   // Function to open drill selection modal
   const openDrillModal = (component) => {
+    console.log('Opening drill modal for component:', component);
+    console.log('Setting showDrillModal to true');
     setSelectedComponent(component);
     setShowDrillModal(true);
   };
 
   // Function to add a drill to a component
   const addDrillToComponent = (drill) => {
-    if (!selectedComponent) return;
+    console.log('addDrillToComponent called with drill:', drill);
+    console.log('selectedComponent:', selectedComponent);
+    console.log('current allocations:', allocations);
     
-    setAllocations(allocations.map(component => {
-      if (component.id === selectedComponent.id) {
-        return {
-          ...component,
-          drills: [...component.drills, drill]
-        };
-      }
-      return component;
-    }));
+    if (!selectedComponent) {
+      console.log('No selected component, returning');
+      return;
+    }
+    
+    setAllocations(prevAllocations => {
+      const newAllocations = prevAllocations.map(component => {
+        if (component.id === selectedComponent.id) {
+          const updated = {
+            ...component,
+            drills: [...component.drills, drill]
+          };
+          console.log('Updated component:', updated);
+          return updated;
+        }
+        return component;
+      });
+      console.log('New allocations:', newAllocations);
+      return newAllocations;
+    });
     
     setShowDrillModal(false);
   };
@@ -432,81 +447,81 @@ const BuildSessionPage = () => {
                   <span style={{fontWeight: 'bold', fontSize: '20px', color: '#1f2937'}}>{component.name}</span>
                 </div>
               
-              {/* Duration controls */}
-              <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
-                <button 
-                  onClick={() => updateDuration(component.id, component.duration - 1)}
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: 'white',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '6px',
-                    color: '#374151',
-                    cursor: 'pointer',
-                    fontSize: '18px'
-                  }}
-                >
-                  −
-                </button>
-                
-                <span style={{fontSize: '20px', fontWeight: 'bold', margin: '0 8px', minWidth: '24px', textAlign: 'center', color: 'black'}}>{component.duration}</span>
-                
-                <button 
-                  onClick={() => updateDuration(component.id, component.duration + 1)}
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: 'white',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '6px',
-                    color: '#374151',
-                    cursor: 'pointer',
-                    fontSize: '18px'
-                  }}
-                >
-                  +
-                </button>
-                
-                <span style={{fontSize: '14px', color: '#6b7280', marginLeft: '4px'}}>min</span>
+                {/* Duration controls */}
+                <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                  <button 
+                    onClick={() => updateDuration(component.id, component.duration - 1)}
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: 'white',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '6px',
+                      color: '#374151',
+                      cursor: 'pointer',
+                      fontSize: '18px'
+                    }}
+                  >
+                    −
+                  </button>
+                  
+                  <span style={{fontSize: '20px', fontWeight: 'bold', margin: '0 8px', minWidth: '24px', textAlign: 'center', color: 'black'}}>{component.duration}</span>
+                  
+                  <button 
+                    onClick={() => updateDuration(component.id, component.duration + 1)}
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backgroundColor: 'white',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '6px',
+                      color: '#374151',
+                      cursor: 'pointer',
+                      fontSize: '18px'
+                    }}
+                  >
+                    +
+                  </button>
+                  
+                  <span style={{fontSize: '14px', color: '#6b7280', marginLeft: '4px'}}>min</span>
+                </div>
               </div>
-            </div>
-            
-            {/* Drill section */}
-            <div className="mt-4">
-              {/* Display selected drills */}
-              {component.drills.length > 0 && (
-                <div className="mb-3 space-y-2">
-                  {component.drills.map((drill, drillIndex) => (
-                    <DrillCardCompact
-                      key={`${drill.id}-${drillIndex}`}
-                      drill={drill}
-                      onRemove={() => removeDrillFromComponent(component.id, drillIndex)}
-                    />
-                  ))}
-                </div>
-              )}
               
-              {/* Add drill button */}
-              <button 
-                className="w-full border-2 border-dashed rounded-lg px-4 py-2 text-center transition-colors flex flex-col items-center justify-center"
-                style={{borderColor: '#16a34a'}}
-                onClick={() => openDrillModal(component)}
-              >
-                <div className="flex flex-col items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{color: '#16a34a'}}>
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                  <span className="font-medium text-sm text-black">Add Drill (Required) *</span>
-                </div>
-              </button>
-            </div>
+              {/* Drill section */}
+              <div className="mt-4">
+                {/* Display selected drills */}
+                {component.drills.length > 0 && (
+                  <div className="mb-3 space-y-2">
+                    {component.drills.map((drill, drillIndex) => (
+                      <DrillCardCompact
+                        key={`${drill.id}-${drillIndex}`}
+                        drill={drill}
+                        onRemove={() => removeDrillFromComponent(component.id, drillIndex)}
+                      />
+                    ))}
+                  </div>
+                )}
+                
+                {/* Add drill button */}
+                <button 
+                  className="w-full border-2 border-dashed rounded-lg px-4 py-8 text-center transition-colors flex flex-col items-center justify-center hover:bg-green-50"
+                  style={{borderColor: '#ef4444'}}
+                  onClick={() => openDrillModal(component)}
+                >
+                  <div className="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{color: '#16a34a'}}>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    <span className="font-medium text-base text-black">Add Drill (Required) *</span>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         ))}
@@ -533,6 +548,7 @@ const BuildSessionPage = () => {
       </div>
       
       {/* Drill Selection Modal */}
+      {console.log('Modal state - showDrillModal:', showDrillModal, 'selectedComponent:', selectedComponent)}
       {showDrillModal && selectedComponent && (
         <DrillSelectionModal
           isOpen={showDrillModal}

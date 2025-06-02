@@ -3,26 +3,86 @@
 import React from 'react';
 
 const DrillCardCompact = ({ drill, onRemove }) => {
+  const getDifficultyColor = (difficulty) => {
+    switch (difficulty?.toLowerCase()) {
+      case 'beginner':
+        return { backgroundColor: '#10B981', color: '#FFFFFF' };
+      case 'intermediate':
+        return { backgroundColor: '#F59E0B', color: '#000000' };
+      case 'advanced':
+        return { backgroundColor: '#F97316', color: '#FFFFFF' };
+      case 'elite':
+        return { backgroundColor: '#EF4444', color: '#FFFFFF' };
+      default:
+        return { backgroundColor: '#6B7280', color: '#FFFFFF' };
+    }
+  };
+
   return (
-    <div className="border rounded-lg p-3 bg-white shadow-sm hover:shadow-md transition-shadow mb-3">
-      <div className="flex justify-between items-start">
+    <div 
+      className="rounded-lg p-4 transition-shadow"
+      style={{ 
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        border: '2px solid #000000',
+        borderRadius: '8px',
+        position: 'relative'
+      }}
+    >
+      <div style={{ position: 'relative', minHeight: '60px' }}>
         <div>
-          <h4 className="font-medium">{drill.name}</h4>
-          <div className="flex items-center text-sm text-gray-500 mt-1">
-            <span className="mr-3">{drill.duration} min</span>
-            <span className="px-2 py-0.5 bg-gray-100 rounded-full text-xs">
-              {drill.difficulty}
+          <h4 
+            className="font-semibold text-lg mb-2" 
+            style={{ 
+              color: '#000000',
+              fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
+              fontStyle: 'italic',
+              fontWeight: '800',
+              transform: 'skew(-5deg)',
+              letterSpacing: '0.01em',
+              textTransform: 'uppercase',
+              lineHeight: '1.2',
+              paddingRight: '40px'
+            }}
+          >
+            {drill?.name || 'No drill name'}
+          </h4>
+          <div className="flex justify-between items-end">
+            <span className="text-sm font-medium" style={{ color: '#000000' }}>
+              {drill?.duration || 'No duration'} min
+            </span>
+            <span 
+              style={{ 
+                display: 'inline-block',
+                padding: '6px 12px',
+                fontSize: '13px',
+                fontWeight: '500',
+                borderRadius: '20px',
+                ...getDifficultyColor(drill?.difficulty || 'beginner')
+              }}
+            >
+              {drill?.difficulty || 'No difficulty'}
             </span>
           </div>
         </div>
         
         <button 
           onClick={onRemove}
-          className="text-gray-400 hover:text-red-500 transition-colors"
+          style={{ 
+            position: 'absolute',
+            top: '12px',
+            right: '8px',
+            color: '#6B7280',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '2px',
+            zIndex: 10,
+            transform: 'translateY(-50%)'
+          }}
           aria-label="Remove drill"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
