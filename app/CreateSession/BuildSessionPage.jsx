@@ -122,12 +122,7 @@ const BuildSessionPage = () => {
   };
   
   // Reset all durations to original values
-  const resetDurations = () => {
-    setAllocations(allocations.map(item => ({
-      ...item,
-      duration: item.originalDuration
-    })));
-  };
+
   
   // Move component up in the order
   const moveComponentUp = (index) => {
@@ -240,19 +235,7 @@ const BuildSessionPage = () => {
     }));
   };
 
-  // Calculate time status
-  const timeRemaining = totalDuration - totalAllocated;
-  const timeStatus = timeRemaining === 0 
-    ? 'Perfect time allocation' 
-    : timeRemaining > 0 
-      ? `${timeRemaining} minutes remaining` 
-      : `${Math.abs(timeRemaining)} minutes over`;
-  
-  const timeStatusColor = timeRemaining === 0 
-    ? 'text-green-600' 
-    : timeRemaining > 0 
-      ? 'text-blue-600' 
-      : 'text-red-600';
+
 
   return (
     <>
@@ -339,7 +322,9 @@ const BuildSessionPage = () => {
             boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
           }}>
             <div style={{ textAlign: 'center', fontSize: '18px', fontWeight: '500', color: '#000', marginBottom: '8px' }}>Total Duration</div>
-            <div style={{ textAlign: 'center', fontSize: '32px', fontWeight: '700', color: '#16a34a' }}>{totalDuration} min</div>
+            <div style={{ textAlign: 'center', fontSize: '32px', fontWeight: '700', color: '#16a34a' }}>
+              {allocations.reduce((sum, component) => sum + component.duration, 0)} min
+            </div>
           </div>
           
           <div style={{
@@ -377,19 +362,7 @@ const BuildSessionPage = () => {
           </div>
         </div>
         
-        {timeRemaining !== 0 && (
-          <div className="mt-4 flex justify-center">
-            <button 
-              onClick={resetDurations}
-              className="text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
-              </svg>
-              Reset to Balanced Durations
-            </button>
-          </div>
-        )}
+
       </div>
 
       {/* Component Cards - Updated styling */}
@@ -511,14 +484,16 @@ const BuildSessionPage = () => {
                 {/* Add drill button */}
                 <button 
                   className="w-full border-2 border-dashed rounded-lg px-4 py-8 text-center transition-colors flex flex-col items-center justify-center hover:bg-green-50"
-                  style={{borderColor: '#ef4444'}}
+                  style={{borderColor: component.drills.length > 0 ? '#6b7280' : '#ef4444'}}
                   onClick={() => openDrillModal(component)}
                 >
                   <div className="flex flex-col items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{color: '#16a34a'}}>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
-                    <span className="font-medium text-base text-black">Add Drill (Required) *</span>
+                    <span className="font-medium text-base text-black">
+                      {component.drills.length > 0 ? 'Add Another Drill' : 'Add Drill (Required) *'}
+                    </span>
                   </div>
                 </button>
               </div>

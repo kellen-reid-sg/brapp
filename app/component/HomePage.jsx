@@ -23,7 +23,7 @@ const HomePage = () => {
         </h1>
         <p style={{
           fontFamily: '"Helvetica Neue", Arial, sans-serif',
-          fontSize: '1.25rem',
+          fontSize: '1.5rem',
           fontWeight: '500',
           fontStyle: 'italic',
           color: 'white',
@@ -31,7 +31,7 @@ const HomePage = () => {
           transform: 'skew(-5deg)',
           letterSpacing: '0.05em',
           marginTop: '0'
-        }}>Create, save, and organize professional training sessions for your team</p>
+        }}>Take your coaching and training sessions to the <span style={{color: '#16a34a', fontWeight: 'bold'}}>next level</span></p>
       </div>
       
       <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', maxWidth: '1000px'}}>
@@ -41,14 +41,14 @@ const HomePage = () => {
             fontSize: '1.5rem',
             fontWeight: '800',
             fontStyle: 'italic',
-            color: '#16a34a',
+            color: 'black',
             letterSpacing: '-0.01em',
             transform: 'skew(-5deg)',
             marginBottom: '16px',
             textTransform: 'uppercase'
           }}>Create Single Session</h2>
           <p style={{color: '#4b5563', marginBottom: '20px'}}>Design individual training sessions with drills, exercises, and games tailored to your team's needs</p>
-          <a href="/sessions/create" style={{backgroundColor: '#16a34a', color: 'white', padding: '8px 16px', borderRadius: '8px', display: 'inline-block', textDecoration: 'none'}}>
+          <a href="/sessions/create" style={{backgroundColor: '#16a34a', color: 'white', padding: '8px 16px', borderRadius: '8px', display: 'inline-block', textDecoration: 'none', fontStyle: 'italic'}}>
             Build Session
           </a>
         </div>
@@ -59,14 +59,14 @@ const HomePage = () => {
             fontSize: '1.5rem',
             fontWeight: '800',
             fontStyle: 'italic',
-            color: '#16a34a',
+            color: 'black',
             letterSpacing: '-0.01em',
             transform: 'skew(-5deg)',
             marginBottom: '16px',
             textTransform: 'uppercase'
           }}>Create Training Block</h2>
           <p style={{color: '#4b5563', marginBottom: '20px'}}>Build multi-session training blocks focused on specific skills development over multiple weeks</p>
-          <a href="/blocks/create" style={{backgroundColor: '#16a34a', color: 'white', padding: '8px 16px', borderRadius: '8px', display: 'inline-block', textDecoration: 'none'}}>
+          <a href="/blocks/create" style={{backgroundColor: '#16a34a', color: 'white', padding: '8px 16px', borderRadius: '8px', display: 'inline-block', textDecoration: 'none', fontStyle: 'italic'}}>
             Create Block
           </a>
         </div>
@@ -77,14 +77,14 @@ const HomePage = () => {
             fontSize: '1.5rem',
             fontWeight: '800',
             fontStyle: 'italic',
-            color: '#16a34a',
+            color: 'black',
             letterSpacing: '-0.01em',
             transform: 'skew(-5deg)',
             marginBottom: '16px',
             textTransform: 'uppercase'
           }}>Save & Organize</h2>
           <p style={{color: '#4b5563', marginBottom: '20px'}}>Build a library of sessions categorized by skills, age groups, and training objectives</p>
-          <a href="/library" style={{backgroundColor: '#16a34a', color: 'white', padding: '8px 16px', borderRadius: '8px', display: 'inline-block', textDecoration: 'none'}}>
+          <a href="/library" style={{backgroundColor: '#16a34a', color: 'white', padding: '8px 16px', borderRadius: '8px', display: 'inline-block', textDecoration: 'none', fontStyle: 'italic'}}>
             View Library
           </a>
         </div>
@@ -95,14 +95,14 @@ const HomePage = () => {
             fontSize: '1.5rem',
             fontWeight: '800',
             fontStyle: 'italic',
-            color: '#16a34a',
+            color: 'black',
             letterSpacing: '-0.01em',
             transform: 'skew(-5deg)',
             marginBottom: '16px',
             textTransform: 'uppercase'
           }}>Access Anywhere</h2>
           <p style={{color: '#4b5563', marginBottom: '20px'}}>View your sessions on the field from any mobile device when training your team</p>
-          <a href="/sessions" style={{backgroundColor: '#16a34a', color: 'white', padding: '8px 16px', borderRadius: '8px', display: 'inline-block', textDecoration: 'none'}}>
+          <a href="/sessions" style={{backgroundColor: '#16a34a', color: 'white', padding: '8px 16px', borderRadius: '8px', display: 'inline-block', textDecoration: 'none', fontStyle: 'italic'}}>
             My Sessions
           </a>
         </div>
