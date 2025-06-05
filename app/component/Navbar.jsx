@@ -71,6 +71,15 @@ const Navbar = () => {
                   Session Themes
                 </Link>
               </div>
+              <div className="mx-3">
+                <Link 
+                  href="/signup" 
+                  className="br-button"
+                  style={{fontSize: '0.9rem', padding: '8px 16px'}}
+                >
+                  Join Us
+                </Link>
+              </div>
             </div>
             
             {/* Profile Icon */}

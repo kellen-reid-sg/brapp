@@ -32,6 +32,32 @@ const HomePage = () => {
           letterSpacing: '0.05em',
           marginTop: '0'
         }}>Take your coaching and training sessions to the <span style={{color: '#16a34a', fontWeight: 'bold'}}>next level</span></p>
+        <p style={{
+          fontFamily: '"Helvetica Neue", Arial, sans-serif',
+          fontSize: '1.2rem',
+          fontWeight: '500',
+          fontStyle: 'italic',
+          color: 'white',
+          textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+          transform: 'skew(-5deg)',
+          letterSpacing: '0.05em',
+          marginTop: '1rem'
+        }}>Coach with confidence. Build better sessions, develop smarter players, and run practices that make an impact — from first whistle to final drill.</p>
+        <div style={{marginTop: '2rem'}}>
+          <a href="/signup" style={{
+            backgroundColor: '#16a34a', 
+            color: 'white', 
+            padding: '12px 24px', 
+            borderRadius: '8px', 
+            display: 'inline-block', 
+            textDecoration: 'none', 
+            fontStyle: 'italic',
+            fontSize: '1.1rem',
+            fontWeight: '600'
+          }}>
+            Start Your Free Trial
+          </a>
+        </div>
       </div>
       
       <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', maxWidth: '1000px'}}>
