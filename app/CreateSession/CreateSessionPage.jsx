@@ -55,6 +55,7 @@ const CreateSessionPage = () => {
 
   return (
     <>
+
       <Navbar />
       <div className="max-w-2xl mx-auto py-8 px-4">
       <div className="br-header-container">
@@ -93,22 +94,46 @@ const CreateSessionPage = () => {
                     <span style={{fontSize: '30px', display: 'flex', alignItems: 'center'}}>«</span>
                   </button>
                   
-                  <div className="bg-white border-y-2 border-gray-300 flex items-center justify-center" style={{width: '55px', height: '48px', margin: 0, padding: 0, overflow: 'hidden'}}>
+                  <div className="bg-white border-y-2 border-gray-300 flex items-center justify-center" style={{width: '75px', height: '48px', margin: 0, padding: 0, overflow: 'hidden'}}>
                     <input
-                      type="number"
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
                       value={sessionData.duration}
                       onChange={(e) => {
-                        const value = parseInt(e.target.value, 10);
-                        if (!isNaN(value)) {
+                        const value = e.target.value.replace(/[^0-9]/g, ''); // Only allow numbers
+                        const numValue = parseInt(value, 10);
+                        if (!isNaN(numValue) && value !== '') {
                           // Clamp value between 30 and 120
-                          const clampedValue = Math.min(120, Math.max(30, value));
+                          const clampedValue = Math.min(120, Math.max(30, numValue));
                           handleChange('duration', clampedValue);
+                        } else if (value === '') {
+                          // Allow empty field temporarily
+                          handleChange('duration', '');
                         }
                       }}
-                      min="30"
-                      max="120"
-                      step="15"
-                      style={{width: '100%', height: '100%', border: 'none', backgroundColor: 'white', color: '#16a34a', fontSize: '24px', fontWeight: 'bold', textAlign: 'center', appearance: 'textfield', padding: '0 0 0 12px', margin: 0}}
+                      onBlur={(e) => {
+                        // If field is empty on blur, set to minimum value
+                        if (e.target.value === '' || isNaN(parseInt(e.target.value, 10))) {
+                          handleChange('duration', 30);
+                        }
+                      }}
+                      style={{
+                        width: '100%', 
+                        height: '100%', 
+                        border: 'none', 
+                        backgroundColor: 'white', 
+                        color: '#16a34a', 
+                        fontSize: '24px', 
+                        fontWeight: 'bold', 
+                        textAlign: 'center', 
+                        padding: '0', 
+                        margin: 0,
+                        lineHeight: '48px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
                       className="focus:outline-none"
                     />
                   </div>

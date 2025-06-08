@@ -5,7 +5,8 @@ import Link from 'next/link';
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: ''
   });
@@ -78,13 +79,36 @@ const SignUpPage = () => {
           }}>Join The Boot Room</h2>
 
           <form onSubmit={handleSubmit}>
-            {/* Name Input */}
+            {/* First Name Input */}
             <div style={{marginBottom: '1rem'}}>
               <input
                 type="text"
-                name="name"
-                placeholder="Enter your name"
-                value={formData.name}
+                name="firstName"
+                placeholder="First Name"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                required
+                style={{
+                  width: '100%',
+                  padding: '16px',
+                  backgroundColor: 'rgba(60, 60, 60, 0.8)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '12px',
+                  color: 'white',
+                  fontSize: '1rem',
+                  outline: 'none',
+                  boxSizing: 'border-box'
+                }}
+              />
+            </div>
+
+            {/* Last Name Input */}
+            <div style={{marginBottom: '1rem'}}>
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                value={formData.lastName}
                 onChange={handleInputChange}
                 required
                 style={{

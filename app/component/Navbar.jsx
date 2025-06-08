@@ -73,7 +73,7 @@ const Navbar = () => {
               </div>
               <div className="mx-3">
                 <Link 
-                  href="/signup" 
+                  href="/how-can-we-help" 
                   className="br-button"
                   style={{fontSize: '0.9rem', padding: '8px 16px'}}
                 >

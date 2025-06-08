@@ -9,7 +9,7 @@ const HomePageStyled = () => {
         <h1 className="br-main-heading" style={{fontSize: '3.5rem', marginBottom: '1rem'}}><span style={{color: 'white'}}>Take your coaching<br/>to the </span><span style={{color: '#16a34a', fontWeight: 'bold'}}>next level</span></h1>
         <p className="br-subheading" style={{fontSize: '1.2rem', marginTop: '1rem', maxWidth: '600px', textAlign: 'center', margin: '1rem auto 0 auto', color: '#d1d5db'}}>Coach with confidence. Build better sessions, develop smarter players, and run practices that make an impact — from first whistle to final drill.</p>
         <div style={{marginTop: '1.5rem'}}>
-          <Link href="/signup" className="br-button" style={{fontSize: '1.1rem', padding: '12px 24px'}}>
+          <Link href="/how-can-we-help" className="br-button" style={{fontSize: '1.1rem', padding: '12px 24px'}}>
             Start Your Free Trial
           </Link>
           <p style={{color: '#d1d5db', fontSize: '0.9rem', marginTop: '0.5rem', textAlign: 'center'}}>First week free. Cancel anytime.</p>
