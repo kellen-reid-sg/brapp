@@ -59,15 +59,16 @@ const HowCanWeHelpPage = () => {
     },
     {
       id: 'level',
-      title: 'What level are you currently coaching at?',
+      title: 'What environment are you currently coaching in?',
       subtitle: '',
       type: 'single',
       options: [
         { id: 'recreational', text: 'Recreational', icon: '🎪' },
-        { id: 'middle-school', text: 'Middle School', icon: '🎓' },
+        { id: 'middle-school', text: 'Middle School', icon: '📚' },
         { id: 'high-school', text: 'High School', icon: '🏫' },
         { id: 'select-club', text: 'Select Club', icon: '⭐' },
-        { id: 'academy', text: 'Academy', icon: '🏛️' }
+        { id: 'academy', text: 'Academy', icon: '🏛️' },
+        { id: 'college', text: 'College', icon: '🎓' }
       ]
     },
     {
