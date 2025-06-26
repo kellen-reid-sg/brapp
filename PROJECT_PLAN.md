@@ -137,9 +137,9 @@ CREATE POLICY "Public drills read access" ON drills
   FOR SELECT USING (true);
 ```
 
-### 1.3 Authentication System (Day 5-7)
+### 1.3 Authentication System (Day 5-7) ✅
 
-**Step 1: Create Supabase Client**
+**Step 1: Create Supabase Client** ✅
 Create `app/lib/supabase.js`:
 ```javascript
 import { createClient } from '@supabase/supabase-js'
@@ -150,12 +150,12 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 ```
 
-**Step 2: Create Authentication Pages**
-- Create `app/auth/login/page.jsx` - Login form
-- Create `app/auth/signup/page.jsx` - Registration form  
-- Create `app/auth/callback/route.js` - Handles auth redirects
+**Step 2: Create Authentication Pages** ✅
+- Create `app/auth/login/page.jsx` - Login form ✅
+- Create `app/auth/signup/page.jsx` - Registration form ✅ 
+- Create `app/auth/callback/route.js` - Handles auth redirects ✅
 
-**Step 3: Add Protected Routes**
+**Step 3: Add Protected Routes** ✅
 Create `middleware.js` in project root to protect certain pages:
 ```javascript
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'

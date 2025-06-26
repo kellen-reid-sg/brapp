@@ -1,55 +1,31 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { createClientComponentClient } from '../lib/supabase';
+import { createClientComponentClient } from '../../lib/supabase';
 
-const SignUpPage = () => {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
-  });
+const ForgotPasswordPage = () => {
+  const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setMessage(null);
     
     try {
       const supabase = createClientComponentClient();
       
-      // First sign up the user with Supabase
-      const { data, error: signUpError } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-        options: {
-          data: {
-            first_name: formData.firstName,
-            last_name: formData.lastName,
-          },
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
-        },
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/reset-password`,
       });
       
-      if (signUpError) throw signUpError;
+      if (error) throw error;
       
-      // Show success message and redirect
-      alert('Check your email for the confirmation link!');
-      router.push('/auth/login');
+      setMessage('Check your email for the password reset link');
     } catch (error) {
       setError(error.message);
     } finally {
@@ -90,7 +66,7 @@ const SignUpPage = () => {
           }}>The Boot Room</h1>
         </div>
 
-        {/* Sign Up Form Container */}
+        {/* Forgot Password Form Container */}
         <div style={{
           backgroundColor: 'rgba(40, 40, 40, 0.95)',
           borderRadius: '24px',
@@ -108,7 +84,7 @@ const SignUpPage = () => {
             textAlign: 'center',
             marginBottom: '2rem',
             marginTop: '0'
-          }}>Join The Boot Room</h2>
+          }}>Reset Password</h2>
           
           {error && (
             <div style={{
@@ -123,84 +99,27 @@ const SignUpPage = () => {
             </div>
           )}
 
+          {message && (
+            <div style={{
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              color: '#10b981',
+              padding: '12px',
+              borderRadius: '8px',
+              marginBottom: '20px',
+              border: '1px solid rgba(16, 185, 129, 0.3)'
+            }}>
+              <p style={{ margin: 0 }}>{message}</p>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit}>
-            {/* First Name Input */}
-            <div style={{marginBottom: '1rem'}}>
-              <input
-                type="text"
-                name="firstName"
-                placeholder="First Name"
-                value={formData.firstName}
-                onChange={handleInputChange}
-                required
-                style={{
-                  width: '100%',
-                  padding: '16px',
-                  backgroundColor: 'rgba(60, 60, 60, 0.8)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '12px',
-                  color: 'white',
-                  fontSize: '1rem',
-                  outline: 'none',
-                  boxSizing: 'border-box'
-                }}
-              />
-            </div>
-
-            {/* Last Name Input */}
-            <div style={{marginBottom: '1rem'}}>
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Last Name"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                required
-                style={{
-                  width: '100%',
-                  padding: '16px',
-                  backgroundColor: 'rgba(60, 60, 60, 0.8)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '12px',
-                  color: 'white',
-                  fontSize: '1rem',
-                  outline: 'none',
-                  boxSizing: 'border-box'
-                }}
-              />
-            </div>
-
             {/* Email Input */}
-            <div style={{marginBottom: '1rem'}}>
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-                style={{
-                  width: '100%',
-                  padding: '16px',
-                  backgroundColor: 'rgba(60, 60, 60, 0.8)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '12px',
-                  color: 'white',
-                  fontSize: '1rem',
-                  outline: 'none',
-                  boxSizing: 'border-box'
-                }}
-              />
-            </div>
-
-            {/* Password Input */}
             <div style={{marginBottom: '2rem'}}>
               <input
-                type="password"
-                name="password"
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={handleInputChange}
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 style={{
                   width: '100%',
@@ -234,17 +153,16 @@ const SignUpPage = () => {
                 opacity: loading ? 0.7 : 1
               }}
             >
-              {loading ? 'Creating Account...' : 'Create Account'}
+              {loading ? 'Sending...' : 'Send Reset Link'}
             </button>
           </form>
         </div>
         
-        {/* Sign In Link */}
+        {/* Back to Login */}
         <div style={{ marginTop: '2rem', textAlign: 'center', color: 'white' }}>
           <p>
-            Already have an account?{' '}
             <Link href="/auth/login" style={{ color: '#16a34a', textDecoration: 'none', fontWeight: 'bold' }}>
-              Sign in
+              Back to Login
             </Link>
           </p>
         </div>
@@ -255,4 +173,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default ForgotPasswordPage;

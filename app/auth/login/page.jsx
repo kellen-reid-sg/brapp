@@ -1,15 +1,13 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { createClientComponentClient } from '../lib/supabase';
+import { createClientComponentClient } from '../../lib/supabase';
 
-const SignUpPage = () => {
+const LoginPage = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
     email: '',
     password: ''
   });
@@ -32,24 +30,16 @@ const SignUpPage = () => {
     try {
       const supabase = createClientComponentClient();
       
-      // First sign up the user with Supabase
-      const { data, error: signUpError } = await supabase.auth.signUp({
+      const { error: signInError } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
-        options: {
-          data: {
-            first_name: formData.firstName,
-            last_name: formData.lastName,
-          },
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
-        },
       });
       
-      if (signUpError) throw signUpError;
+      if (signInError) throw signInError;
       
-      // Show success message and redirect
-      alert('Check your email for the confirmation link!');
-      router.push('/auth/login');
+      // Redirect to home page on successful login
+      router.push('/');
+      router.refresh();
     } catch (error) {
       setError(error.message);
     } finally {
@@ -90,7 +80,7 @@ const SignUpPage = () => {
           }}>The Boot Room</h1>
         </div>
 
-        {/* Sign Up Form Container */}
+        {/* Login Form Container */}
         <div style={{
           backgroundColor: 'rgba(40, 40, 40, 0.95)',
           borderRadius: '24px',
@@ -108,7 +98,7 @@ const SignUpPage = () => {
             textAlign: 'center',
             marginBottom: '2rem',
             marginTop: '0'
-          }}>Join The Boot Room</h2>
+          }}>Welcome Back</h2>
           
           {error && (
             <div style={{
@@ -124,52 +114,6 @@ const SignUpPage = () => {
           )}
 
           <form onSubmit={handleSubmit}>
-            {/* First Name Input */}
-            <div style={{marginBottom: '1rem'}}>
-              <input
-                type="text"
-                name="firstName"
-                placeholder="First Name"
-                value={formData.firstName}
-                onChange={handleInputChange}
-                required
-                style={{
-                  width: '100%',
-                  padding: '16px',
-                  backgroundColor: 'rgba(60, 60, 60, 0.8)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '12px',
-                  color: 'white',
-                  fontSize: '1rem',
-                  outline: 'none',
-                  boxSizing: 'border-box'
-                }}
-              />
-            </div>
-
-            {/* Last Name Input */}
-            <div style={{marginBottom: '1rem'}}>
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Last Name"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                required
-                style={{
-                  width: '100%',
-                  padding: '16px',
-                  backgroundColor: 'rgba(60, 60, 60, 0.8)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '12px',
-                  color: 'white',
-                  fontSize: '1rem',
-                  outline: 'none',
-                  boxSizing: 'border-box'
-                }}
-              />
-            </div>
-
             {/* Email Input */}
             <div style={{marginBottom: '1rem'}}>
               <input
@@ -234,17 +178,26 @@ const SignUpPage = () => {
                 opacity: loading ? 0.7 : 1
               }}
             >
-              {loading ? 'Creating Account...' : 'Create Account'}
+              {loading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
         </div>
         
-        {/* Sign In Link */}
+        {/* Forgot Password Link */}
         <div style={{ marginTop: '2rem', textAlign: 'center', color: 'white' }}>
           <p>
-            Already have an account?{' '}
-            <Link href="/auth/login" style={{ color: '#16a34a', textDecoration: 'none', fontWeight: 'bold' }}>
-              Sign in
+            <Link href="/auth/forgot-password" style={{ color: '#16a34a', textDecoration: 'none', fontWeight: 'bold' }}>
+              Forgot Password?
+            </Link>
+          </p>
+        </div>
+        
+        {/* Sign Up Link */}
+        <div style={{ marginTop: '1rem', textAlign: 'center', color: 'white' }}>
+          <p>
+            Don't have an account?{' '}
+            <Link href="/signup" style={{ color: '#16a34a', textDecoration: 'none', fontWeight: 'bold' }}>
+              Sign up
             </Link>
           </p>
         </div>
@@ -255,4 +208,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default LoginPage;

@@ -20,7 +20,7 @@ const HomePageStyled = () => {
         <div className="br-card" style={{display: 'flex', flexDirection: 'column'}}>
           <h2 className="br-card-heading" style={{marginTop: '0', marginBottom: '12px', minHeight: '120px', display: 'flex', alignItems: 'flex-start'}}>Create Single Session</h2>
           <p style={{color: 'black', flexGrow: '1'}} className="br-card-text">Design individual training sessions with drills, exercises, and games tailored to your team's needs</p>
-          <Link href="/sessions/create" className="br-button">Build Session</Link>
+          <Link href="/CreateSession" className="br-button">Build Session</Link>
         </div>
         
         <div className="br-card" style={{display: 'flex', flexDirection: 'column'}}>
