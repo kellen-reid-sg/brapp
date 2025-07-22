@@ -4,7 +4,7 @@
 
 This project plan will guide you through building The Boot Room from its current state to a fully functional MVP that real users can test. The plan is designed for someone with limited software engineering experience and includes detailed steps and explanations.
 
-**Total Timeline: 7-8 weeks**  
+**Total Timeline: 8-9 weeks**  
 **Goal: Launch MVP with user accounts, session building, and drill library**
 
 ---
@@ -224,6 +224,14 @@ Set your user as admin: ✅
 - Admin access granted via user-specific policy ✅
 
 **Step 3: Build Admin Drill Creation Interface (Day 9-10)** ✅
+
+**Step 4: Add Club/Source Tracking (Day 11)**
+Add club field to track drill sources for future filtering:
+
+```sql
+-- Add club column to drills table
+ALTER TABLE drills ADD COLUMN IF NOT EXISTS club TEXT;
+```
 
 Create admin layout component `app/admin/layout.jsx`:
 ```javascript
@@ -725,12 +733,110 @@ Create `app/sessions/page.jsx`:
 
 ---
 
-## 📅 Phase 4: User Experience (Week 5-6)
+## 📅 Phase 4: Custom Drill Visualization (Week 5)
+
+### 🎯 Goal
+Replace uploaded drill images with AI-generated branded diagrams that create a cohesive, professional visual identity for your drill library.
+
+### 4.1 Visual Style Guide Development (Day 29-31)
+
+**What This Means:** Define your platform's visual identity for drill diagrams to ensure all generated images look consistent and professional.
+
+**Step 1: Design System Planning**
+- **Color Palette:** Define primary colors for field, players, equipment, arrows
+- **Field Style:** Grass texture, line style, goal design
+- **Player Icons:** Consistent player representation (stick figures, colored dots, etc.)
+- **Equipment Design:** Cone styles, ball representation, goal appearance
+- **Arrow/Movement:** How to show player movement, ball direction
+
+**Step 2: Reference Collection**
+- Gather examples of professional drill diagrams
+- Screenshot current best practices from coaching resources
+- Define what "Boot Room style" should look like
+
+**Step 3: Style Guide Documentation**
+Create detailed prompt templates for DALL-E 3:
+```
+"Create a soccer drill diagram in minimalist style with:
+- Bright green grass field with white lines
+- Blue team players as blue circles with numbers
+- Red team players as red circles with numbers
+- Orange cones as triangles
+- Yellow soccer balls as circles
+- White arrows showing movement
+- Clean, professional coaching diagram style"
+```
+
+### 4.2 AI Image Generation Integration (Day 32-35)
+
+**Step 1: Add DALL-E 3 Integration**
+Extend your existing OpenAI integration to include image generation:
+
+```javascript
+// Add to your analyze API
+const imageResponse = await openai.images.generate({
+  model: "dall-e-3",
+  prompt: buildDrillPrompt(aiSuggestions, formData),
+  size: "1024x1024",
+  quality: "standard",
+  n: 1,
+});
+```
+
+**Step 2: Prompt Engineering**
+Create dynamic prompts that combine:
+- AI-analyzed drill content
+- Your visual style guide
+- Specific coaching elements (player positions, equipment setup)
+
+**Step 3: Image Workflow Enhancement**
+1. **Upload source image** → AI analyzes content
+2. **Generate suggestions** → Equipment, setup, coaching points
+3. **Create branded diagram** → DALL-E generates professional version
+4. **Save both versions** → Original for reference, branded for display
+
+### 4.3 Quality Control & Testing (Day 36-38)
+
+**Step 1: Generated Image Review**
+- Test with various drill types (technical, tactical, finishing)
+- Ensure consistency across different complexity levels
+- Validate that diagrams accurately represent the drill
+
+**Step 2: Fallback System**
+- Keep original uploaded images as backup
+- Allow manual selection between AI-generated and original
+- Error handling for failed image generations
+
+**Step 3: Batch Processing**
+- Tool to regenerate existing drill images with new style
+- Ability to update visual style across entire library
+- Version control for diagram updates
+
+### 4.4 Advanced Features (Day 39-42)
+
+**Step 1: Interactive Diagrams**
+- Clickable elements showing progression phases
+- Animated movement arrows
+- Equipment tooltips with setup details
+
+**Step 2: Customization Options**
+- Different field sizes (youth vs adult)
+- Indoor vs outdoor variations
+- Equipment alternatives based on availability
+
+**Step 3: Export Capabilities**
+- High-resolution downloads for printing
+- Multiple format options (PNG, PDF, SVG)
+- Branded coaching materials generation
+
+---
+
+## 📅 Phase 5: User Experience (Week 6-7)
 
 ### 🎯 Goal
 Make sure the app works great on mobile devices and has professional features.
 
-### 4.1 Mobile Optimization (Day 29-35)
+### 5.1 Mobile Optimization (Day 43-49)
 
 **What This Means:** Ensure your app looks and works great on phones and tablets.
 
@@ -749,7 +855,7 @@ Make sure the app works great on mobile devices and has professional features.
 - Make drill cards touch-friendly
 - Ensure text is readable without zooming
 
-### 4.2 Export Features (Day 36-42)
+### 5.2 Export Features (Day 50-56)
 
 **Step 1: PDF Export**
 Install PDF generation library:
@@ -779,12 +885,12 @@ Create shareable links for sessions:
 
 ---
 
-## 📅 Phase 5: Testing & Launch Prep (Week 6-7)
+## 📅 Phase 6: Testing & Launch Prep (Week 7-8)
 
 ### 🎯 Goal
 Make sure everything works correctly and prepare for users.
 
-### 5.1 Quality Assurance (Day 43-46)
+### 6.1 Quality Assurance (Day 57-60)
 
 **Manual Testing Checklist:**
 - [ ] User can create account
@@ -803,7 +909,7 @@ Make sure everything works correctly and prepare for users.
 - Test with empty data
 - Test edge cases (very long session names, etc.)
 
-### 5.2 Performance & Deployment (Day 47-49)
+### 6.2 Performance & Deployment (Day 61-63)
 
 **Step 1: Optimize Performance**
 ```bash
@@ -818,12 +924,12 @@ npm run build  # Check for any build errors
 
 ---
 
-## 📅 Phase 6: Beta Testing (Week 7-8)
+## 📅 Phase 7: Beta Testing (Week 8-9)
 
 ### 🎯 Goal
 Get real coaches using your app and collect feedback.
 
-### 6.1 Beta User Recruitment (Day 50-52)
+### 7.1 Beta User Recruitment (Day 64-66)
 
 **Where to Find Beta Users:**
 - Local soccer clubs
@@ -836,7 +942,7 @@ Get real coaches using your app and collect feedback.
 - Direct line to developer (you)
 - Influence on future features
 
-### 6.2 Feedback Collection (Day 53-56)
+### 7.2 Feedback Collection (Day 67-70)
 
 **Set Up Analytics:**
 - Google Analytics for usage data

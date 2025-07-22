@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import drillsData from '../data/drills.json';
 
 const DrillSelectionModal = ({
   isOpen,
@@ -14,10 +13,10 @@ const DrillSelectionModal = ({
   const [drills, setDrills] = useState([]);
   const [hoveredDrill, setHoveredDrill] = useState(null);
   
-  // Filter drills by component when the modal opens
+  // Fetch drills from database when the modal opens
   useEffect(() => {
     if (isOpen) {
-      // Map from componentId to a string we can match against component names in drills.json
+      // Map from componentId to a string we can match against component names
       const componentMap = {
         warmup: 'Warm-up',
         technical: 'Technical Ball Work',
@@ -35,12 +34,24 @@ const DrillSelectionModal = ({
       
       const searchTerm = componentMap[componentId] || componentName;
       
-      // Filter drills based on component name
-      const filteredDrills = drillsData.filter(
-        drill => drill.component.toLowerCase() === searchTerm.toLowerCase()
-      );
+      // Fetch drills from database
+      async function fetchDrills() {
+        try {
+          const response = await fetch(`/api/drills?component=${encodeURIComponent(searchTerm)}`);
+          if (response.ok) {
+            const data = await response.json();
+            setDrills(data.drills || []);
+          } else {
+            console.error('Failed to fetch drills');
+            setDrills([]);
+          }
+        } catch (error) {
+          console.error('Error fetching drills:', error);
+          setDrills([]);
+        }
+      }
       
-      setDrills(filteredDrills);
+      fetchDrills();
     }
   }, [isOpen, componentId, componentName]);
 
@@ -199,7 +210,7 @@ const DrillSelectionModal = ({
                     </div>
                     
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'flex-end' }}>
-                      {drill.skillFocus.map(skill => (
+                      {(drill.skill_focus || []).map(skill => (
                         <span 
                           key={skill} 
                           style={{ 
