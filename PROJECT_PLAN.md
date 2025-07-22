@@ -191,20 +191,20 @@ Set up a system to collect real drill content from external sources and populate
 
 **What This Means:** Instead of using dummy drill data, create an admin interface that lets you efficiently collect drills from Instagram, federation websites, coaching blogs, and other sources, then structure them into your database format using AI assistance.
 
-**Step 1: Set Up Supabase Storage (Day 8)**
+**Step 1: Set Up Supabase Storage (Day 8)** ✅
 You'll need image storage for drill diagrams and photos.
 
-Go to Supabase Dashboard → Storage → Create new bucket:
+Go to Supabase Dashboard → Storage → Create new bucket: ✅
 ```sql
--- Create storage bucket for drill images
+-- Create storage bucket for drill images ✅
 INSERT INTO storage.buckets (id, name, public)
 VALUES ('drill-images', 'drill-images', true);
 
--- Allow public access to drill images
+-- Allow public access to drill images ✅
 CREATE POLICY "Public drill images access" ON storage.objects
   FOR SELECT USING (bucket_id = 'drill-images');
 
--- Allow authenticated admin users to upload
+-- Allow authenticated admin users to upload ✅
 CREATE POLICY "Admin drill image upload" ON storage.objects
   FOR INSERT WITH CHECK (
     bucket_id = 'drill-images' 
@@ -212,29 +212,18 @@ CREATE POLICY "Admin drill image upload" ON storage.objects
   );
 ```
 
-**Step 2: Create Admin Authentication (Day 8)**
-Add admin role to your users table:
+**Step 2: Create Admin Authentication (Day 8)** ✅
+Add admin role to your users table: ✅
 ```sql
--- Add admin role column to users table
-ALTER TABLE auth.users ADD COLUMN IF NOT EXISTS role TEXT DEFAULT 'user';
-
--- Create admin policy for drill management
+-- Create admin policy for drill management ✅
 CREATE POLICY "Admin drill management" ON drills
-  FOR ALL USING (
-    EXISTS (
-      SELECT 1 FROM auth.users 
-      WHERE auth.users.id = auth.uid() 
-      AND auth.users.role = 'admin'
-    )
-  );
+  FOR ALL USING (auth.uid() = '0dd2ccb9-7102-4fd2-be78-53b1f85d85b0'::uuid);
 ```
 
-Set your user as admin in Supabase dashboard:
-```sql
-UPDATE auth.users SET role = 'admin' WHERE email = 'your-email@example.com';
-```
+Set your user as admin: ✅
+- Admin access granted via user-specific policy ✅
 
-**Step 3: Build Admin Drill Creation Interface (Day 9-10)**
+**Step 3: Build Admin Drill Creation Interface (Day 9-10)** ✅
 
 Create admin layout component `app/admin/layout.jsx`:
 ```javascript
