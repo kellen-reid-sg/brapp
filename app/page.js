@@ -108,20 +108,21 @@ export default function HomePage() {
         </div>
 
         {/* Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl w-full px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl w-full px-4">
           {/* Browse Drills Card */}
           <div style={{
-            backgroundColor: 'rgba(229, 231, 235, 0.95)',
+            backgroundColor: 'transparent',
+            border: '2px solid #16a34a',
             borderRadius: '16px',
             padding: '32px',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+            backdropFilter: 'blur(8px)'
           }}>
             <h3 style={{
               fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
               fontSize: '1.75rem',
               fontWeight: '900',
               fontStyle: 'italic',
-              color: 'black',
+              color: 'white',
               textTransform: 'uppercase',
               marginBottom: '16px',
               transform: 'skew(-5deg)',
@@ -129,7 +130,7 @@ export default function HomePage() {
             }}>
               BROWSE DRILLS
             </h3>
-            <p style={{ color: '#4b5563', marginBottom: '24px', lineHeight: '1.6' }}>
+            <p style={{ color: '#d1d5db', marginBottom: '24px', lineHeight: '1.6' }}>
               Access a growing library of community-shared training drills. 
               Upvote favorites and discover new ideas from coaches worldwide.
             </p>
@@ -153,17 +154,18 @@ export default function HomePage() {
 
           {/* Build Sessions Card */}
           <div style={{
-            backgroundColor: 'rgba(229, 231, 235, 0.95)',
+            backgroundColor: 'transparent',
+            border: '2px solid #16a34a',
             borderRadius: '16px',
             padding: '32px',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+            backdropFilter: 'blur(8px)'
           }}>
             <h3 style={{
               fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
               fontSize: '1.75rem',
               fontWeight: '900',
               fontStyle: 'italic',
-              color: 'black',
+              color: 'white',
               textTransform: 'uppercase',
               marginBottom: '16px',
               transform: 'skew(-5deg)',
@@ -171,7 +173,7 @@ export default function HomePage() {
             }}>
               BUILD SESSIONS
             </h3>
-            <p style={{ color: '#4b5563', marginBottom: '24px', lineHeight: '1.6' }}>
+            <p style={{ color: '#d1d5db', marginBottom: '24px', lineHeight: '1.6' }}>
               Design complete training sessions in minutes by selecting drills 
               from the library. Save and share with your team.
             </p>
@@ -195,17 +197,18 @@ export default function HomePage() {
 
           {/* Community Card */}
           <div style={{
-            backgroundColor: 'rgba(229, 231, 235, 0.95)',
+            backgroundColor: 'transparent',
+            border: '2px solid #16a34a',
             borderRadius: '16px',
             padding: '32px',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+            backdropFilter: 'blur(8px)'
           }}>
             <h3 style={{
               fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
               fontSize: '1.75rem',
               fontWeight: '900',
               fontStyle: 'italic',
-              color: 'black',
+              color: 'white',
               textTransform: 'uppercase',
               marginBottom: '16px',
               transform: 'skew(-5deg)',
@@ -213,7 +216,7 @@ export default function HomePage() {
             }}>
               JOIN COMMUNITY
             </h3>
-            <p style={{ color: '#4b5563', marginBottom: '24px', lineHeight: '1.6' }}>
+            <p style={{ color: '#d1d5db', marginBottom: '24px', lineHeight: '1.6' }}>
               Connect with coaches worldwide. Share your own drills, 
               comment on sessions, and learn from the best.
             </p>
