@@ -20,7 +20,7 @@ export default function HomePage() {
             THE BOOT ROOM
           </h1>
           
-          <nav className="flex gap-8 items-center">
+          <nav className="flex gap-16 items-center">
             <Link 
               href="/drills" 
               style={{ 
