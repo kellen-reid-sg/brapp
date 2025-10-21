@@ -23,22 +23,40 @@ export default function HomePage() {
           <nav className="flex gap-8 items-center">
             <Link 
               href="/drills" 
-              className="text-white hover:text-green-500 transition font-medium italic"
-              style={{ textDecoration: 'underline' }}
+              style={{ 
+                color: 'white',
+                fontStyle: 'italic',
+                fontWeight: '500',
+                textDecoration: 'underline',
+                transition: 'color 0.2s'
+              }}
+              className="hover:text-green-500"
             >
               BROWSE DRILLS
             </Link>
             <Link 
               href="/sessions/new" 
-              className="text-white hover:text-green-500 transition font-medium italic"
-              style={{ textDecoration: 'underline' }}
+              style={{ 
+                color: 'white',
+                fontStyle: 'italic',
+                fontWeight: '500',
+                textDecoration: 'underline',
+                transition: 'color 0.2s'
+              }}
+              className="hover:text-green-500"
             >
               BUILD SESSION
             </Link>
             <Link 
               href="/profile" 
-              className="text-white hover:text-green-500 transition font-medium italic"
-              style={{ textDecoration: 'underline' }}
+              style={{ 
+                color: 'white',
+                fontStyle: 'italic',
+                fontWeight: '500',
+                textDecoration: 'underline',
+                transition: 'color 0.2s'
+              }}
+              className="hover:text-green-500"
             >
               MY SESSIONS
             </Link>
@@ -108,14 +126,12 @@ export default function HomePage() {
         </div>
 
         {/* Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl w-full px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl w-full px-4">
           {/* Browse Drills Card */}
           <div style={{
-            backgroundColor: 'transparent',
             border: '2px solid #16a34a',
             borderRadius: '16px',
-            padding: '32px',
-            backdropFilter: 'blur(8px)'
+            padding: '32px'
           }}>
             <h3 style={{
               fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
@@ -154,11 +170,9 @@ export default function HomePage() {
 
           {/* Build Sessions Card */}
           <div style={{
-            backgroundColor: 'transparent',
             border: '2px solid #16a34a',
             borderRadius: '16px',
-            padding: '32px',
-            backdropFilter: 'blur(8px)'
+            padding: '32px'
           }}>
             <h3 style={{
               fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
@@ -197,11 +211,9 @@ export default function HomePage() {
 
           {/* Community Card */}
           <div style={{
-            backgroundColor: 'transparent',
             border: '2px solid #16a34a',
             borderRadius: '16px',
-            padding: '32px',
-            backdropFilter: 'blur(8px)'
+            padding: '32px'
           }}>
             <h3 style={{
               fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
