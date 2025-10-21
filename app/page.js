@@ -62,9 +62,16 @@ export default function HomePage() {
             </Link>
             <Link 
               href="/auth/login" 
-              className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition font-medium"
+              style={{ 
+                color: 'white',
+                fontStyle: 'italic',
+                fontWeight: '500',
+                textDecoration: 'underline',
+                transition: 'color 0.2s'
+              }}
+              className="hover:text-green-500"
             >
-              Sign Out
+              SIGN OUT
             </Link>
           </nav>
         </div>
@@ -126,7 +133,7 @@ export default function HomePage() {
         </div>
 
         {/* Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl w-full px-4">
+        <div className="flex flex-col gap-6 max-w-7xl w-full px-4">
           {/* Browse Drills Card */}
           <div style={{
             border: '2px solid #16a34a',
