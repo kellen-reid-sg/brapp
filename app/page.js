@@ -20,7 +20,7 @@ export default function HomePage() {
             THE BOOT ROOM
           </h1>
           
-          <nav className="flex gap-16 items-center">
+          <nav style={{ display: 'flex', gap: '80px', alignItems: 'center' }}>
             <Link 
               href="/drills" 
               style={{ 
@@ -29,7 +29,8 @@ export default function HomePage() {
                 fontWeight: '500',
                 textDecoration: 'underline',
                 transition: 'color 0.2s',
-                letterSpacing: '0.05em'
+                letterSpacing: '0.05em',
+                whiteSpace: 'nowrap'
               }}
               className="hover:text-green-500"
             >
@@ -43,7 +44,8 @@ export default function HomePage() {
                 fontWeight: '500',
                 textDecoration: 'underline',
                 transition: 'color 0.2s',
-                letterSpacing: '0.05em'
+                letterSpacing: '0.05em',
+                whiteSpace: 'nowrap'
               }}
               className="hover:text-green-500"
             >
@@ -57,7 +59,8 @@ export default function HomePage() {
                 fontWeight: '500',
                 textDecoration: 'underline',
                 transition: 'color 0.2s',
-                letterSpacing: '0.05em'
+                letterSpacing: '0.05em',
+                whiteSpace: 'nowrap'
               }}
               className="hover:text-green-500"
             >
@@ -71,7 +74,8 @@ export default function HomePage() {
                 fontWeight: '500',
                 textDecoration: 'underline',
                 transition: 'color 0.2s',
-                letterSpacing: '0.05em'
+                letterSpacing: '0.05em',
+                whiteSpace: 'nowrap'
               }}
               className="hover:text-green-500"
             >
