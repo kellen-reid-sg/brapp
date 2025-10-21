@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import custom styles */
-@import './themes/custom.css';
-
 :root {
   --background: #1a1a1a;
   --foreground: #ffffff;
