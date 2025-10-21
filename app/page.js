@@ -28,7 +28,8 @@ export default function HomePage() {
                 fontStyle: 'italic',
                 fontWeight: '500',
                 textDecoration: 'underline',
-                transition: 'color 0.2s'
+                transition: 'color 0.2s',
+                letterSpacing: '0.05em'
               }}
               className="hover:text-green-500"
             >
@@ -41,7 +42,8 @@ export default function HomePage() {
                 fontStyle: 'italic',
                 fontWeight: '500',
                 textDecoration: 'underline',
-                transition: 'color 0.2s'
+                transition: 'color 0.2s',
+                letterSpacing: '0.05em'
               }}
               className="hover:text-green-500"
             >
@@ -54,7 +56,8 @@ export default function HomePage() {
                 fontStyle: 'italic',
                 fontWeight: '500',
                 textDecoration: 'underline',
-                transition: 'color 0.2s'
+                transition: 'color 0.2s',
+                letterSpacing: '0.05em'
               }}
               className="hover:text-green-500"
             >
@@ -67,7 +70,8 @@ export default function HomePage() {
                 fontStyle: 'italic',
                 fontWeight: '500',
                 textDecoration: 'underline',
-                transition: 'color 0.2s'
+                transition: 'color 0.2s',
+                letterSpacing: '0.05em'
               }}
               className="hover:text-green-500"
             >
