@@ -100,7 +100,9 @@ export default function HomePage() {
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.75) 100%)',
+            background: 'linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.70) 40%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.85) 100%)',
+            backdropFilter: 'blur(1px)',
+            WebkitBackdropFilter: 'blur(1px)',
             zIndex: 0
           }}
         />
