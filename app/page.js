@@ -92,29 +92,29 @@ export default function HomePage() {
           backgroundColor: '#0a0a0a'
         }}
       >
-        {/* Super Blurred Background Layer */}
+        {/* Blurred Background Layer */}
         <div 
           style={{
             position: 'absolute',
-            inset: '-20px',
+            inset: '-40px',
             backgroundImage: 'url(/images/hero-training-session.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
-            filter: 'blur(20px) grayscale(40%) brightness(0.6)',
-            WebkitFilter: 'blur(20px) grayscale(40%) brightness(0.6)',
-            opacity: 0.15,
+            filter: 'blur(15px) grayscale(60%) brightness(0.5)',
+            WebkitFilter: 'blur(15px) grayscale(60%) brightness(0.5)',
+            opacity: 0.35,
             zIndex: 0,
-            transform: 'scale(1.1)'
+            transform: 'scale(1.15)'
           }}
         />
         
-        {/* Very Dark Overlay */}
+        {/* Dark Overlay */}
         <div 
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'radial-gradient(ellipse at center, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.95) 70%, rgba(10,10,10,1) 100%)',
+            background: 'linear-gradient(180deg, rgba(10,10,10,0.80) 0%, rgba(10,10,10,0.65) 50%, rgba(10,10,10,0.80) 100%)',
             zIndex: 1
           }}
         />
