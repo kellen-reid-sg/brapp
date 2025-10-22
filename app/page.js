@@ -85,59 +85,112 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 py-12">
-        <div className="text-center max-w-5xl mx-auto mb-16">
+      {/* Hero Section - Full Bleed with Background Image */}
+      <main 
+        className="relative flex-1 flex flex-col items-center justify-center px-4 py-32 min-h-screen"
+        style={{
+          backgroundImage: 'url(/images/hero-training-session.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 40%',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Dark Gradient Overlay */}
+        <div 
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.75) 100%)',
+            zIndex: 0
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 text-center max-w-5xl mx-auto">
           <h2 style={{
             fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-            fontSize: 'clamp(3rem, 8vw, 6rem)',
+            fontSize: 'clamp(3.5rem, 10vw, 7rem)',
+            fontWeight: '900',
+            fontStyle: 'italic',
+            color: 'transparent',
+            WebkitTextStroke: '2px white',
+            textStroke: '2px white',
+            lineHeight: '1',
+            textTransform: 'uppercase',
+            marginBottom: '1rem',
+            letterSpacing: '-0.02em'
+          }}>
+            DEFINE YOUR
+          </h2>
+          
+          <h2 style={{
+            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
+            fontSize: 'clamp(3.5rem, 10vw, 7rem)',
             fontWeight: '900',
             fontStyle: 'italic',
             color: 'white',
-            lineHeight: '1.1',
+            lineHeight: '1',
             textTransform: 'uppercase',
-            marginBottom: '2rem'
+            marginBottom: '3rem',
+            letterSpacing: '-0.02em'
           }}>
-            TAKE YOUR COACHING<br />
-            TO THE <span style={{ 
-              color: '#16a34a',
-              WebkitTextStroke: '1px #16a34a',
-              textStroke: '1px #16a34a'
-            }}>NEXT LEVEL</span>
+            <span style={{ color: '#16a34a' }}>SESSION</span>
           </h2>
           
           <p style={{
             fontFamily: '"Helvetica Neue", Arial, sans-serif',
-            fontSize: '1.25rem',
+            fontSize: '1.375rem',
             fontStyle: 'italic',
             color: 'white',
-            maxWidth: '800px',
-            margin: '0 auto 2.5rem',
-            lineHeight: '1.6'
+            maxWidth: '700px',
+            margin: '0 auto 3rem',
+            lineHeight: '1.6',
+            textShadow: '0 2px 8px rgba(0,0,0,0.5)'
           }}>
-            Coach with confidence. Build better sessions, develop smarter players, 
-            and run practices that make an impact — from first whistle to final drill.
+            Design training sessions, share drills, and connect with coaches worldwide through your unique coaching lens.
           </p>
 
-          <div className="mb-4">
+          <div className="mb-6">
             <Link 
-              href="/auth/signup"
+              href="/drills"
               style={{
                 backgroundColor: '#16a34a',
                 color: 'white',
-                padding: '16px 48px',
+                padding: '18px 56px',
                 borderRadius: '8px',
                 display: 'inline-block',
-                fontWeight: '600',
-                fontSize: '1.125rem',
-                transition: 'all 0.2s'
+                fontWeight: '700',
+                fontSize: '1.25rem',
+                transition: 'all 0.2s',
+                boxShadow: '0 4px 16px rgba(22, 163, 74, 0.4)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.02em'
               }}
               className="hover:bg-green-700"
             >
-              Start Your Free Trial
+              Start Building
             </Link>
           </div>
-          <p className="text-gray-400 text-sm italic">First week free. Cancel anytime.</p>
+
+          {/* Stats Ticker */}
+          <div 
+            style={{
+              marginTop: '4rem',
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '3rem',
+              flexWrap: 'wrap',
+              fontSize: '0.875rem',
+              color: 'rgba(255,255,255,0.7)',
+              fontWeight: '500'
+            }}
+          >
+            <span>1,247 Drills</span>
+            <span>•</span>
+            <span>523 Coaches</span>
+            <span>•</span>
+            <span>2,831 Sessions Created</span>
+          </div>
         </div>
 
         {/* Feature Cards */}
