@@ -90,25 +90,40 @@ export default function HomePage() {
         className="relative flex-1 flex flex-col items-center justify-center px-4 py-32 min-h-screen"
         style={{
           backgroundImage: 'url(/images/hero-training-session.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center 40%',
-          backgroundRepeat: 'no-repeat'
+          backgroundSize: 'contain',
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: '#0a0a0a'
         }}
       >
-        {/* Dark Gradient Overlay */}
+        {/* Heavily Blurred Background Layer */}
         <div 
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.70) 40%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.85) 100%)',
-            backdropFilter: 'blur(1px)',
-            WebkitBackdropFilter: 'blur(1px)',
+            backgroundImage: 'url(/images/hero-training-session.png)',
+            backgroundSize: 'contain',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            filter: 'blur(12px)',
+            WebkitFilter: 'blur(12px)',
+            opacity: 0.3,
             zIndex: 0
+          }}
+        />
+        
+        {/* Very Dark Overlay */}
+        <div 
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(180deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.82) 60%, rgba(0,0,0,0.92) 100%)',
+            zIndex: 1
           }}
         />
 
         {/* Content */}
-        <div className="relative z-10 text-center max-w-5xl mx-auto">
+        <div className="relative z-20 text-center max-w-5xl mx-auto">
           <h2 style={{
             fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
             fontSize: 'clamp(3.5rem, 10vw, 7rem)',
