@@ -89,7 +89,7 @@ export default function HomePage() {
       <main 
         className="relative flex-1 flex flex-col items-center justify-center px-4 py-32 min-h-screen"
         style={{
-          backgroundImage: 'url(/images/hero-training-session.jpg)',
+          backgroundImage: 'url(/images/hero-training-session.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center 40%',
           backgroundRepeat: 'no-repeat'
