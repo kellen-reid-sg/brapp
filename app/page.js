@@ -206,132 +206,427 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Feature Cards */}
-        <div className="flex flex-col gap-6 max-w-7xl w-full px-4">
-          {/* Browse Drills Card */}
-          <div style={{
-            border: '2px solid #16a34a',
-            borderRadius: '16px',
-            padding: '32px'
+      </main>
+
+      {/* Section 2: Expanding Card Selection */}
+      <section style={{ padding: '80px 0', backgroundColor: '#0a0a0a' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+          {/* Section Header */}
+          <h2 style={{
+            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
+            fontSize: '40px',
+            fontWeight: '900',
+            fontStyle: 'italic',
+            color: 'white',
+            textTransform: 'uppercase',
+            textAlign: 'center',
+            marginBottom: '64px',
+            letterSpacing: '0.05em'
           }}>
-            <h3 style={{
-              fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-              fontSize: '1.75rem',
-              fontWeight: '900',
-              fontStyle: 'italic',
-              color: 'white',
-              textTransform: 'uppercase',
-              marginBottom: '16px',
-              transform: 'skew(-5deg)',
-              letterSpacing: '-0.02em'
-            }}>
-              BROWSE DRILLS
-            </h3>
-            <p style={{ color: '#d1d5db', marginBottom: '24px', lineHeight: '1.6' }}>
-              Access a growing library of community-shared training drills. 
-              Upvote favorites and discover new ideas from coaches worldwide.
-            </p>
+            SELECT YOUR PATH
+          </h2>
+
+          {/* Expanding Cards Container */}
+          <div className="expanding-cards-container" style={{ 
+            display: 'flex', 
+            gap: '16px', 
+            height: '440px',
+            overflow: 'hidden'
+          }}>
+            {/* Card 1: Browse Drills */}
             <Link 
               href="/drills"
+              className="expanding-card"
               style={{
-                backgroundColor: '#16a34a',
-                color: 'white',
-                padding: '10px 24px',
-                borderRadius: '8px',
-                display: 'inline-block',
-                fontStyle: 'italic',
-                fontWeight: '600',
-                transition: 'all 0.2s'
+                flex: '1 1 0',
+                minWidth: '180px',
+                borderRadius: '12px',
+                position: 'relative',
+                overflow: 'hidden',
+                backgroundColor: '#1a1a1a',
+                cursor: 'pointer',
+                textDecoration: 'none',
+                border: '1px solid rgba(0,217,255,0.3)'
               }}
-              className="hover:bg-green-700"
             >
-              Explore Library
+              {/* Background Overlay */}
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'rgba(0,0,0,0.60)',
+                zIndex: 1,
+                transition: 'background 0.3s ease'
+              }} className="card-overlay" />
+              
+              {/* Content */}
+              <div style={{
+                position: 'relative',
+                zIndex: 2,
+                padding: '32px',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <h3 className="card-title" style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  color: 'white',
+                  textTransform: 'uppercase',
+                  marginBottom: '16px',
+                  transition: 'all 0.2s ease'
+                }}>
+                  BROWSE DRILLS
+                </h3>
+                
+                <div className="card-content" style={{
+                  opacity: 0,
+                  transform: 'translateY(10px)',
+                  transition: 'opacity 0.3s ease 0.14s, transform 0.3s ease 0.14s'
+                }}>
+                  <p style={{
+                    fontSize: '14px',
+                    fontWeight: '700',
+                    color: 'rgba(255,255,255,0.9)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    marginBottom: '16px'
+                  }}>
+                    THE DRILL LIBRARY
+                  </p>
+                  <p style={{
+                    fontSize: '16px',
+                    color: 'rgba(255,255,255,0.9)',
+                    lineHeight: '1.5',
+                    marginBottom: '32px'
+                  }}>
+                    Access 1,247+ community-shared drills. Filter by age, skill, duration.
+                  </p>
+                  <div style={{
+                    display: 'flex',
+                    gap: '24px',
+                    marginBottom: '24px'
+                  }}>
+                    <div>
+                      <div style={{
+                        fontSize: '24px',
+                        fontWeight: '700',
+                        color: 'white'
+                      }}>1247</div>
+                      <div style={{
+                        fontSize: '11px',
+                        fontWeight: '700',
+                        color: 'rgba(255,255,255,0.72)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.08em'
+                      }}>DRILLS</div>
+                    </div>
+                    <div>
+                      <div style={{
+                        fontSize: '24px',
+                        fontWeight: '700',
+                        color: 'white'
+                      }}>12</div>
+                      <div style={{
+                        fontSize: '11px',
+                        fontWeight: '700',
+                        color: 'rgba(255,255,255,0.72)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.08em'
+                      }}>CATEGORIES</div>
+                    </div>
+                  </div>
+                  <div style={{
+                    fontSize: '20px',
+                    color: 'white'
+                  }}>→</div>
+                </div>
+              </div>
             </Link>
-          </div>
 
-          {/* Build Sessions Card */}
-          <div style={{
-            border: '2px solid #16a34a',
-            borderRadius: '16px',
-            padding: '32px'
-          }}>
-            <h3 style={{
-              fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-              fontSize: '1.75rem',
-              fontWeight: '900',
-              fontStyle: 'italic',
-              color: 'white',
-              textTransform: 'uppercase',
-              marginBottom: '16px',
-              transform: 'skew(-5deg)',
-              letterSpacing: '-0.02em'
-            }}>
-              BUILD SESSIONS
-            </h3>
-            <p style={{ color: '#d1d5db', marginBottom: '24px', lineHeight: '1.6' }}>
-              Design complete training sessions in minutes by selecting drills 
-              from the library. Save and share with your team.
-            </p>
+            {/* Card 2: Build Session */}
             <Link 
               href="/sessions/new"
+              className="expanding-card"
               style={{
-                backgroundColor: '#16a34a',
-                color: 'white',
-                padding: '10px 24px',
-                borderRadius: '8px',
-                display: 'inline-block',
-                fontStyle: 'italic',
-                fontWeight: '600',
-                transition: 'all 0.2s'
+                flex: '1 1 0',
+                minWidth: '180px',
+                borderRadius: '12px',
+                position: 'relative',
+                overflow: 'hidden',
+                backgroundColor: '#1a1a1a',
+                cursor: 'pointer',
+                textDecoration: 'none',
+                border: '1px solid rgba(22,163,74,0.3)'
               }}
-              className="hover:bg-green-700"
             >
-              Create Session
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'rgba(0,0,0,0.60)',
+                zIndex: 1,
+                transition: 'background 0.3s ease'
+              }} className="card-overlay" />
+              
+              <div style={{
+                position: 'relative',
+                zIndex: 2,
+                padding: '32px',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <h3 className="card-title" style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  color: 'white',
+                  textTransform: 'uppercase',
+                  marginBottom: '16px',
+                  transition: 'all 0.2s ease'
+                }}>
+                  BUILD SESSION
+                </h3>
+                
+                <div className="card-content" style={{
+                  opacity: 0,
+                  transform: 'translateY(10px)',
+                  transition: 'opacity 0.3s ease 0.14s, transform 0.3s ease 0.14s'
+                }}>
+                  <p style={{
+                    fontSize: '14px',
+                    fontWeight: '700',
+                    color: 'rgba(255,255,255,0.9)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    marginBottom: '16px'
+                  }}>
+                    SESSION BUILDER
+                  </p>
+                  <p style={{
+                    fontSize: '16px',
+                    color: 'rgba(255,255,255,0.9)',
+                    lineHeight: '1.5',
+                    marginBottom: '32px'
+                  }}>
+                    Design complete training plans in minutes with drag-and-drop simplicity.
+                  </p>
+                  <div style={{
+                    display: 'flex',
+                    gap: '24px',
+                    marginBottom: '24px'
+                  }}>
+                    <div>
+                      <div style={{
+                        fontSize: '24px',
+                        fontWeight: '700',
+                        color: 'white'
+                      }}>2831</div>
+                      <div style={{
+                        fontSize: '11px',
+                        fontWeight: '700',
+                        color: 'rgba(255,255,255,0.72)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.08em'
+                      }}>SESSIONS</div>
+                    </div>
+                  </div>
+                  <div style={{
+                    fontSize: '20px',
+                    color: 'white'
+                  }}>→</div>
+                </div>
+              </div>
             </Link>
-          </div>
 
-          {/* Community Card */}
-          <div style={{
-            border: '2px solid #16a34a',
-            borderRadius: '16px',
-            padding: '32px'
-          }}>
-            <h3 style={{
-              fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-              fontSize: '1.75rem',
-              fontWeight: '900',
-              fontStyle: 'italic',
-              color: 'white',
-              textTransform: 'uppercase',
-              marginBottom: '16px',
-              transform: 'skew(-5deg)',
-              letterSpacing: '-0.02em'
-            }}>
-              JOIN COMMUNITY
-            </h3>
-            <p style={{ color: '#d1d5db', marginBottom: '24px', lineHeight: '1.6' }}>
-              Connect with coaches worldwide. Share your own drills, 
-              comment on sessions, and learn from the best.
-            </p>
+            {/* Card 3: Join Community */}
             <Link 
-              href="/auth/signup"
+              href="/drills"
+              className="expanding-card"
               style={{
-                backgroundColor: '#16a34a',
-                color: 'white',
-                padding: '10px 24px',
-                borderRadius: '8px',
-                display: 'inline-block',
-                fontStyle: 'italic',
-                fontWeight: '600',
-                transition: 'all 0.2s'
+                flex: '1 1 0',
+                minWidth: '180px',
+                borderRadius: '12px',
+                position: 'relative',
+                overflow: 'hidden',
+                backgroundColor: '#1a1a1a',
+                cursor: 'pointer',
+                textDecoration: 'none',
+                border: '1px solid rgba(16,185,129,0.3)'
               }}
-              className="hover:bg-green-700"
             >
-              Get Started
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'rgba(0,0,0,0.60)',
+                zIndex: 1,
+                transition: 'background 0.3s ease'
+              }} className="card-overlay" />
+              
+              <div style={{
+                position: 'relative',
+                zIndex: 2,
+                padding: '32px',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <h3 className="card-title" style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  color: 'white',
+                  textTransform: 'uppercase',
+                  marginBottom: '16px',
+                  transition: 'all 0.2s ease'
+                }}>
+                  JOIN COMMUNITY
+                </h3>
+                
+                <div className="card-content" style={{
+                  opacity: 0,
+                  transform: 'translateY(10px)',
+                  transition: 'opacity 0.3s ease 0.14s, transform 0.3s ease 0.14s'
+                }}>
+                  <p style={{
+                    fontSize: '14px',
+                    fontWeight: '700',
+                    color: 'rgba(255,255,255,0.9)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    marginBottom: '16px'
+                  }}>
+                    THE COMMUNITY
+                  </p>
+                  <p style={{
+                    fontSize: '16px',
+                    color: 'rgba(255,255,255,0.9)',
+                    lineHeight: '1.5',
+                    marginBottom: '32px'
+                  }}>
+                    Share drills, comment on sessions, upvote favorites from coaches worldwide.
+                  </p>
+                  <div style={{
+                    display: 'flex',
+                    gap: '24px',
+                    marginBottom: '24px'
+                  }}>
+                    <div>
+                      <div style={{
+                        fontSize: '24px',
+                        fontWeight: '700',
+                        color: 'white'
+                      }}>523</div>
+                      <div style={{
+                        fontSize: '11px',
+                        fontWeight: '700',
+                        color: 'rgba(255,255,255,0.72)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.08em'
+                      }}>COACHES</div>
+                    </div>
+                  </div>
+                  <div style={{
+                    fontSize: '20px',
+                    color: 'white'
+                  }}>→</div>
+                </div>
+              </div>
+            </Link>
+
+            {/* Card 4: My Library */}
+            <Link 
+              href="/profile"
+              className="expanding-card"
+              style={{
+                flex: '1 1 0',
+                minWidth: '180px',
+                borderRadius: '12px',
+                position: 'relative',
+                overflow: 'hidden',
+                backgroundColor: '#1a1a1a',
+                cursor: 'pointer',
+                textDecoration: 'none',
+                border: '1px solid rgba(245,158,11,0.3)'
+              }}
+            >
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'rgba(0,0,0,0.60)',
+                zIndex: 1,
+                transition: 'background 0.3s ease'
+              }} className="card-overlay" />
+              
+              <div style={{
+                position: 'relative',
+                zIndex: 2,
+                padding: '32px',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <h3 className="card-title" style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  color: 'white',
+                  textTransform: 'uppercase',
+                  marginBottom: '16px',
+                  transition: 'all 0.2s ease'
+                }}>
+                  MY LIBRARY
+                </h3>
+                
+                <div className="card-content" style={{
+                  opacity: 0,
+                  transform: 'translateY(10px)',
+                  transition: 'opacity 0.3s ease 0.14s, transform 0.3s ease 0.14s'
+                }}>
+                  <p style={{
+                    fontSize: '14px',
+                    fontWeight: '700',
+                    color: 'rgba(255,255,255,0.9)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    marginBottom: '16px'
+                  }}>
+                    YOUR SAVED CONTENT
+                  </p>
+                  <p style={{
+                    fontSize: '16px',
+                    color: 'rgba(255,255,255,0.9)',
+                    lineHeight: '1.5',
+                    marginBottom: '32px'
+                  }}>
+                    Access your saved sessions, favorite drills, and personal library.
+                  </p>
+                  <div style={{
+                    display: 'flex',
+                    gap: '24px',
+                    marginBottom: '24px'
+                  }}>
+                    <div>
+                      <div style={{
+                        fontSize: '24px',
+                        fontWeight: '700',
+                        color: 'white'
+                      }}>∞</div>
+                      <div style={{
+                        fontSize: '11px',
+                        fontWeight: '700',
+                        color: 'rgba(255,255,255,0.72)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.08em'
+                      }}>UNLIMITED</div>
+                    </div>
+                  </div>
+                  <div style={{
+                    fontSize: '20px',
+                    color: 'white'
+                  }}>→</div>
+                </div>
+              </div>
             </Link>
           </div>
         </div>
-      </main>
+      </section>
 
       {/* Footer */}
       <footer className="py-8 text-center text-gray-500 text-sm">

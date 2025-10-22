@@ -22,6 +22,49 @@ body {
   font-family: Inter, Arial, Helvetica, sans-serif;
 }
 
+/* Expanding Cards */
+.expanding-card {
+  transition: flex-grow 420ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 240ms ease-out,
+              filter 240ms ease-out;
+}
+
+.expanding-card:hover {
+  flex-grow: 3;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+}
+
+.expanding-card:hover .card-overlay {
+  background: rgba(0,0,0,0.25) !important;
+}
+
+.expanding-card:hover .card-title {
+  font-size: 32px;
+  color: var(--accent-color, #00D9FF);
+}
+
+.expanding-card:hover .card-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Color-coded accents for each card type */
+.expanding-card:nth-child(1):hover .card-title {
+  color: #00D9FF;
+}
+
+.expanding-card:nth-child(2):hover .card-title {
+  color: #16a34a;
+}
+
+.expanding-card:nth-child(3):hover .card-title {
+  color: #10B981;
+}
+
+.expanding-card:nth-child(4):hover .card-title {
+  color: #F59E0B;
+}
+
 @media print {
   body {
     -webkit-print-color-adjust: exact !important;
