@@ -89,26 +89,23 @@ export default function HomePage() {
       <main 
         className="relative flex-1 flex flex-col items-center justify-center px-4 py-32 min-h-screen"
         style={{
-          backgroundImage: 'url(/images/hero-training-session.png)',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center center',
-          backgroundRepeat: 'no-repeat',
           backgroundColor: '#0a0a0a'
         }}
       >
-        {/* Heavily Blurred Background Layer */}
+        {/* Super Blurred Background Layer */}
         <div 
           style={{
             position: 'absolute',
-            inset: 0,
+            inset: '-20px',
             backgroundImage: 'url(/images/hero-training-session.png)',
-            backgroundSize: 'contain',
+            backgroundSize: 'cover',
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
-            filter: 'blur(12px)',
-            WebkitFilter: 'blur(12px)',
-            opacity: 0.3,
-            zIndex: 0
+            filter: 'blur(20px) grayscale(40%) brightness(0.6)',
+            WebkitFilter: 'blur(20px) grayscale(40%) brightness(0.6)',
+            opacity: 0.15,
+            zIndex: 0,
+            transform: 'scale(1.1)'
           }}
         />
         
@@ -117,7 +114,7 @@ export default function HomePage() {
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(180deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.82) 60%, rgba(0,0,0,0.92) 100%)',
+            background: 'radial-gradient(ellipse at center, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.95) 70%, rgba(10,10,10,1) 100%)',
             zIndex: 1
           }}
         />
