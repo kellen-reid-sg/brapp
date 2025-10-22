@@ -92,14 +92,14 @@ export default function HomePage() {
           backgroundColor: '#0a0a0a'
         }}
       >
-        {/* Blurred Background Layer */}
+        {/* Blurred Background Layer - Anchored at Bottom */}
         <div 
           style={{
             position: 'absolute',
-            inset: '-40px',
+            inset: 0,
             backgroundImage: 'url(/images/hero-training-session.png)',
-            backgroundSize: '90%',
-            backgroundPosition: 'center center',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center bottom',
             backgroundRepeat: 'no-repeat',
             filter: 'blur(10px) grayscale(30%)',
             WebkitFilter: 'blur(10px) grayscale(30%)',
@@ -108,12 +108,12 @@ export default function HomePage() {
           }}
         />
         
-        {/* Dark Overlay */}
+        {/* Fade to Black Gradient Overlay */}
         <div 
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(180deg, rgba(10,10,10,0.60) 0%, rgba(10,10,10,0.45) 50%, rgba(10,10,10,0.65) 100%)',
+            background: 'linear-gradient(180deg, rgba(10,10,10,1) 0%, rgba(10,10,10,0.85) 30%, rgba(10,10,10,0.50) 60%, rgba(10,10,10,0.40) 100%)',
             zIndex: 1
           }}
         />
