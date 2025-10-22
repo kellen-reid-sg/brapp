@@ -25,11 +25,12 @@ export default function HomePage() {
               href="/drills" 
               style={{ 
                 color: 'white',
+                fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
                 fontStyle: 'italic',
-                fontWeight: '500',
+                fontWeight: '900',
                 textDecoration: 'underline',
                 transition: 'color 0.2s',
-                letterSpacing: '0.05em',
+                letterSpacing: '0.1em',
                 whiteSpace: 'nowrap'
               }}
               className="hover:text-green-500"
@@ -40,11 +41,12 @@ export default function HomePage() {
               href="/sessions/new" 
               style={{ 
                 color: 'white',
+                fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
                 fontStyle: 'italic',
-                fontWeight: '500',
+                fontWeight: '900',
                 textDecoration: 'underline',
                 transition: 'color 0.2s',
-                letterSpacing: '0.05em',
+                letterSpacing: '0.1em',
                 whiteSpace: 'nowrap'
               }}
               className="hover:text-green-500"
@@ -55,11 +57,12 @@ export default function HomePage() {
               href="/profile" 
               style={{ 
                 color: 'white',
+                fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
                 fontStyle: 'italic',
-                fontWeight: '500',
+                fontWeight: '900',
                 textDecoration: 'underline',
                 transition: 'color 0.2s',
-                letterSpacing: '0.05em',
+                letterSpacing: '0.1em',
                 whiteSpace: 'nowrap'
               }}
               className="hover:text-green-500"
@@ -70,11 +73,12 @@ export default function HomePage() {
               href="/auth/login" 
               style={{ 
                 color: 'white',
+                fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
                 fontStyle: 'italic',
-                fontWeight: '500',
+                fontWeight: '900',
                 textDecoration: 'underline',
                 transition: 'color 0.2s',
-                letterSpacing: '0.05em',
+                letterSpacing: '0.1em',
                 whiteSpace: 'nowrap'
               }}
               className="hover:text-green-500"
@@ -87,7 +91,7 @@ export default function HomePage() {
 
       {/* Hero Section - Full Bleed with Background Image */}
       <main 
-        className="relative flex-1 flex flex-col items-center justify-center px-4 py-32 min-h-screen"
+        className="relative flex-1 flex items-center px-8 py-20 min-h-screen"
         style={{
           backgroundColor: '#0a0a0a'
         }}
@@ -118,511 +122,840 @@ export default function HomePage() {
           }}
         />
 
-        {/* Content */}
-        <div className="relative z-20 text-center max-w-5xl mx-auto">
-          <h2 style={{
-            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-            fontSize: 'clamp(3.5rem, 10vw, 7rem)',
-            fontWeight: '900',
-            fontStyle: 'italic',
-            color: 'transparent',
-            WebkitTextStroke: '2px white',
-            textStroke: '2px white',
-            lineHeight: '1',
-            textTransform: 'uppercase',
-            marginBottom: '1rem',
-            letterSpacing: '-0.02em'
-          }}>
-            DEFINE YOUR
-          </h2>
+        {/* Content Container - Split Layout */}
+        <div className="relative z-20 w-full max-w-7xl mx-auto flex items-center gap-12" style={{ minHeight: '70vh' }}>
           
-          <h2 style={{
-            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-            fontSize: 'clamp(3.5rem, 10vw, 7rem)',
-            fontWeight: '900',
-            fontStyle: 'italic',
-            color: 'white',
-            lineHeight: '1',
-            textTransform: 'uppercase',
-            marginBottom: '3rem',
-            letterSpacing: '-0.02em'
-          }}>
-            <span style={{ color: '#16a34a' }}>SESSION</span>
-          </h2>
-          
-          <p style={{
-            fontFamily: '"Helvetica Neue", Arial, sans-serif',
-            fontSize: '1.375rem',
-            fontStyle: 'italic',
-            color: 'white',
-            maxWidth: '700px',
-            margin: '0 auto 3rem',
-            lineHeight: '1.6',
-            textShadow: '0 2px 8px rgba(0,0,0,0.5)'
-          }}>
-            Design training sessions, share drills, and connect with coaches worldwide through your unique coaching lens.
-          </p>
-
-          <div className="mb-6">
-            <Link 
-              href="/drills"
-              style={{
-                backgroundColor: '#16a34a',
-                color: 'white',
-                padding: '18px 56px',
-                borderRadius: '8px',
-                display: 'inline-block',
-                fontWeight: '700',
-                fontSize: '1.25rem',
-                transition: 'all 0.2s',
-                boxShadow: '0 4px 16px rgba(22, 163, 74, 0.4)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.02em'
-              }}
-              className="hover:bg-green-700"
-            >
-              Start Building
-            </Link>
+          {/* Left Side: Hero Text */}
+          <div style={{ flex: '0 0 50%', maxWidth: '50%', paddingLeft: '3rem' }}>
+            <h2 style={{
+              fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
+              fontSize: 'clamp(3rem, 6vw, 5rem)',
+              fontWeight: '900',
+              fontStyle: 'italic',
+              color: 'white',
+              lineHeight: '0.9',
+              textTransform: 'uppercase',
+              marginBottom: '0',
+              letterSpacing: '-0.02em'
+            }}>
+              CRAFT YOUR
+            </h2>
+            
+            <h2 style={{
+              fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
+              fontSize: 'clamp(3rem, 6vw, 5rem)',
+              fontWeight: '900',
+              fontStyle: 'italic',
+              color: 'white',
+              lineHeight: '0.9',
+              textTransform: 'uppercase',
+              marginTop: '0',
+              marginBottom: '2rem',
+              letterSpacing: '-0.02em'
+            }}>
+              SESSION
+            </h2>
+            
+            <p style={{
+              fontFamily: '"Helvetica Neue", Arial, sans-serif',
+              fontSize: '1.125rem',
+              fontStyle: 'italic',
+              color: 'white',
+              maxWidth: '520px',
+              lineHeight: '1.6',
+              textShadow: '0 2px 8px rgba(0,0,0,0.5)'
+            }}>
+              Design training sessions, share drills, and connect with coaches worldwide through your unique coaching lens.
+            </p>
           </div>
 
-          {/* Stats Ticker */}
-          <div 
-            style={{
-              marginTop: '4rem',
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '3rem',
-              flexWrap: 'wrap',
-              fontSize: '0.875rem',
-              color: 'rgba(255,255,255,0.7)',
-              fontWeight: '500'
-            }}
-          >
-            <span>1,247 Drills</span>
-            <span>•</span>
-            <span>523 Coaches</span>
-            <span>•</span>
-            <span>2,831 Sessions Created</span>
-          </div>
-        </div>
-
-      </main>
-
-      {/* Section 2: Expanding Card Selection */}
-      <section style={{ padding: '80px 0', backgroundColor: '#0a0a0a' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
-          {/* Section Header */}
-          <h2 style={{
-            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-            fontSize: '40px',
-            fontWeight: '900',
-            fontStyle: 'italic',
-            color: 'white',
-            textTransform: 'uppercase',
-            textAlign: 'center',
-            marginBottom: '64px',
-            letterSpacing: '0.05em'
+          {/* Right Side: Card Grid */}
+          <div style={{ 
+            flex: '0 0 45%', 
+            maxWidth: '45%',
+            paddingRight: '2rem'
           }}>
-            SELECT YOUR PATH
-          </h2>
-
-          {/* Expanding Cards Container */}
-          <div className="expanding-cards-container" style={{ 
-            display: 'flex', 
-            gap: '16px', 
-            height: '440px',
-            overflow: 'hidden'
-          }}>
+            <h3 style={{
+              fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
+              fontSize: '1.25rem',
+              fontWeight: '700',
+              fontStyle: 'italic',
+              color: 'rgba(255,255,255,0.5)',
+              textTransform: 'uppercase',
+              textAlign: 'center',
+              marginBottom: '1.5rem',
+              letterSpacing: '0.05em'
+            }}>
+              SELECT YOUR PATH
+            </h3>
+            
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '12px'
+            }}>
             {/* Card 1: Browse Drills */}
             <Link 
               href="/drills"
-              className="expanding-card"
               style={{
-                flex: '1 1 0',
-                minWidth: '180px',
-                borderRadius: '12px',
+                borderRadius: '8px',
                 position: 'relative',
                 overflow: 'hidden',
-                backgroundColor: '#1a1a1a',
+                backgroundColor: 'rgba(0,0,0,0.4)',
                 cursor: 'pointer',
                 textDecoration: 'none',
-                border: '1px solid rgba(0,217,255,0.3)'
-              }}
-            >
-              {/* Background Overlay */}
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'rgba(0,0,0,0.60)',
-                zIndex: 1,
-                transition: 'background 0.3s ease'
-              }} className="card-overlay" />
-              
-              {/* Content */}
-              <div style={{
-                position: 'relative',
-                zIndex: 2,
-                padding: '32px',
-                height: '100%',
+                border: '1px solid rgba(22,163,74,0.5)',
+                padding: '20px',
+                height: '180px',
                 display: 'flex',
-                flexDirection: 'column'
-              }}>
-                <h3 className="card-title" style={{
-                  fontSize: '24px',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                transition: 'all 0.3s ease'
+              }}
+              className="hover:bg-opacity-60 hover:border-green-500"
+            >
+              <div>
+                <h3 style={{
+                  fontSize: '18px',
                   fontWeight: '700',
                   color: 'white',
                   textTransform: 'uppercase',
-                  marginBottom: '16px',
-                  transition: 'all 0.2s ease'
+                  marginBottom: '8px',
+                  fontStyle: 'italic'
                 }}>
                   BROWSE DRILLS
                 </h3>
-                
-                <div className="card-content" style={{
-                  opacity: 0,
-                  transform: 'translateY(10px)',
-                  transition: 'opacity 0.3s ease 0.14s, transform 0.3s ease 0.14s'
+                <p style={{
+                  fontSize: '14px',
+                  color: 'rgba(255,255,255,0.7)',
+                  lineHeight: '1.4'
                 }}>
-                  <p style={{
-                    fontSize: '14px',
-                    fontWeight: '700',
-                    color: 'rgba(255,255,255,0.9)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
-                    marginBottom: '16px'
-                  }}>
-                    THE DRILL LIBRARY
-                  </p>
-                  <p style={{
-                    fontSize: '16px',
-                    color: 'rgba(255,255,255,0.9)',
-                    lineHeight: '1.5',
-                    marginBottom: '32px'
-                  }}>
-                    Access 1,247+ community-shared drills. Filter by age, skill, duration.
-                  </p>
-                  <div style={{
-                    display: 'flex',
-                    gap: '24px',
-                    marginBottom: '24px'
-                  }}>
-                    <div>
-                      <div style={{
-                        fontSize: '24px',
-                        fontWeight: '700',
-                        color: 'white'
-                      }}>1247</div>
-                      <div style={{
-                        fontSize: '11px',
-                        fontWeight: '700',
-                        color: 'rgba(255,255,255,0.72)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.08em'
-                      }}>DRILLS</div>
-                    </div>
-                    <div>
-                      <div style={{
-                        fontSize: '24px',
-                        fontWeight: '700',
-                        color: 'white'
-                      }}>12</div>
-                      <div style={{
-                        fontSize: '11px',
-                        fontWeight: '700',
-                        color: 'rgba(255,255,255,0.72)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.08em'
-                      }}>CATEGORIES</div>
-                    </div>
-                  </div>
-                  <div style={{
-                    fontSize: '20px',
-                    color: 'white'
-                  }}>→</div>
-                </div>
+                  Access 1,247+ drills
+                </p>
               </div>
+              <div style={{ fontSize: '20px', color: 'white' }}>→</div>
             </Link>
 
             {/* Card 2: Build Session */}
             <Link 
               href="/sessions/new"
-              className="expanding-card"
               style={{
-                flex: '1 1 0',
-                minWidth: '180px',
-                borderRadius: '12px',
+                borderRadius: '8px',
                 position: 'relative',
                 overflow: 'hidden',
-                backgroundColor: '#1a1a1a',
+                backgroundColor: 'rgba(0,0,0,0.4)',
                 cursor: 'pointer',
                 textDecoration: 'none',
-                border: '1px solid rgba(22,163,74,0.3)'
-              }}
-            >
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'rgba(0,0,0,0.60)',
-                zIndex: 1,
-                transition: 'background 0.3s ease'
-              }} className="card-overlay" />
-              
-              <div style={{
-                position: 'relative',
-                zIndex: 2,
-                padding: '32px',
-                height: '100%',
+                border: '1px solid rgba(22,163,74,0.5)',
+                padding: '20px',
+                height: '180px',
                 display: 'flex',
-                flexDirection: 'column'
-              }}>
-                <h3 className="card-title" style={{
-                  fontSize: '24px',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                transition: 'all 0.3s ease'
+              }}
+              className="hover:bg-opacity-60 hover:border-green-500"
+            >
+              <div>
+                <h3 style={{
+                  fontSize: '18px',
                   fontWeight: '700',
                   color: 'white',
                   textTransform: 'uppercase',
-                  marginBottom: '16px',
-                  transition: 'all 0.2s ease'
+                  marginBottom: '8px',
+                  fontStyle: 'italic'
                 }}>
                   BUILD SESSION
                 </h3>
-                
-                <div className="card-content" style={{
-                  opacity: 0,
-                  transform: 'translateY(10px)',
-                  transition: 'opacity 0.3s ease 0.14s, transform 0.3s ease 0.14s'
+                <p style={{
+                  fontSize: '14px',
+                  color: 'rgba(255,255,255,0.7)',
+                  lineHeight: '1.4'
                 }}>
-                  <p style={{
-                    fontSize: '14px',
-                    fontWeight: '700',
-                    color: 'rgba(255,255,255,0.9)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
-                    marginBottom: '16px'
-                  }}>
-                    SESSION BUILDER
-                  </p>
-                  <p style={{
-                    fontSize: '16px',
-                    color: 'rgba(255,255,255,0.9)',
-                    lineHeight: '1.5',
-                    marginBottom: '32px'
-                  }}>
-                    Design complete training plans in minutes with drag-and-drop simplicity.
-                  </p>
-                  <div style={{
-                    display: 'flex',
-                    gap: '24px',
-                    marginBottom: '24px'
-                  }}>
-                    <div>
-                      <div style={{
-                        fontSize: '24px',
-                        fontWeight: '700',
-                        color: 'white'
-                      }}>2831</div>
-                      <div style={{
-                        fontSize: '11px',
-                        fontWeight: '700',
-                        color: 'rgba(255,255,255,0.72)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.08em'
-                      }}>SESSIONS</div>
-                    </div>
-                  </div>
-                  <div style={{
-                    fontSize: '20px',
-                    color: 'white'
-                  }}>→</div>
-                </div>
+                  Design training plans
+                </p>
               </div>
+              <div style={{ fontSize: '20px', color: 'white' }}>→</div>
             </Link>
 
             {/* Card 3: Join Community */}
             <Link 
               href="/drills"
-              className="expanding-card"
               style={{
-                flex: '1 1 0',
-                minWidth: '180px',
-                borderRadius: '12px',
+                borderRadius: '8px',
                 position: 'relative',
                 overflow: 'hidden',
-                backgroundColor: '#1a1a1a',
+                backgroundColor: 'rgba(0,0,0,0.4)',
                 cursor: 'pointer',
                 textDecoration: 'none',
-                border: '1px solid rgba(16,185,129,0.3)'
-              }}
-            >
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'rgba(0,0,0,0.60)',
-                zIndex: 1,
-                transition: 'background 0.3s ease'
-              }} className="card-overlay" />
-              
-              <div style={{
-                position: 'relative',
-                zIndex: 2,
-                padding: '32px',
-                height: '100%',
+                border: '1px solid rgba(22,163,74,0.5)',
+                padding: '20px',
+                height: '180px',
                 display: 'flex',
-                flexDirection: 'column'
-              }}>
-                <h3 className="card-title" style={{
-                  fontSize: '24px',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                transition: 'all 0.3s ease'
+              }}
+              className="hover:bg-opacity-60 hover:border-green-500"
+            >
+              <div>
+                <h3 style={{
+                  fontSize: '18px',
                   fontWeight: '700',
                   color: 'white',
                   textTransform: 'uppercase',
-                  marginBottom: '16px',
-                  transition: 'all 0.2s ease'
+                  marginBottom: '8px',
+                  fontStyle: 'italic'
                 }}>
                   JOIN COMMUNITY
                 </h3>
-                
-                <div className="card-content" style={{
-                  opacity: 0,
-                  transform: 'translateY(10px)',
-                  transition: 'opacity 0.3s ease 0.14s, transform 0.3s ease 0.14s'
+                <p style={{
+                  fontSize: '14px',
+                  color: 'rgba(255,255,255,0.7)',
+                  lineHeight: '1.4'
                 }}>
-                  <p style={{
-                    fontSize: '14px',
-                    fontWeight: '700',
-                    color: 'rgba(255,255,255,0.9)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
-                    marginBottom: '16px'
-                  }}>
-                    THE COMMUNITY
-                  </p>
-                  <p style={{
-                    fontSize: '16px',
-                    color: 'rgba(255,255,255,0.9)',
-                    lineHeight: '1.5',
-                    marginBottom: '32px'
-                  }}>
-                    Share drills, comment on sessions, upvote favorites from coaches worldwide.
-                  </p>
-                  <div style={{
-                    display: 'flex',
-                    gap: '24px',
-                    marginBottom: '24px'
-                  }}>
-                    <div>
-                      <div style={{
-                        fontSize: '24px',
-                        fontWeight: '700',
-                        color: 'white'
-                      }}>523</div>
-                      <div style={{
-                        fontSize: '11px',
-                        fontWeight: '700',
-                        color: 'rgba(255,255,255,0.72)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.08em'
-                      }}>COACHES</div>
-                    </div>
-                  </div>
-                  <div style={{
-                    fontSize: '20px',
-                    color: 'white'
-                  }}>→</div>
-                </div>
+                  Connect with coaches
+                </p>
               </div>
+              <div style={{ fontSize: '20px', color: 'white' }}>→</div>
             </Link>
 
             {/* Card 4: My Library */}
             <Link 
               href="/profile"
-              className="expanding-card"
               style={{
-                flex: '1 1 0',
-                minWidth: '180px',
-                borderRadius: '12px',
+                borderRadius: '8px',
                 position: 'relative',
                 overflow: 'hidden',
-                backgroundColor: '#1a1a1a',
+                backgroundColor: 'rgba(0,0,0,0.4)',
                 cursor: 'pointer',
                 textDecoration: 'none',
-                border: '1px solid rgba(245,158,11,0.3)'
-              }}
-            >
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'rgba(0,0,0,0.60)',
-                zIndex: 1,
-                transition: 'background 0.3s ease'
-              }} className="card-overlay" />
-              
-              <div style={{
-                position: 'relative',
-                zIndex: 2,
-                padding: '32px',
-                height: '100%',
+                border: '1px solid rgba(22,163,74,0.5)',
+                padding: '20px',
+                height: '180px',
                 display: 'flex',
-                flexDirection: 'column'
-              }}>
-                <h3 className="card-title" style={{
-                  fontSize: '24px',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                transition: 'all 0.3s ease'
+              }}
+              className="hover:bg-opacity-60 hover:border-green-500"
+            >
+              <div>
+                <h3 style={{
+                  fontSize: '18px',
                   fontWeight: '700',
                   color: 'white',
                   textTransform: 'uppercase',
-                  marginBottom: '16px',
-                  transition: 'all 0.2s ease'
+                  marginBottom: '8px',
+                  fontStyle: 'italic'
                 }}>
                   MY LIBRARY
                 </h3>
-                
-                <div className="card-content" style={{
-                  opacity: 0,
-                  transform: 'translateY(10px)',
-                  transition: 'opacity 0.3s ease 0.14s, transform 0.3s ease 0.14s'
+                <p style={{
+                  fontSize: '14px',
+                  color: 'rgba(255,255,255,0.7)',
+                  lineHeight: '1.4'
                 }}>
-                  <p style={{
-                    fontSize: '14px',
-                    fontWeight: '700',
-                    color: 'rgba(255,255,255,0.9)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
-                    marginBottom: '16px'
-                  }}>
-                    YOUR SAVED CONTENT
-                  </p>
-                  <p style={{
-                    fontSize: '16px',
-                    color: 'rgba(255,255,255,0.9)',
-                    lineHeight: '1.5',
-                    marginBottom: '32px'
-                  }}>
-                    Access your saved sessions, favorite drills, and personal library.
-                  </p>
-                  <div style={{
-                    display: 'flex',
-                    gap: '24px',
-                    marginBottom: '24px'
-                  }}>
-                    <div>
-                      <div style={{
-                        fontSize: '24px',
-                        fontWeight: '700',
-                        color: 'white'
-                      }}>∞</div>
-                      <div style={{
-                        fontSize: '11px',
-                        fontWeight: '700',
-                        color: 'rgba(255,255,255,0.72)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.08em'
-                      }}>UNLIMITED</div>
-                    </div>
-                  </div>
-                  <div style={{
-                    fontSize: '20px',
-                    color: 'white'
-                  }}>→</div>
-                </div>
+                  Your saved content
+                </p>
               </div>
+              <div style={{ fontSize: '20px', color: 'white' }}>→</div>
+            </Link>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      {/* Section 3: Feature Highlights */}
+      <section style={{ 
+        backgroundColor: '#0a0a0a', 
+        padding: '120px 24px',
+      }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '24px'
+          }}>
+            {/* Feature 1: Community-Driven Library */}
+            <div style={{
+              border: '2px solid #16a34a',
+              borderRadius: '12px',
+              padding: '40px 32px',
+              backgroundColor: 'transparent',
+              transition: 'transform 0.3s ease',
+            }}
+            className="hover:-translate-y-1"
+            >
+              <div style={{ fontSize: '48px', marginBottom: '24px' }}>⚽</div>
+              <div style={{ marginBottom: '16px' }}>
+                <div style={{ fontSize: '32px', fontWeight: '700', color: 'white' }}>1,247</div>
+                <div style={{ 
+                  fontSize: '12px', 
+                  fontWeight: '700', 
+                  color: 'rgba(255,255,255,0.6)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em'
+                }}>DRILLS</div>
+              </div>
+              <h3 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                color: 'white',
+                marginBottom: '12px',
+                fontStyle: 'italic'
+              }}>
+                Community-Driven Library
+              </h3>
+              <p style={{
+                fontSize: '16px',
+                color: 'rgba(255,255,255,0.7)',
+                lineHeight: '1.6'
+              }}>
+                Browse, upvote, and share training drills from coaches worldwide
+              </p>
+            </div>
+
+            {/* Feature 2: Session Builder */}
+            <div style={{
+              border: '2px solid #16a34a',
+              borderRadius: '12px',
+              padding: '40px 32px',
+              backgroundColor: 'transparent',
+              transition: 'transform 0.3s ease',
+            }}
+            className="hover:-translate-y-1"
+            >
+              <div style={{ fontSize: '48px', marginBottom: '24px' }}>📋</div>
+              <div style={{ marginBottom: '16px' }}>
+                <div style={{ fontSize: '32px', fontWeight: '700', color: 'white' }}>2,831</div>
+                <div style={{ 
+                  fontSize: '12px', 
+                  fontWeight: '700', 
+                  color: 'rgba(255,255,255,0.6)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em'
+                }}>SESSIONS</div>
+              </div>
+              <h3 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                color: 'white',
+                marginBottom: '12px',
+                fontStyle: 'italic'
+              }}>
+                Session Builder
+              </h3>
+              <p style={{
+                fontSize: '16px',
+                color: 'rgba(255,255,255,0.7)',
+                lineHeight: '1.6'
+              }}>
+                Design complete training plans in minutes with drag-and-drop simplicity
+              </p>
+            </div>
+
+            {/* Feature 3: Instant Sharing */}
+            <div style={{
+              border: '2px solid #16a34a',
+              borderRadius: '12px',
+              padding: '40px 32px',
+              backgroundColor: 'transparent',
+              transition: 'transform 0.3s ease',
+            }}
+            className="hover:-translate-y-1"
+            >
+              <div style={{ fontSize: '48px', marginBottom: '24px' }}>🔗</div>
+              <div style={{ marginBottom: '16px' }}>
+                <div style={{ fontSize: '32px', fontWeight: '700', color: 'white' }}>523</div>
+                <div style={{ 
+                  fontSize: '12px', 
+                  fontWeight: '700', 
+                  color: 'rgba(255,255,255,0.6)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em'
+                }}>COACHES</div>
+              </div>
+              <h3 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                color: 'white',
+                marginBottom: '12px',
+                fontStyle: 'italic'
+              }}>
+                Instant Sharing
+              </h3>
+              <p style={{
+                fontSize: '16px',
+                color: 'rgba(255,255,255,0.7)',
+                lineHeight: '1.6'
+              }}>
+                Generate shareable links and export to PDF for your team
+              </p>
+            </div>
+
+            {/* Feature 4: Drill Builder */}
+            <div style={{
+              border: '2px solid #16a34a',
+              borderRadius: '12px',
+              padding: '40px 32px',
+              backgroundColor: 'transparent',
+              transition: 'transform 0.3s ease',
+            }}
+            className="hover:-translate-y-1"
+            >
+              <div style={{ fontSize: '48px', marginBottom: '24px' }}>🎨</div>
+              <h3 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                color: 'white',
+                marginBottom: '12px',
+                fontStyle: 'italic'
+              }}>
+                Drill Builder
+              </h3>
+              <p style={{
+                fontSize: '16px',
+                color: 'rgba(255,255,255,0.7)',
+                lineHeight: '1.6'
+              }}>
+                Coming Soon
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 4: How It Works */}
+      <section style={{ 
+        backgroundColor: '#0a0a0a',
+        padding: '120px 24px'
+      }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          {/* Section Title */}
+          <h2 style={{
+            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
+            fontSize: '56px',
+            fontWeight: '900',
+            fontStyle: 'italic',
+            color: 'white',
+            textTransform: 'uppercase',
+            textAlign: 'center',
+            marginBottom: '80px',
+            letterSpacing: '0.05em'
+          }}>
+            HOW IT WORKS
+          </h2>
+
+          {/* Timeline Steps */}
+          <div style={{ 
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '32px'
+          }}>
+            {/* Step 1: Browse */}
+            <div style={{
+              backgroundColor: '#0a0a0a',
+              borderRadius: '12px',
+              padding: '32px',
+              position: 'relative',
+              overflow: 'hidden',
+              border: '1px solid rgba(255,255,255,0.1)'
+            }}>
+              {/* Colored accent bar */}
+              <div style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: '4px',
+                background: '#06b6d4'
+              }} />
+              
+              {/* Numbered badge */}
+              <div style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                backgroundColor: '#06b6d4',
+                color: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: '700',
+                fontSize: '20px',
+                marginBottom: '24px'
+              }}>
+                1
+              </div>
+
+              <h3 style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                color: 'white',
+                textTransform: 'uppercase',
+                marginBottom: '16px',
+                fontStyle: 'italic'
+              }}>
+                BROWSE
+              </h3>
+
+              <p style={{
+                fontSize: '16px',
+                color: 'rgba(255,255,255,0.8)',
+                lineHeight: '1.6'
+              }}>
+                Search and filter 1,247 drills by category, age group, skill level, and duration
+              </p>
+            </div>
+
+            {/* Step 2: Build */}
+            <div style={{
+              backgroundColor: '#0a0a0a',
+              borderRadius: '12px',
+              padding: '32px',
+              position: 'relative',
+              overflow: 'hidden',
+              border: '1px solid rgba(255,255,255,0.1)'
+            }}>
+              {/* Colored accent bar */}
+              <div style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: '4px',
+                background: '#3b82f6'
+              }} />
+              
+              {/* Numbered badge */}
+              <div style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                backgroundColor: '#3b82f6',
+                color: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: '700',
+                fontSize: '20px',
+                marginBottom: '24px'
+              }}>
+                2
+              </div>
+
+              <h3 style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                color: 'white',
+                textTransform: 'uppercase',
+                marginBottom: '16px',
+                fontStyle: 'italic'
+              }}>
+                BUILD
+              </h3>
+
+              <p style={{
+                fontSize: '16px',
+                color: 'rgba(255,255,255,0.8)',
+                lineHeight: '1.6'
+              }}>
+                Drag drills into your session timeline and organize your perfect training plan
+              </p>
+            </div>
+
+            {/* Step 3: Share */}
+            <div style={{
+              backgroundColor: '#0a0a0a',
+              borderRadius: '12px',
+              padding: '32px',
+              position: 'relative',
+              overflow: 'hidden',
+              border: '1px solid rgba(255,255,255,0.1)'
+            }}>
+              {/* Colored accent bar */}
+              <div style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: '4px',
+                background: '#16a34a'
+              }} />
+              
+              {/* Numbered badge */}
+              <div style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                backgroundColor: '#16a34a',
+                color: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: '700',
+                fontSize: '20px',
+                marginBottom: '24px'
+              }}>
+                3
+              </div>
+
+              <h3 style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                color: 'white',
+                textTransform: 'uppercase',
+                marginBottom: '16px',
+                fontStyle: 'italic'
+              }}>
+                SHARE
+              </h3>
+
+              <p style={{
+                fontSize: '16px',
+                color: 'rgba(255,255,255,0.8)',
+                lineHeight: '1.6'
+              }}>
+                Export to PDF or share a link with your team for instant access
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 5: Live Stats/Social Proof */}
+      <section style={{ 
+        backgroundColor: '#0a0a0a',
+        padding: '80px 24px',
+        borderTop: '1px solid rgba(255,255,255,0.1)',
+        borderBottom: '1px solid rgba(255,255,255,0.1)'
+      }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <div style={{ 
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '64px',
+            textAlign: 'center'
+          }}>
+            {/* Stat 1: Drills */}
+            <div>
+              <div style={{
+                fontSize: '48px',
+                fontWeight: '700',
+                color: 'white',
+                marginBottom: '8px',
+                fontVariantNumeric: 'tabular-nums'
+              }}>
+                1,247
+              </div>
+              <div style={{
+                fontSize: '12px',
+                fontWeight: '700',
+                color: 'rgba(255,255,255,0.6)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                marginBottom: '4px'
+              }}>
+                DRILLS
+              </div>
+              <div style={{
+                fontSize: '14px',
+                color: 'rgba(255,255,255,0.5)',
+                marginBottom: '16px'
+              }}>
+                Shared
+              </div>
+              {/* Progress bar */}
+              <div style={{
+                width: '100%',
+                height: '4px',
+                backgroundColor: 'rgba(255,255,255,0.1)',
+                borderRadius: '2px',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  width: '75%',
+                  height: '100%',
+                  background: 'linear-gradient(90deg, #16a34a 0%, #15803d 100%)',
+                  borderRadius: '2px'
+                }} />
+              </div>
+            </div>
+
+            {/* Stat 2: Coaches */}
+            <div>
+              <div style={{
+                fontSize: '48px',
+                fontWeight: '700',
+                color: 'white',
+                marginBottom: '8px',
+                fontVariantNumeric: 'tabular-nums'
+              }}>
+                523
+              </div>
+              <div style={{
+                fontSize: '12px',
+                fontWeight: '700',
+                color: 'rgba(255,255,255,0.6)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                marginBottom: '4px'
+              }}>
+                COACHES
+              </div>
+              <div style={{
+                fontSize: '14px',
+                color: 'rgba(255,255,255,0.5)',
+                marginBottom: '16px'
+              }}>
+                Active
+              </div>
+              {/* Progress bar */}
+              <div style={{
+                width: '100%',
+                height: '4px',
+                backgroundColor: 'rgba(255,255,255,0.1)',
+                borderRadius: '2px',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  width: '60%',
+                  height: '100%',
+                  background: 'linear-gradient(90deg, #16a34a 0%, #15803d 100%)',
+                  borderRadius: '2px'
+                }} />
+              </div>
+            </div>
+
+            {/* Stat 3: Sessions */}
+            <div>
+              <div style={{
+                fontSize: '48px',
+                fontWeight: '700',
+                color: 'white',
+                marginBottom: '8px',
+                fontVariantNumeric: 'tabular-nums'
+              }}>
+                2,831
+              </div>
+              <div style={{
+                fontSize: '12px',
+                fontWeight: '700',
+                color: 'rgba(255,255,255,0.6)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                marginBottom: '4px'
+              }}>
+                SESSIONS
+              </div>
+              <div style={{
+                fontSize: '14px',
+                color: 'rgba(255,255,255,0.5)',
+                marginBottom: '16px'
+              }}>
+                Created
+              </div>
+              {/* Progress bar */}
+              <div style={{
+                width: '100%',
+                height: '4px',
+                backgroundColor: 'rgba(255,255,255,0.1)',
+                borderRadius: '2px',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  width: '85%',
+                  height: '100%',
+                  background: 'linear-gradient(90deg, #16a34a 0%, #15803d 100%)',
+                  borderRadius: '2px'
+                }} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 6: CTA Section */}
+      <section style={{ 
+        background: 'linear-gradient(135deg, rgba(22,163,74,0.15) 0%, rgba(10,10,10,1) 100%)',
+        backgroundColor: '#0a0a0a',
+        padding: '160px 24px',
+        textAlign: 'center'
+      }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <h2 style={{
+            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
+            fontSize: '48px',
+            fontWeight: '900',
+            fontStyle: 'italic',
+            color: 'white',
+            textTransform: 'uppercase',
+            marginBottom: '24px',
+            letterSpacing: '0.02em',
+            lineHeight: '1.2'
+          }}>
+            READY TO ELEVATE YOUR COACHING?
+          </h2>
+
+          <p style={{
+            fontSize: '18px',
+            color: 'rgba(255,255,255,0.8)',
+            marginBottom: '48px',
+            lineHeight: '1.6'
+          }}>
+            Join 500+ coaches using The Boot Room to build better sessions
+          </p>
+
+          <div style={{
+            display: 'flex',
+            gap: '24px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexWrap: 'wrap'
+          }}>
+            <Link
+              href="/auth/signup"
+              style={{
+                backgroundColor: '#16a34a',
+                color: 'white',
+                padding: '18px 48px',
+                borderRadius: '8px',
+                fontWeight: '700',
+                fontSize: '18px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.02em',
+                transition: 'all 0.3s ease',
+                textDecoration: 'none',
+                display: 'inline-block',
+                fontStyle: 'italic'
+              }}
+              className="hover:bg-green-600"
+            >
+              Start Free Trial
+            </Link>
+
+            <Link
+              href="/demo"
+              style={{
+                backgroundColor: 'transparent',
+                color: 'white',
+                padding: '18px 48px',
+                borderRadius: '8px',
+                border: '2px solid white',
+                fontWeight: '700',
+                fontSize: '18px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.02em',
+                transition: 'all 0.3s ease',
+                textDecoration: 'none',
+                display: 'inline-block',
+                fontStyle: 'italic'
+              }}
+              className="hover:bg-white hover:text-black"
+            >
+              Watch Demo
             </Link>
           </div>
         </div>

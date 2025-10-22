@@ -1,146 +1,274 @@
-# Boot Room MVP Project Plan
+# Boot Room MVP Project Plan (v2.0)
+## 🎯 4-Week Path to Launch
 
-## 📋 Overview
-
-This project plan will guide you through building The Boot Room from its current state to a fully functional MVP that real users can test. The plan is designed for someone with limited software engineering experience and includes detailed steps and explanations.
-
-**Total Timeline: 8-9 weeks**  
-**Goal: Launch MVP with user accounts, session building, and drill library**
+**Last Updated:** January 2025  
+**Goal:** Ship a mobile-first Reddit-style drill feed + dead-simple session builder  
+**Timeline:** 4 weeks to testable MVP with real users
 
 ---
 
-## 🎯 Current State Analysis
+## 🔥 Core Principle: Ship Fast, Validate Fast
 
-### ✅ What You Already Have
-- Next.js application with basic routing
-- Landing page with professional styling
-- Session creation flow components (partially built)
-- 60+ high-quality drills in JSON format
-- Responsive design and UI components
+**What We're Building:**
+- Reddit-style drill feed with upvotes, comments, sorting
+- Dead-simple session builder (no wizard, no complexity)
+- Shareable public sessions
+- Basic user profiles
 
-### ❌ What's Missing for MVP
-- User authentication (login/signup)
-- Database to store user data and sessions
-- Working session builder that saves data
-- User dashboard to view saved sessions
-- Mobile-optimized experience
+**What We're NOT Building (Yet):**
+- Sandbox drill editor (Phase 3 - months away)
+- Advanced drag-and-drop
+- Admin CMS
+- PDF exports
+- Team features
 
 ---
 
-## 📅 Phase 1: Backend Foundation (Week 1-2)
+## 📐 Architecture
+
+### Tech Stack (Keep It Simple)
+- **Frontend:** Next.js App Router
+- **Backend:** Supabase (auth + database + storage)
+- **Styling:** Tailwind CSS only
+- **Deployment:** Vercel
+
+**NO complex libraries:** No shadcn/ui, no Framer Motion, no fancy drag-and-drop yet.
+
+### Database Schema (Simplified)
+
+```sql
+-- Core tables only
+users (Supabase auth handles this)
+profiles (id, display_name, avatar_url, bio, created_at)
+drills (id, author_id, title, description, skill_tags[], media_url, created_at)
+sessions (id, author_id, title, description, total_duration, is_public, created_at)
+session_drills (id, session_id, drill_id, order_index, custom_duration, notes)
+votes (id, user_id, content_kind, content_id, value, unique constraint)
+comments (id, user_id, content_kind, content_id, body, created_at)
+```
+
+### Page Structure
+
+```
+3 CORE PAGES:
+├── /drills - Reddit-style feed (Hot/New/Top)
+├── /sessions/new - Session builder
+└── /profile - User's content + settings
+
+SUPPORTING PAGES:
+├── / - Landing page (2 CTAs: Browse Drills / Build Session)
+├── /auth/login & /auth/signup - Authentication
+├── /drills/[id] - Drill detail with comments
+├── /sessions/[id] - Public session view
+└── /profile/[id] - Public user profile (optional)
+```
+
+---
+
+## 📅 Week 1: Foundation (Database + Auth + Basic Feed)
 
 ### 🎯 Goal
-Set up Supabase as your backend database and authentication system.
+Working database with RLS, seed drills, authentication, and a basic /drills feed visible on mobile.
 
-### 1.1 Supabase Setup (Day 1-2) ✅
+### Day 1: Database Schema Setup
 
-**Step 1: Create Supabase Account** ✅
-1. Go to [supabase.com](https://supabase.com) and sign up ✅
-2. Create a new project (choose a region close to your users) ✅
-3. Wait for project to finish setting up (5-10 minutes) ✅
+**Task:** Run complete schema in Supabase SQL Editor
 
-**Step 2: Get Your Keys** ✅
-1. In Supabase dashboard, go to Settings → API ✅
-2. Copy your `Project URL` and `anon public key` ✅
-3. Create `.env.local` file in your project root: ✅
-```bash
-NEXT_PUBLIC_SUPABASE_URL=your_project_url_here
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
-```
+<details>
+<summary>📋 Click to view full SQL schema</summary>
 
-**Step 3: Install Supabase in Your Project** ✅
-```bash
-npm install @supabase/supabase-js @supabase/ssr
-```
-
-### 1.2 Database Schema Setup (Day 3-4) ✅
-
-**What This Means:** Think of database tables like Excel spreadsheets. Each table stores different types of information.
-
-**Step 1: Create Tables in Supabase** ✅
-Go to Supabase dashboard → Table Editor → Create new table for each:
-
-**Users Table** (Supabase creates this automatically with auth) ✅
-- This stores user account information
-
-**Drills Table** ✅
 ```sql
-CREATE TABLE drills (
-  id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  component TEXT NOT NULL,
-  skill_focus TEXT[] NOT NULL,
-  difficulty TEXT NOT NULL,
-  description TEXT NOT NULL,
-  duration INTEGER NOT NULL,
-  equipment TEXT[] NOT NULL,
-  diagram_image_url TEXT,
-  setup_instructions TEXT[] NOT NULL,
-  coaching_points TEXT[] NOT NULL,
-  progressions TEXT[] NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+-- 1) Types
+create type content_type as enum ('drill','session');
+
+-- 2) Profiles (public read, owners edit)
+create table if not exists profiles (
+  id uuid primary key references auth.users(id) on delete cascade,
+  display_name text,
+  avatar_url text,
+  bio text,
+  created_at timestamptz default now()
 );
-```
 
-**Sessions Table** ✅
-```sql
-CREATE TABLE sessions (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-  name TEXT NOT NULL,
-  description TEXT,
-  total_duration INTEGER NOT NULL,
-  team_size INTEGER NOT NULL,
-  skill_level TEXT NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+alter table profiles enable row level security;
+
+create policy "profiles are readable by everyone"
+on profiles for select using (true);
+
+create policy "users can upsert own profile"
+on profiles for insert with check (auth.uid() = id);
+
+create policy "users can update own profile"
+on profiles for update using (auth.uid() = id);
+
+-- Optional: auto-insert profile on signup
+create or replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.profiles (id, display_name)
+  values (new.id, coalesce(new.raw_user_meta_data->>'full_name','Coach'));
+  return new;
+end;
+$$ language plpgsql security definer;
+
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+after insert on auth.users
+for each row execute procedure public.handle_new_user();
+
+-- 3) Drills (public read)
+create table if not exists drills (
+  id uuid primary key default gen_random_uuid(),
+  author_id uuid references auth.users(id) on delete set null,
+  title text not null,
+  description text,
+  skill_tags text[] default '{}',
+  media_url text,
+  created_at timestamptz default now()
 );
-```
+alter table drills enable row level security;
 
-**Sessions_Drills Table** (connects sessions to drills) ✅
-```sql
-CREATE TABLE session_drills (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  session_id UUID REFERENCES sessions(id) ON DELETE CASCADE,
-  drill_id TEXT REFERENCES drills(id) ON DELETE CASCADE,
-  order_index INTEGER NOT NULL,
-  custom_duration INTEGER,
-  notes TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+create policy "drills are public readable"
+on drills for select using (true);
+
+create policy "auth users can insert drills"
+on drills for insert with check (auth.uid() = author_id);
+
+create policy "authors can update/delete own drills"
+on drills for update using (auth.uid() = author_id);
+create policy "authors can delete own drills"
+on drills for delete using (auth.uid() = author_id);
+
+-- 4) Sessions (public shareable via is_public)
+create table if not exists sessions (
+  id uuid primary key default gen_random_uuid(),
+  author_id uuid references auth.users(id) on delete set null,
+  title text not null,
+  description text,
+  total_duration integer default 0,
+  is_public boolean default true,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
 );
+alter table sessions enable row level security;
+
+create policy "sessions public readable if public or owner"
+on sessions for select using (is_public or auth.uid() = author_id);
+
+create policy "auth users can insert sessions"
+on sessions for insert with check (auth.uid() = author_id);
+
+create policy "authors can update/delete own sessions"
+on sessions for update using (auth.uid() = author_id);
+create policy "authors can delete own sessions"
+on sessions for delete using (auth.uid() = author_id);
+
+-- 5) Session drills (composition)
+create table if not exists session_drills (
+  id uuid primary key default gen_random_uuid(),
+  session_id uuid not null references sessions(id) on delete cascade,
+  drill_id uuid not null references drills(id) on delete restrict,
+  order_index integer not null,
+  custom_duration integer,
+  notes text,
+  created_at timestamptz default now()
+);
+alter table session_drills enable row level security;
+
+create policy "read session drills if session is public or owner"
+on session_drills for select using (
+  exists (
+    select 1 from sessions s
+    where s.id = session_drills.session_id
+      and (s.is_public or s.author_id = auth.uid())
+  )
+);
+
+create policy "insert/update/delete session drills only by session owner"
+on session_drills for all using (
+  exists (
+    select 1 from sessions s
+    where s.id = session_drills.session_id
+      and s.author_id = auth.uid()
+  )
+) with check (
+  exists (
+    select 1 from sessions s
+    where s.id = session_drills.session_id
+      and s.author_id = auth.uid()
+  )
+);
+
+-- 6) Votes (single table for drills and sessions)
+create table if not exists votes (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  content_kind content_type not null,
+  content_id uuid not null,
+  value smallint not null check (value in (-1, 1)),
+  created_at timestamptz default now(),
+  unique (user_id, content_kind, content_id)
+);
+alter table votes enable row level security;
+
+create policy "votes are readable by everyone" on votes for select using (true);
+create policy "users manage own votes"
+on votes for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+-- 7) Comments (flat, no threading in MVP)
+create table if not exists comments (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  content_kind content_type not null,
+  content_id uuid not null,
+  body text not null,
+  created_at timestamptz default now()
+);
+alter table comments enable row level security;
+
+create policy "comments are readable by everyone" on comments for select using (true);
+create policy "users can insert comments" on comments for insert with check (auth.uid() = user_id);
+create policy "users can update/delete own comments"
+on comments for update using (auth.uid() = user_id);
+create policy "users can delete own comments"
+on comments for delete using (auth.uid() = user_id);
+
+-- 8) Helpful indexes
+create index on drills (created_at desc);
+create index on sessions (created_at desc);
+create index votes_lookup on votes (content_kind, content_id);
+create index comments_lookup on comments (content_kind, content_id);
+
+-- 9) Simple stats views
+create or replace view drill_stats as
+select
+  d.id,
+  coalesce(sum(case when v.value is null then 0 else v.value end), 0) as score,
+  coalesce(count(c.id),0) as comment_count
+from drills d
+left join votes v on v.content_kind = 'drill' and v.content_id = d.id
+left join comments c on c.content_kind = 'drill' and c.content_id = d.id
+group by d.id;
+
+create or replace view session_stats as
+select
+  s.id,
+  coalesce(sum(case when v.value is null then 0 else v.value end), 0) as score,
+  coalesce(count(c.id),0) as comment_count
+from sessions s
+left join votes v on v.content_kind = 'session' and v.content_id = s.id
+left join comments c on c.content_kind = 'session' and c.content_id = s.id
+group by s.id;
 ```
 
-**Step 2: Set Up Row Level Security (RLS)** ✅
-This ensures users can only see their own data.
+</details>
 
-```sql
--- Enable RLS on all tables ✅
-ALTER TABLE sessions ENABLE ROW LEVEL SECURITY;
-ALTER TABLE sessions_drills ENABLE ROW LEVEL SECURITY;
+**Deliverable:** ✅ All tables created, RLS policies enabled, indexes in place
 
--- Users can only see their own sessions ✅
-CREATE POLICY "Users can view own sessions" ON sessions
-  FOR ALL USING (auth.uid() = user_id);
+### Day 2: Supabase Client + Auth Guard
 
--- Users can only see drills connected to their sessions ✅
-CREATE POLICY "Users can view session drills" ON sessions_drills
-  FOR ALL USING (
-    EXISTS (
-      SELECT 1 FROM sessions 
-      WHERE sessions.id = sessions_drills.session_id 
-      AND sessions.user_id = auth.uid()
-    )
-  );
-
--- All users can read drills (public drill library) ✅
-CREATE POLICY "Public drills read access" ON drills
-  FOR SELECT USING (true);
-```
-
-### 1.3 Authentication System (Day 5-7) ✅
-
-**Step 1: Create Supabase Client** ✅
-Create `app/lib/supabase.js`:
+**Tasks:**
+1. Create `app/lib/supabaseClient.js`:
 ```javascript
 import { createClient } from '@supabase/supabase-js'
 
@@ -150,13 +278,7 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 ```
 
-**Step 2: Create Authentication Pages** ✅
-- Create `app/auth/login/page.jsx` - Login form ✅
-- Create `app/auth/signup/page.jsx` - Registration form ✅ 
-- Create `app/auth/callback/route.js` - Handles auth redirects ✅
-
-**Step 3: Add Protected Routes** ✅
-Create `middleware.js` in project root to protect certain pages:
+2. Update `middleware.js` to protect `/sessions` and `/profile`:
 ```javascript
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 import { NextResponse } from 'next/server'
@@ -166,13 +288,12 @@ export async function middleware(req) {
   const supabase = createMiddlewareClient({ req, res })
   const { data: { session } } = await supabase.auth.getSession()
 
-  // Protect these routes
-  const protectedRoutes = ['/sessions', '/profile', '/library']
-  const isProtectedRoute = protectedRoutes.some(route => 
+  const protectedRoutes = ['/sessions', '/profile']
+  const isProtected = protectedRoutes.some(route => 
     req.nextUrl.pathname.startsWith(route)
   )
 
-  if (isProtectedRoute && !session) {
+  if (isProtected && !session) {
     return NextResponse.redirect(new URL('/auth/login', req.url))
   }
 
@@ -180,843 +301,729 @@ export async function middleware(req) {
 }
 ```
 
----
+3. Verify login/signup pages work (should already exist from previous work)
 
-## 📅 Phase 2: Core Data Layer (Week 2-3)
+**Deliverable:** ✅ Auth working; protected routes redirect to login
 
-### 🎯 Goal
-Set up a system to collect real drill content from external sources and populate your database with high-quality drills that coaches can actually use.
+### Day 3: Seed Drills from JSON
 
-### 2.1 Admin Drill Collection System (Day 8-14)
+**Task:** Create `scripts/seedDrills.js` to migrate existing drill data
 
-**What This Means:** Instead of using dummy drill data, create an admin interface that lets you efficiently collect drills from Instagram, federation websites, coaching blogs, and other sources, then structure them into your database format using AI assistance.
+```javascript
+import { createClient } from '@supabase/supabase-js'
+import drills from '../app/data/drills.json' assert { type: 'json' }
 
-**Step 1: Set Up Supabase Storage (Day 8)** ✅
-You'll need image storage for drill diagrams and photos.
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY // Use service key for seeding
+)
 
-Go to Supabase Dashboard → Storage → Create new bucket: ✅
-```sql
--- Create storage bucket for drill images ✅
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('drill-images', 'drill-images', true);
+async function seedDrills() {
+  console.log(`Seeding ${drills.length} drills...`)
+  
+  const mappedDrills = drills.map(drill => ({
+    title: drill.name,
+    description: drill.description,
+    skill_tags: drill.skill_focus || [],
+    media_url: drill.diagram_image_url || null,
+    author_id: null // Seed drills have no author
+  }))
 
--- Allow public access to drill images ✅
-CREATE POLICY "Public drill images access" ON storage.objects
-  FOR SELECT USING (bucket_id = 'drill-images');
+  const { data, error } = await supabase
+    .from('drills')
+    .insert(mappedDrills)
+  
+  if (error) {
+    console.error('Error seeding drills:', error)
+  } else {
+    console.log(`✅ Successfully seeded ${data.length} drills`)
+  }
+}
 
--- Allow authenticated admin users to upload ✅
-CREATE POLICY "Admin drill image upload" ON storage.objects
-  FOR INSERT WITH CHECK (
-    bucket_id = 'drill-images' 
-    AND auth.uid() IS NOT NULL
-  );
+seedDrills()
 ```
 
-**Step 2: Create Admin Authentication (Day 8)** ✅
-Add admin role to your users table: ✅
-```sql
--- Create admin policy for drill management ✅
-CREATE POLICY "Admin drill management" ON drills
-  FOR ALL USING (auth.uid() = '0dd2ccb9-7102-4fd2-be78-53b1f85d85b0'::uuid);
-```
+**Run:** `node scripts/seedDrills.js`
 
-Set your user as admin: ✅
-- Admin access granted via user-specific policy ✅
+**Deliverable:** ✅ 60+ drills in database
 
-**Step 3: Build Admin Drill Creation Interface (Day 9-10)** ✅
+### Day 4: /drills Feed (New Sort)
 
-**Step 4: Add Club/Source Tracking (Day 11)**
-Add club field to track drill sources for future filtering:
+**Task:** Create basic drill feed page
 
-```sql
--- Add club column to drills table
-ALTER TABLE drills ADD COLUMN IF NOT EXISTS club TEXT;
-```
+**Files to create:**
+- `app/drills/page.jsx` - Main feed page
+- `components/DrillCard.jsx` - Drill preview card
+- `components/SortTabs.jsx` - Hot/New/Top tabs
+- `components/VoteButtons.jsx` - Upvote UI (stub for now)
 
-Create admin layout component `app/admin/layout.jsx`:
+**Example `app/drills/page.jsx`:**
 ```javascript
 'use client'
-import { useEffect, useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { supabase } from '@/app/lib/supabaseClient'
+import DrillCard from '@/components/DrillCard'
+import SortTabs from '@/components/SortTabs'
 
-export default function AdminLayout({ children }) {
-  const [isAdmin, setIsAdmin] = useState(false)
+export default function DrillsPage() {
+  const [drills, setDrills] = useState([])
+  const [sort, setSort] = useState('new')
   const [loading, setLoading] = useState(true)
-  const supabase = createClientComponentClient()
-  const router = useRouter()
 
   useEffect(() => {
-    async function checkAdmin() {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        router.push('/auth/login')
-        return
-      }
+    fetchDrills()
+  }, [sort])
 
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .single()
-
-      if (profile?.role !== 'admin') {
-        router.push('/')
-        return
-      }
-
-      setIsAdmin(true)
-      setLoading(false)
-    }
-
-    checkAdmin()
-  }, [])
-
-  if (loading) return <div>Loading...</div>
-  if (!isAdmin) return <div>Access denied</div>
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <h1 className="text-xl font-semibold">Admin Dashboard</h1>
-        </div>
-      </nav>
-      <main className="max-w-7xl mx-auto py-6 px-4">
-        {children}
-      </main>
-    </div>
-  )
-}
-```
-
-Create `app/admin/drills/new/page.jsx`:
-```javascript
-'use client'
-import { useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { useRouter } from 'next/navigation'
-
-export default function NewDrillPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    component: '',
-    difficulty: '',
-    description: '',
-    duration: '',
-    teamSize: ''
-  })
-  const [images, setImages] = useState([])
-  const [aiSuggestions, setAiSuggestions] = useState(null)
-  const [loading, setLoading] = useState(false)
-  
-  const supabase = createClientComponentClient()
-  const router = useRouter()
-
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files)
-    setImages(files)
-  }
-
-  const handleAiEnhance = async () => {
-    if (images.length === 0) {
-      alert('Please upload at least one image first')
-      return
-    }
-
+  async function fetchDrills() {
     setLoading(true)
     
-    // Upload images first
-    const imageUrls = []
-    for (const image of images) {
-      const fileName = `${Date.now()}-${image.name}`
-      const { data, error } = await supabase.storage
-        .from('drill-images')
-        .upload(fileName, image)
-      
-      if (!error) {
-        const { data: { publicUrl } } = supabase.storage
-          .from('drill-images')
-          .getPublicUrl(fileName)
-        imageUrls.push(publicUrl)
-      }
-    }
-
-    // Send to AI for analysis
-    try {
-      const response = await fetch('/api/admin/drills/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          images: imageUrls,
-          partialData: formData
-        })
-      })
-      
-      const suggestions = await response.json()
-      setAiSuggestions(suggestions)
-    } catch (error) {
-      console.error('AI analysis failed:', error)
+    let query = supabase
+      .from('drills')
+      .select(`
+        *,
+        drill_stats!inner(score, comment_count)
+      `)
+      .limit(25)
+    
+    if (sort === 'new') {
+      query = query.order('created_at', { ascending: false })
+    } else if (sort === 'top') {
+      query = query.order('drill_stats(score)', { ascending: false })
     }
     
+    const { data, error } = await query
+    
+    if (!error) setDrills(data)
     setLoading(false)
   }
 
-  const handleSave = async () => {
-    // Combine manual data with AI suggestions
-    const finalDrill = {
-      ...formData,
-      ...aiSuggestions,
-      id: `drill-${Date.now()}`,
-      diagram_image_url: images.length > 0 ? 'url-to-first-image' : null
-    }
-
-    const { error } = await supabase
-      .from('drills')
-      .insert(finalDrill)
-
-    if (!error) {
-      router.push('/admin/drills')
-    }
-  }
-
   return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Add New Drill</h1>
-      
-      {/* Image Upload Section */}
-      <div className="bg-white p-6 rounded-lg shadow mb-6">
-        <h2 className="text-lg font-semibold mb-4">Upload Drill Images</h2>
-        <input
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={handleImageUpload}
-          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-        />
-        <p className="text-sm text-gray-600 mt-2">
-          Upload images from Instagram, coaching sites, or your own diagrams
-        </p>
-      </div>
-
-      {/* Basic Information Form */}
-      <div className="bg-white p-6 rounded-lg shadow mb-6">
-        <h2 className="text-lg font-semibold mb-4">Basic Information</h2>
-        <div className="grid grid-cols-2 gap-4">
-          <input
-            type="text"
-            placeholder="Drill Name"
-            value={formData.name}
-            onChange={(e) => setFormData({...formData, name: e.target.value})}
-            className="border rounded-lg px-3 py-2"
-          />
-          <select
-            value={formData.component}
-            onChange={(e) => setFormData({...formData, component: e.target.value})}
-            className="border rounded-lg px-3 py-2"
-          >
-            <option value="">Select Component</option>
-            <option value="Warm-up">Warm-up</option>
-            <option value="Technical">Technical</option>
-            <option value="Tactical">Tactical</option>
-            <option value="Physical">Physical</option>
-            <option value="Finishing">Finishing</option>
-            <option value="Cool-down">Cool-down</option>
-          </select>
-          <select
-            value={formData.difficulty}
-            onChange={(e) => setFormData({...formData, difficulty: e.target.value})}
-            className="border rounded-lg px-3 py-2"
-          >
-            <option value="">Select Difficulty</option>
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
-          </select>
-          <input
-            type="number"
-            placeholder="Duration (minutes)"
-            value={formData.duration}
-            onChange={(e) => setFormData({...formData, duration: e.target.value})}
-            className="border rounded-lg px-3 py-2"
-          />
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-4xl mx-auto p-4">
+        <h1 className="text-3xl font-bold mb-6">Drill Library</h1>
+        
+        <SortTabs active={sort} onChange={setSort} />
+        
+        <div className="space-y-4 mt-6">
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            drills.map(drill => (
+              <DrillCard key={drill.id} drill={drill} />
+            ))
+          )}
         </div>
-        <textarea
-          placeholder="Brief description"
-          value={formData.description}
-          onChange={(e) => setFormData({...formData, description: e.target.value})}
-          className="w-full border rounded-lg px-3 py-2 mt-4"
-          rows="3"
-        />
-      </div>
-
-      {/* AI Enhancement Button */}
-      <div className="text-center mb-6">
-        <button
-          onClick={handleAiEnhance}
-          disabled={loading || images.length === 0}
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold disabled:opacity-50"
-        >
-          {loading ? 'Analyzing...' : 'AI Enhance'}
-        </button>
-      </div>
-
-      {/* AI Suggestions Display */}
-      {aiSuggestions && (
-        <div className="bg-green-50 p-6 rounded-lg mb-6">
-          <h2 className="text-lg font-semibold mb-4 text-green-800">AI Suggestions</h2>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-green-700">Equipment:</label>
-              <p className="text-green-600">{aiSuggestions.equipment?.join(', ')}</p>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-green-700">Setup Instructions:</label>
-              <ul className="text-green-600 list-disc list-inside">
-                {aiSuggestions.setup_instructions?.map((instruction, i) => (
-                  <li key={i}>{instruction}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-green-700">Coaching Points:</label>
-              <ul className="text-green-600 list-disc list-inside">
-                {aiSuggestions.coaching_points?.map((point, i) => (
-                  <li key={i}>{point}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Save Button */}
-      <div className="text-center">
-        <button
-          onClick={handleSave}
-          disabled={!formData.name || !formData.component}
-          className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold disabled:opacity-50"
-        >
-          Save Drill
-        </button>
       </div>
     </div>
   )
 }
 ```
 
-**Step 4: Create AI Analysis API (Day 11-12)**
+**Deliverable:** ✅ Mobile-first drill feed showing seeded drills
 
-Create `app/api/admin/drills/analyze/route.js`:
+### Day 5: Drill Detail Page
+
+**Task:** Create drill detail view with comments (read-only)
+
+**Files:**
+- `app/drills/[id]/page.jsx` - Drill detail page
+- `components/CommentList.jsx` - Display comments
+
+**Deliverable:** ✅ Click drill → see full detail + comments
+
+**🎯 Week 1 Success Criteria:**
+- [ ] Auth working (login/signup/logout)
+- [ ] Public /drills feed shows seeded drills
+- [ ] /drills/[id] loads drill detail
+- [ ] DB policies allow public read
+- [ ] Mobile-responsive layout
+- [ ] Project builds without errors
+
+---
+
+## 📅 Week 2: Community Features (Voting + Comments + Sorting)
+
+### 🎯 Goal
+Reddit-like interactions: upvotes, comments, and Hot/New/Top sorting
+
+### Day 6: Implement Upvoting
+
+**Tasks:**
+1. Update `components/VoteButtons.jsx` with real functionality:
 ```javascript
-import { NextResponse } from 'next/server'
-import OpenAI from 'openai'
+'use client'
+import { useState } from 'react'
+import { supabase } from '@/app/lib/supabaseClient'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+export default function VoteButtons({ contentKind, contentId, initialScore, userVote }) {
+  const [score, setScore] = useState(initialScore)
+  const [voted, setVoted] = useState(userVote)
 
-export async function POST(request) {
-  try {
-    const { images, partialData } = await request.json()
+  async function handleVote(value) {
+    const { data: { user } } = await supabase.auth.getUser()
     
-    const messages = [
-      {
-        role: "system",
-        content: `You are a soccer coaching expert. Analyze drill images and extract structured information. Return JSON matching this exact format:
-        {
-          "equipment": ["array of equipment needed"],
-          "skill_focus": ["array of skills practiced"],
-          "setup_instructions": ["array of setup steps"],
-          "coaching_points": ["array of coaching tips"],
-          "progressions": ["array of drill variations"]
-        }`
-      },
-      {
-        role: "user",
-        content: [
-          {
-            type: "text",
-            text: `Analyze this soccer drill. Current info: ${JSON.stringify(partialData)}`
-          },
-          ...images.map(url => ({
-            type: "image_url",
-            image_url: { url }
-          }))
-        ]
-      }
-    ]
+    if (!user) {
+      alert('Please log in to vote')
+      return
+    }
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4-vision-preview",
-      messages,
-      max_tokens: 1000,
-    })
+    // Optimistic update
+    const newVote = voted === value ? null : value
+    setVoted(newVote)
+    setScore(score + (newVote || 0) - (voted || 0))
 
-    const suggestions = JSON.parse(response.choices[0].message.content)
-    return NextResponse.json(suggestions)
-
-  } catch (error) {
-    console.error('AI analysis error:', error)
-    return NextResponse.json(
-      { error: 'Failed to analyze drill' },
-      { status: 500 }
-    )
+    // Upsert vote
+    if (newVote === null) {
+      await supabase
+        .from('votes')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('content_kind', contentKind)
+        .eq('content_id', contentId)
+    } else {
+      await supabase
+        .from('votes')
+        .upsert({
+          user_id: user.id,
+          content_kind: contentKind,
+          content_id: contentId,
+          value: newVote
+        }, { onConflict: 'user_id,content_kind,content_id' })
+    }
   }
+
+  return (
+    <div className="flex items-center gap-2">
+      <button
+        onClick={() => handleVote(1)}
+        className={`p-2 ${voted === 1 ? 'text-green-600' : 'text-gray-400'}`}
+      >
+        ▲
+      </button>
+      <span className="font-bold">{score}</span>
+      <button
+        onClick={() => handleVote(-1)}
+        className={`p-2 ${voted === -1 ? 'text-red-600' : 'text-gray-400'}`}
+      >
+        ▼
+      </button>
+    </div>
+  )
 }
 ```
 
-**Step 5: Environment Setup (Day 13)**
-Add to your `.env.local`:
-```bash
-OPENAI_API_KEY=your_openai_api_key_here
+**Deliverable:** ✅ Upvote/downvote works with optimistic UI
+
+### Day 7: Implement Comments
+
+**Tasks:**
+1. Create `components/CommentForm.jsx`
+2. Update `components/CommentList.jsx` to allow posting
+3. Add real-time comment refresh
+
+**Deliverable:** ✅ Users can post comments on drills
+
+### Day 8: Hot/Top Sorting
+
+**Task:** Implement Hot algorithm for sorting
+
+**Add to Supabase (function for hot score):**
+```sql
+create or replace function get_hot_drills(lim integer default 25)
+returns table (
+  id uuid,
+  author_id uuid,
+  title text,
+  description text,
+  skill_tags text[],
+  media_url text,
+  created_at timestamptz,
+  score bigint,
+  comment_count bigint,
+  hot_score numeric
+) as $$
+begin
+  return query
+  select 
+    d.*,
+    ds.score,
+    ds.comment_count,
+    (ds.score::float + extract(epoch from (now() - d.created_at)) / -45000.0) as hot_score
+  from drills d
+  join drill_stats ds on ds.id = d.id
+  order by hot_score desc
+  limit lim;
+end;
+$$ language plpgsql;
 ```
 
-Get OpenAI API key:
-1. Go to [platform.openai.com](https://platform.openai.com)
-2. Create account and get API key
-3. Add billing method (GPT-4 Vision costs ~$0.01-0.03 per image)
-
-**Step 6: Test the Workflow (Day 14)**
-1. Set yourself as admin in Supabase
-2. Navigate to `/admin/drills/new`
-3. Upload a drill image from Instagram or coaching site
-4. Fill basic fields
-5. Click "AI Enhance" and review suggestions
-6. Save the drill
-7. Verify it appears in your drills table
-
-**Expected Outcome:**
-- Admin interface for collecting real drill content
-- AI-powered extraction of drill details from images
-- Structured drill data in your database
-- Foundation for building high-quality drill library
-
-### 2.2 Drill Library Population (Day 15-16)
-
-**What This Means:** Use your new admin system to populate the database with 50-100 real, high-quality drills from various sources.
-
-**Step 1: Source Collection Strategy**
-Identify your drill sources:
-- **Federation websites:** US Soccer, FA, UEFA coaching materials
-- **Social media:** Instagram accounts (@coaches_voice, @soccercoachweekly)
-- **Coaching blogs:** Soccer Coach Weekly, World Class Coaching
-- **YouTube channels:** Screenshot key moments from drill videos
-
-**Step 2: Daily Collection Target**
-- **Day 1:** 25 warm-up and technical drills
-- **Day 2:** 25 tactical and finishing drills
-
-**Step 3: Quality Standards**
-For each drill ensure:
-- Clear, descriptive name
-- Appropriate component classification
-- Realistic duration estimate
-- Complete equipment list
-- 3+ setup instructions
-- 3+ coaching points
-- 2+ progressions
-
-### 2.3 API Endpoints (Day 17-19)
-
-**What This Means:** Create "endpoints" - these are like phone numbers that your frontend can call to get or save data.
-
-**Step 1: Create Drill API**
-Create `app/api/drills/route.js`:
+**Update feed to call RPC for Hot sort:**
 ```javascript
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
+const { data } = await supabase.rpc('get_hot_drills', { lim: 25 })
+```
 
-export async function GET(request) {
-  const supabase = createRouteHandlerClient({ cookies })
-  const { searchParams } = new URL(request.url)
+**Deliverable:** ✅ Sort tabs work (Hot/New/Top)
+
+### Day 9: Polish Drill Detail
+
+**Tasks:**
+- Add "Share" button (copy link)
+- Show upvote status for logged-in users
+- Improve mobile layout
+- Handle long descriptions
+
+**Deliverable:** ✅ Professional drill detail page
+
+### Day 10: QA Week 2
+
+**Testing Checklist:**
+- [ ] Vote toggles correctly
+- [ ] Comments post and display
+- [ ] Sort changes query correctly
+- [ ] Login required prompts work
+- [ ] Mobile UX smooth
+
+**Deliverable:** ✅ Week 2 features stable
+
+**🎯 Week 2 Success Criteria:**
+- [ ] Users can upvote/downvote drills
+- [ ] Users can comment on drills
+- [ ] Hot/New/Top sorting works correctly
+- [ ] Mobile experience is smooth
+- [ ] Login prompts appear for auth-required actions
+
+---
+
+## 📅 Week 3: Session Builder + Profile (The Big Week)
+
+### 🎯 Goal
+Dead-simple session builder, save/share sessions, votes/comments on sessions, basic profile
+
+### Day 11: Session Builder Scaffold
+
+**Files to create:**
+- `app/sessions/new/page.jsx` - Builder page
+- `components/SessionBuilder.jsx` - Parent component
+- `components/DrillListSidebar.jsx` - Left: searchable drills
+- `components/SessionCanvas.jsx` - Right: session timeline
+
+**Layout structure:**
+```
+┌─────────────────────────────────────┐
+│  [Save Session] [Cancel]            │
+├──────────────┬──────────────────────┤
+│              │                      │
+│  Drill List  │   Your Session       │
+│  (search)    │   1. [Drill Name]    │
+│  - Drill A   │      Duration: 15min │
+│  - Drill B   │   2. [Drill Name]    │
+│  - Drill C   │      Duration: 10min │
+│              │   ─────────────────  │
+│  [+ Add]     │   Total: 25 min      │
+└──────────────┴──────────────────────┘
+```
+
+**Deliverable:** ✅ UI scaffold with local state
+
+### Day 12: Add/Remove/Reorder Drills
+
+**Task:** Implement session building logic
+
+**Key features:**
+- Click drill to add to session
+- Up/down arrows to reorder (NO drag-and-drop yet)
+- Input field for custom duration
+- Compute total_duration automatically
+
+**Example state management:**
+```javascript
+const [selectedDrills, setSelectedDrills] = useState([])
+
+function addDrill(drill) {
+  setSelectedDrills([...selectedDrills, {
+    drill,
+    order_index: selectedDrills.length,
+    custom_duration: drill.duration || 15,
+    notes: ''
+  }])
+}
+
+function moveDrill(index, direction) {
+  const newDrills = [...selectedDrills]
+  const newIndex = index + direction
+  [newDrills[index], newDrills[newIndex]] = [newDrills[newIndex], newDrills[index]]
+  setSelectedDrills(newDrills.map((d, i) => ({ ...d, order_index: i })))
+}
+```
+
+**Deliverable:** ✅ Fully interactive builder (client-side only)
+
+### Day 13: Persist Session
+
+**Task:** Save session to database
+
+**Implementation:**
+```javascript
+async function saveSession() {
+  const { data: { user } } = await supabase.auth.getUser()
   
-  // Allow filtering by component, difficulty, etc.
-  const component = searchParams.get('component')
-  const difficulty = searchParams.get('difficulty')
+  if (!user) return
   
-  let query = supabase.from('drills').select('*')
-  
-  if (component) query = query.eq('component', component)
-  if (difficulty) query = query.eq('difficulty', difficulty)
-  
-  const { data, error } = await query
+  // 1. Insert session
+  const { data: session, error } = await supabase
+    .from('sessions')
+    .insert({
+      author_id: user.id,
+      title: sessionTitle,
+      description: sessionDescription,
+      total_duration: selectedDrills.reduce((sum, d) => sum + d.custom_duration, 0),
+      is_public: true
+    })
+    .select()
+    .single()
   
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    alert('Error saving session')
+    return
   }
   
-  return NextResponse.json({ drills: data })
+  // 2. Insert session_drills
+  const drillsToInsert = selectedDrills.map(d => ({
+    session_id: session.id,
+    drill_id: d.drill.id,
+    order_index: d.order_index,
+    custom_duration: d.custom_duration,
+    notes: d.notes
+  }))
+  
+  await supabase.from('session_drills').insert(drillsToInsert)
+  
+  // 3. Navigate to session view
+  router.push(`/sessions/${session.id}`)
 }
 ```
 
-**Step 2: Create Sessions API**
-Create `app/api/sessions/route.js` for creating and getting sessions
-Create `app/api/sessions/[id]/route.js` for updating specific sessions
+**Deliverable:** ✅ Sessions save to database
+
+### Day 14: Session View Page
+
+**Task:** Create public session view
+
+**Files:**
+- `app/sessions/[id]/page.jsx` - Display saved session
+
+**Query to fetch session:**
+```javascript
+const { data } = await supabase
+  .from('sessions')
+  .select(`
+    *,
+    profiles(display_name, avatar_url),
+    session_drills(
+      order_index,
+      custom_duration,
+      notes,
+      drills(*)
+    ),
+    session_stats!inner(score, comment_count)
+  `)
+  .eq('id', sessionId)
+  .single()
+```
+
+**Add VoteButtons and Comments (reuse components with `content_kind='session'`)**
+
+**Deliverable:** ✅ Shareable session page with voting/comments
+
+### Day 15: Profile Page
+
+**Task:** Create user profile
+
+**Files:**
+- `app/profile/page.jsx` - Own profile
+- `components/ProfileHeader.jsx` - Display name, avatar, edit
+- `components/SessionList.jsx` - User's sessions
+- `components/DrillList.jsx` - User's uploaded drills
+
+**Features:**
+- Edit display name inline
+- Show user's sessions
+- Show user's uploaded drills
+- Basic stats (sessions created, drills uploaded)
+
+**Deliverable:** ✅ Working profile page
+
+**🔍 Testing Checkpoint:**
+1. Create session from scratch
+2. Open share link while logged out
+3. Upvote/comment as different user
+4. Verify RLS allows/blocks correctly
+
+**🎯 Week 3 Success Criteria:**
+- [ ] Coaches can build complete sessions
+- [ ] Sessions save and load correctly
+- [ ] Session pages are publicly viewable
+- [ ] Voting/commenting works on sessions
+- [ ] Profile shows user's content
+- [ ] Can edit profile info
 
 ---
 
-## 📅 Phase 3: Frontend Features (Week 3-5)
+## 📅 Week 4: Polish + Deploy + Beta
 
 ### 🎯 Goal
-Build the user-facing features that make your app functional.
+Mobile-first polish, error handling, production deployment, first beta users
 
-### 3.1 Session Builder (Day 15-21)
+### Day 16: Mobile Polish Pass
 
-**What This Means:** Create the interface where coaches can build their training sessions by selecting drills.
+**Tasks:**
+- Ensure 1-column layout on mobile
+- Touch targets minimum 44px
+- Sticky sort tabs on /drills
+- Sticky save bar on /sessions/new
+- Review typography and spacing
+- Test on actual mobile devices
 
-**Key Components to Build:**
-1. **Session Setup Form** - Where users input team size, skill level, duration
-2. **Drill Selection Interface** - Browse and filter drills
-3. **Session Timeline** - Drag and drop drills to build session
-4. **Session Preview** - See the complete session before saving
+**Deliverable:** ✅ Smooth mobile experience
 
-**Step 1: Update Existing Session Builder**
-Your existing `CreateSession` components need to be connected to the database:
+### Day 17: Error States + Loading
 
-**Step 2: Add Real Data Fetching**
-Replace hardcoded data with API calls:
-```javascript
-// In your session builder component
-const [drills, setDrills] = useState([])
+**Tasks:**
+- Add skeleton loaders for lists
+- Friendly empty states:
+  - No drills found
+  - No comments yet
+  - No sessions created
+- Toast notifications for actions:
+  - "Session saved!"
+  - "Login required"
+  - "Comment posted!"
+- Loading spinners for save operations
 
-useEffect(() => {
-  async function fetchDrills() {
-    const response = await fetch('/api/drills')
-    const data = await response.json()
-    setDrills(data.drills)
-  }
-  fetchDrills()
-}, [])
-```
+**Deliverable:** ✅ Professional error/loading UX
 
-**Step 3: Add Save Functionality**
-```javascript
-async function saveSession(sessionData) {
-  const response = await fetch('/api/sessions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(sessionData)
-  })
-  
-  if (response.ok) {
-    router.push('/sessions') // Redirect to user's sessions
-  }
-}
-```
+### Day 18: Security + RLS Review
 
-### 3.2 Drill Library Page (Day 22-25)
+**Security Checklist:**
+- [ ] All write operations require authentication
+- [ ] Anonymous users can read public pages
+- [ ] Users can only edit their own content
+- [ ] Votes are unique per user/content
+- [ ] Input validation on:
+  - [ ] Comment length (max 2000 chars)
+  - [ ] Session title (max 100 chars)
+  - [ ] Duration values (positive integers)
 
-**Step 1: Create Library Page**
-Create `app/library/page.jsx`:
-- Search bar for drill names
-- Filter buttons for components (warm-up, finishing, etc.)
-- Filter by difficulty level
-- Grid layout showing drill cards
+**Test scenarios:**
+1. Try to vote while logged out
+2. Try to edit someone else's session
+3. Try to delete someone else's comment
+4. Try SQL injection in comment field
 
-**Step 2: Drill Detail Modal**
-When users click a drill, show a popup with:
-- Drill diagram
-- Detailed instructions
-- Coaching points
-- Equipment needed
+**Deliverable:** ✅ Security verified
 
-### 3.3 User Dashboard (Day 26-28)
+### Day 19: Performance + Deploy
 
-**Step 1: Create Sessions Dashboard**
-Create `app/sessions/page.jsx`:
-- List of user's saved sessions
-- Search and filter saved sessions
-- Quick actions: duplicate, edit, delete
-- Session statistics (total time, number of drills)
+**Tasks:**
 
----
+**1. Performance:**
+- Add pagination to drill feed (Load More button)
+- Limit comments to 50 per page
+- Verify database indexes are used
+- Test with larger datasets
 
-## 📅 Phase 4: Custom Drill Visualization (Week 5)
-
-### 🎯 Goal
-Replace uploaded drill images with AI-generated branded diagrams that create a cohesive, professional visual identity for your drill library.
-
-### 4.1 Visual Style Guide Development (Day 29-31)
-
-**What This Means:** Define your platform's visual identity for drill diagrams to ensure all generated images look consistent and professional.
-
-**Step 1: Design System Planning**
-- **Color Palette:** Define primary colors for field, players, equipment, arrows
-- **Field Style:** Grass texture, line style, goal design
-- **Player Icons:** Consistent player representation (stick figures, colored dots, etc.)
-- **Equipment Design:** Cone styles, ball representation, goal appearance
-- **Arrow/Movement:** How to show player movement, ball direction
-
-**Step 2: Reference Collection**
-- Gather examples of professional drill diagrams
-- Screenshot current best practices from coaching resources
-- Define what "Boot Room style" should look like
-
-**Step 3: Style Guide Documentation**
-Create detailed prompt templates for DALL-E 3:
-```
-"Create a soccer drill diagram in minimalist style with:
-- Bright green grass field with white lines
-- Blue team players as blue circles with numbers
-- Red team players as red circles with numbers
-- Orange cones as triangles
-- Yellow soccer balls as circles
-- White arrows showing movement
-- Clean, professional coaching diagram style"
-```
-
-### 4.2 AI Image Generation Integration (Day 32-35)
-
-**Step 1: Add DALL-E 3 Integration**
-Extend your existing OpenAI integration to include image generation:
-
-```javascript
-// Add to your analyze API
-const imageResponse = await openai.images.generate({
-  model: "dall-e-3",
-  prompt: buildDrillPrompt(aiSuggestions, formData),
-  size: "1024x1024",
-  quality: "standard",
-  n: 1,
-});
-```
-
-**Step 2: Prompt Engineering**
-Create dynamic prompts that combine:
-- AI-analyzed drill content
-- Your visual style guide
-- Specific coaching elements (player positions, equipment setup)
-
-**Step 3: Image Workflow Enhancement**
-1. **Upload source image** → AI analyzes content
-2. **Generate suggestions** → Equipment, setup, coaching points
-3. **Create branded diagram** → DALL-E generates professional version
-4. **Save both versions** → Original for reference, branded for display
-
-### 4.3 Quality Control & Testing (Day 36-38)
-
-**Step 1: Generated Image Review**
-- Test with various drill types (technical, tactical, finishing)
-- Ensure consistency across different complexity levels
-- Validate that diagrams accurately represent the drill
-
-**Step 2: Fallback System**
-- Keep original uploaded images as backup
-- Allow manual selection between AI-generated and original
-- Error handling for failed image generations
-
-**Step 3: Batch Processing**
-- Tool to regenerate existing drill images with new style
-- Ability to update visual style across entire library
-- Version control for diagram updates
-
-### 4.4 Advanced Features (Day 39-42)
-
-**Step 1: Interactive Diagrams**
-- Clickable elements showing progression phases
-- Animated movement arrows
-- Equipment tooltips with setup details
-
-**Step 2: Customization Options**
-- Different field sizes (youth vs adult)
-- Indoor vs outdoor variations
-- Equipment alternatives based on availability
-
-**Step 3: Export Capabilities**
-- High-resolution downloads for printing
-- Multiple format options (PNG, PDF, SVG)
-- Branded coaching materials generation
-
----
-
-## 📅 Phase 5: User Experience (Week 6-7)
-
-### 🎯 Goal
-Make sure the app works great on mobile devices and has professional features.
-
-### 5.1 Mobile Optimization (Day 43-49)
-
-**What This Means:** Ensure your app looks and works great on phones and tablets.
-
-**Key Areas to Focus:**
-1. **Touch-Friendly Buttons** - Make buttons big enough for fingers
-2. **Responsive Layout** - Content should adapt to screen size
-3. **Mobile Navigation** - Easy-to-use menu on small screens
-4. **Session Viewing** - Coaches can easily read sessions on field
-
-**Step 1: Test on Mobile**
-- Use Chrome DevTools to test different screen sizes
-- Test on actual phones/tablets if available
-
-**Step 2: Improve Mobile Experience**
-- Add bottom navigation for mobile
-- Make drill cards touch-friendly
-- Ensure text is readable without zooming
-
-### 5.2 Export Features (Day 50-56)
-
-**Step 1: PDF Export**
-Install PDF generation library:
+**2. Build:**
 ```bash
-npm install jspdf html2canvas
+npm run build
 ```
+Fix any build errors.
 
-Create function to generate PDF of session:
-```javascript
-import jsPDF from 'jspdf'
-import html2canvas from 'html2canvas'
-
-export async function generateSessionPDF(sessionElement) {
-  const canvas = await html2canvas(sessionElement)
-  const imgData = canvas.toDataURL('image/png')
-  
-  const pdf = new jsPDF()
-  pdf.addImage(imgData, 'PNG', 0, 0)
-  pdf.save('training-session.pdf')
-}
-```
-
-**Step 2: Session Sharing**
-Create shareable links for sessions:
-- Generate unique session URLs
-- Allow viewing sessions without login (read-only)
-
----
-
-## 📅 Phase 6: Testing & Launch Prep (Week 7-8)
-
-### 🎯 Goal
-Make sure everything works correctly and prepare for users.
-
-### 6.1 Quality Assurance (Day 57-60)
-
-**Manual Testing Checklist:**
-- [ ] User can create account
-- [ ] User can log in/out
-- [ ] User can build and save session
-- [ ] User can view saved sessions
-- [ ] User can browse drill library
-- [ ] All links work correctly
-- [ ] Mobile experience is smooth
-- [ ] PDF export works
-- [ ] Session sharing works
-
-**Error Testing:**
-- Try to break things intentionally
-- Test with bad internet connection
-- Test with empty data
-- Test edge cases (very long session names, etc.)
-
-### 6.2 Performance & Deployment (Day 61-63)
-
-**Step 1: Optimize Performance**
-```bash
-npm run build  # Check for any build errors
-```
-
-**Step 2: Deploy to Vercel**
+**3. Deploy to Vercel:**
 1. Push code to GitHub
-2. Connect Vercel to your GitHub repo
-3. Add environment variables in Vercel dashboard
-4. Deploy and test live site
+2. Import repo in Vercel
+3. Add environment variables:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+4. Deploy
+5. Test production URL
+
+**4. Custom domain (optional):**
+- Connect domain in Vercel settings
+
+**Deliverable:** ✅ App live on Vercel
+
+### Day 20: Beta QA + Launch
+
+**Final QA Checklist:**
+
+**Mobile Testing:**
+- [ ] iOS Safari
+- [ ] Android Chrome
+- [ ] Tablet view
+
+**Feature Testing:**
+- [ ] Create account
+- [ ] Log in / log out
+- [ ] Browse drill feed (all sort modes)
+- [ ] Upvote drill
+- [ ] Comment on drill
+- [ ] Build session from scratch
+- [ ] Save session
+- [ ] View saved session (logged in)
+- [ ] View shared session (logged out)
+- [ ] Edit profile
+- [ ] View own profile
+
+**Beta Launch:**
+1. Create Google Form for feedback
+2. Invite 5-10 coaches from your network
+3. Send them:
+   - Link to app
+   - Quick "how to use" guide
+   - Feedback form link
+4. Monitor for critical bugs
+5. Schedule 15-min calls with active users
+
+**Deliverable:** ✅ First beta users testing app
+
+**🎯 Week 4 Success Criteria:**
+- [ ] App deployed to production
+- [ ] Anonymous users can browse drills/sessions
+- [ ] Logged-in users can create sessions
+- [ ] Mobile experience is smooth
+- [ ] Zero critical bugs
+- [ ] 5+ beta users actively testing
+- [ ] Feedback collected
 
 ---
 
-## 📅 Phase 7: Beta Testing (Week 8-9)
+## 🎨 Component Structure
 
-### 🎯 Goal
-Get real coaches using your app and collect feedback.
+```
+app/
+├── layout.jsx
+├── page.js (landing)
+├── lib/
+│   └── supabaseClient.js
+├── drills/
+│   ├── page.jsx (feed)
+│   └── [id]/page.jsx (detail)
+├── sessions/
+│   ├── new/page.jsx (builder)
+│   └── [id]/page.jsx (view)
+├── profile/
+│   └── page.jsx
+├── auth/
+│   ├── login/page.jsx
+│   └── signup/page.jsx
+└── middleware.js
 
-### 7.1 Beta User Recruitment (Day 64-66)
+components/
+├── SortTabs.jsx
+├── DrillCard.jsx
+├── VoteButtons.jsx
+├── CommentList.jsx
+├── CommentForm.jsx
+├── DrillListSidebar.jsx
+├── SessionCanvas.jsx
+├── SessionBuilder.jsx
+├── ProfileHeader.jsx
+├── SessionList.jsx
+└── DrillList.jsx
 
-**Where to Find Beta Users:**
-- Local soccer clubs
-- Coaching Facebook groups
-- Soccer coaching forums
-- Personal network of coaches
-
-**What to Offer:**
-- Free access during beta
-- Direct line to developer (you)
-- Influence on future features
-
-### 7.2 Feedback Collection (Day 67-70)
-
-**Set Up Analytics:**
-- Google Analytics for usage data
-- Simple feedback form in app
-- Schedule calls with active users
-
-**Key Questions to Ask:**
-- What's confusing about the app?
-- What features are missing?
-- Would you pay for this?
-- How does this compare to what you use now?
+scripts/
+└── seedDrills.js
+```
 
 ---
 
-## 🎯 Success Metrics for MVP Launch
+## ⚠️ Common Pitfalls to Avoid
+
+### Week 1
+- **RLS blocking public reads:** Ensure drill/session select policies use `using (true)` for public access
+- **Auth callbacks not working:** Check Supabase redirect URLs in dashboard
+
+### Week 2
+- **Duplicate votes:** Handle unique constraint error gracefully (toggle vote instead of error)
+- **N+1 queries:** Always join stats views with main query
+- **Vote count inflation:** Ensure unique constraint on (user_id, content_kind, content_id)
+
+### Week 3
+- **Over-complicating builder:** Keep to simple add/remove/up/down - NO drag-and-drop yet
+- **Session RLS too strict:** Public sessions should be viewable by anyone (check is_public flag)
+- **Reordering bugs:** Update order_index for ALL drills when one moves
+
+### Week 4
+- **Premature optimization:** Focus on working features, not perfect code
+- **Scope creep:** Resist adding "just one more feature"
+- **Not testing on real devices:** Desktop Chrome DevTools ≠ actual mobile
+
+---
+
+## 📊 MVP Success Metrics
 
 ### Technical Metrics
-- [ ] 99% uptime
-- [ ] Page loads in under 3 seconds
-- [ ] Mobile-responsive design
-- [ ] Zero critical bugs
+- [ ] 99% uptime (check Vercel analytics)
+- [ ] Pages load in < 3 seconds
+- [ ] Mobile-responsive on iOS and Android
+- [ ] Zero critical bugs after Week 4
 
 ### User Metrics
-- [ ] Users can complete full session creation flow
-- [ ] Average session contains 4+ drills
-- [ ] Users return to app within 7 days
-- [ ] Positive feedback from 80%+ of beta users
+- [ ] Users complete session creation flow
+- [ ] Average session contains 3+ drills
+- [ ] Users return within 7 days
+- [ ] 80%+ positive feedback from beta users
 
-### Business Metrics
-- [ ] 50+ active beta users
-- [ ] 100+ sessions created
-- [ ] Clear path to monetization identified
-
----
-
-## 🚨 Common Pitfalls to Avoid
-
-### Technical Issues
-- **Don't skip database design** - Plan your tables carefully upfront
-- **Test early and often** - Don't wait until the end to test features
-- **Keep it simple** - Resist adding complex features during MVP
-
-### User Experience Issues
-- **Mobile-first thinking** - Many coaches will use this on phones
-- **Keep drill entry simple** - Don't overwhelm with too many options
-- **Fast loading** - Coaches need quick access during training
-
-### Project Management Issues
-- **Scope creep** - Stick to MVP features only
-- **Perfect is the enemy of good** - Launch with good enough, improve later
-- **Get user feedback early** - Don't build in isolation
+### Business Validation
+- [ ] 10+ active beta users
+- [ ] 25+ sessions created
+- [ ] Users request specific features
+- [ ] Clear understanding of monetization path
 
 ---
 
-## 📞 Getting Help
+## 🚀 What Comes After MVP
 
-### When You Get Stuck
-1. **Check the error message** - Often tells you exactly what's wrong
-2. **Google the error** - Usually someone has solved it before
-3. **Ask ChatGPT/Claude** - Describe your specific problem
-4. **Check documentation** - Supabase and Next.js have great docs
+### Phase 2 (Weeks 5-8)
+- Search and advanced filtering
+- User follows and activity feed
+- Drill templates and categories
+- Email notifications
+- Session templates
+
+### Phase 3 (Months 3-6)
+- Sandbox drill builder (visual editor)
+- Team features (share with roster)
+- PDF export
+- Analytics dashboard
+- Mobile apps (React Native)
+
+---
+
+## 🆘 Getting Help
+
+### When Stuck
+1. **Read the error message** - Usually tells you exactly what's wrong
+2. **Check RLS policies** - 90% of Supabase issues are RLS-related
+3. **Test query in SQL editor** - Verify query works before debugging code
+4. **Console.log everything** - See what data you're actually getting
 
 ### Useful Resources
-- [Supabase Documentation](https://supabase.com/docs)
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Stack Overflow](https://stackoverflow.com) - For specific coding questions
-- [YouTube tutorials](https://youtube.com) - Visual learners
+- [Supabase Docs](https://supabase.com/docs)
+- [Next.js App Router Docs](https://nextjs.org/docs)
+- [Tailwind CSS Docs](https://tailwindcss.com/docs)
+- [RLS Debugger](https://supabase.com/docs/guides/auth/row-level-security)
 
 ---
 
 ## ✅ Ready to Start?
 
-**Your first step:** Begin with Phase 1.1 - Create your Supabase account and get familiar with the dashboard. Take it one day at a time, and don't try to rush through multiple phases at once.
+**First step:** Week 1, Day 1 - Run the complete database schema in Supabase SQL Editor.
 
-**Remember:** This is a marathon, not a sprint. Focus on building something that works well rather than something that has every feature imaginable.
+**Remember:** 
+- One week at a time
+- Test constantly
+- Keep it simple
+- Ship fast, iterate faster
 
 Good luck! 🚀
