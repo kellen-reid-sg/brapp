@@ -98,14 +98,13 @@ export default function HomePage() {
             position: 'absolute',
             inset: '-40px',
             backgroundImage: 'url(/images/hero-training-session.png)',
-            backgroundSize: 'cover',
+            backgroundSize: '90%',
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
             filter: 'blur(10px) grayscale(30%)',
             WebkitFilter: 'blur(10px) grayscale(30%)',
             opacity: 0.6,
-            zIndex: 0,
-            transform: 'scale(1.15)'
+            zIndex: 0
           }}
         />
         
