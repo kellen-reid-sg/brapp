@@ -101,9 +101,9 @@ export default function HomePage() {
             backgroundSize: 'cover',
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
-            filter: 'blur(15px) grayscale(60%) brightness(0.5)',
-            WebkitFilter: 'blur(15px) grayscale(60%) brightness(0.5)',
-            opacity: 0.35,
+            filter: 'blur(10px) grayscale(30%)',
+            WebkitFilter: 'blur(10px) grayscale(30%)',
+            opacity: 0.6,
             zIndex: 0,
             transform: 'scale(1.15)'
           }}
@@ -114,7 +114,7 @@ export default function HomePage() {
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(180deg, rgba(10,10,10,0.80) 0%, rgba(10,10,10,0.65) 50%, rgba(10,10,10,0.80) 100%)',
+            background: 'linear-gradient(180deg, rgba(10,10,10,0.60) 0%, rgba(10,10,10,0.45) 50%, rgba(10,10,10,0.65) 100%)',
             zIndex: 1
           }}
         />
