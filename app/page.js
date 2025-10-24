@@ -1,93 +1,10 @@
 import Link from 'next/link';
+import Navigation from '@/components/Navigation';
 
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navigation Bar */}
-      <header className="px-8 py-6">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 style={{
-            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-            fontSize: '1.5rem',
-            fontWeight: '900',
-            fontStyle: 'italic',
-            color: 'transparent',
-            WebkitTextStroke: '1.5px white',
-            textStroke: '1.5px white',
-            letterSpacing: '0.1em',
-            transform: 'skew(-5deg)'
-          }}>
-            THE BOOT ROOM
-          </h1>
-          
-          <nav style={{ display: 'flex', gap: '80px', alignItems: 'center' }}>
-            <Link 
-              href="/drills" 
-              style={{ 
-                color: 'white',
-                fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-                fontStyle: 'italic',
-                fontWeight: '900',
-                textDecoration: 'underline',
-                transition: 'color 0.2s',
-                letterSpacing: '0.1em',
-                whiteSpace: 'nowrap'
-              }}
-              className="hover:text-green-500"
-            >
-              BROWSE DRILLS
-            </Link>
-            <Link 
-              href="/sessions/new" 
-              style={{ 
-                color: 'white',
-                fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-                fontStyle: 'italic',
-                fontWeight: '900',
-                textDecoration: 'underline',
-                transition: 'color 0.2s',
-                letterSpacing: '0.1em',
-                whiteSpace: 'nowrap'
-              }}
-              className="hover:text-green-500"
-            >
-              BUILD SESSION
-            </Link>
-            <Link 
-              href="/profile" 
-              style={{ 
-                color: 'white',
-                fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-                fontStyle: 'italic',
-                fontWeight: '900',
-                textDecoration: 'underline',
-                transition: 'color 0.2s',
-                letterSpacing: '0.1em',
-                whiteSpace: 'nowrap'
-              }}
-              className="hover:text-green-500"
-            >
-              MY SESSIONS
-            </Link>
-            <Link 
-              href="/auth/login" 
-              style={{ 
-                color: 'white',
-                fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-                fontStyle: 'italic',
-                fontWeight: '900',
-                textDecoration: 'underline',
-                transition: 'color 0.2s',
-                letterSpacing: '0.1em',
-                whiteSpace: 'nowrap'
-              }}
-              className="hover:text-green-500"
-            >
-              SIGN OUT
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <Navigation />
 
       {/* Hero Section - Full Bleed with Background Image */}
       <main 

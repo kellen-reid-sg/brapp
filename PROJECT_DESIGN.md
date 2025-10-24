@@ -676,15 +676,53 @@
 
 ---
 
+## 🎯 Icons & Imagery
+
+### Icon System
+```css
+/* Use simple outline SVG icons */
+.icon {
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Icon sizes */
+.icon-sm { width: 16px; height: 16px; }
+.icon-md { width: 20px; height: 20px; }
+.icon-lg { width: 24px; height: 24px; }
+```
+
+### Guidelines
+- **NO emojis**: Always use SVG outline icons instead of emojis
+- **Simple & clean**: Outline style with 2px stroke width
+- **White default**: Icons inherit text color (typically white on dark backgrounds)
+- **Consistent style**: Use Heroicons or similar minimal icon sets
+- **Inline with text**: Icons should align vertically with adjacent text
+
+### Common Icons
+- **Hot/Trending**: Flame outline
+- **New**: Plus or sparkle outline
+- **Top/Popular**: Star outline
+- **Comments**: Chat bubble outline
+- **Upvote**: Arrow up outline
+- **Downvote**: Arrow down outline
+- **Share**: Share arrow outline
+- **Time**: Clock outline
+
+---
+
 ## 📚 References
 
 - Inspired by: [LENS Player Analysis](https://lens-v1.vercel.app/)
 - Font: Inter from [Google Fonts](https://fonts.google.com/specimen/Inter)
-- Icons: [Heroicons](https://heroicons.com/) or similar minimal set
+- Icons: [Heroicons](https://heroicons.com/) (outline style)
 - Accessibility: [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 
 ---
 
-**Version:** 1.0  
+**Version:** 1.1  
 **Last Updated:** October 2025  
 **Maintained by:** The Boot Room Team
