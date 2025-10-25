@@ -33,7 +33,7 @@ export default function SortTabs({ active, onChange }) {
   ]
   
   return (
-    <div className="flex gap-2">
+    <div style={{ display: 'flex', gap: '16px' }}>
       {tabs.map(tab => (
         <button
           key={tab.id}

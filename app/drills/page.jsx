@@ -17,17 +17,21 @@ export default function DrillsPage() {
   async function fetchDrills() {
     setLoading(true)
     
-    const { data: drillsData, error } = await supabase
-      .from('drills')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(25)
-    
-    if (error) {
-      console.error('Error fetching drills:', error)
-      setLoading(false)
-      return
-    }
+    try {
+      // Get current user (if logged in)
+      const { data: { user } } = await supabase.auth.getUser()
+      
+      const { data: drillsData, error } = await supabase
+        .from('drills')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(25)
+      
+      if (error) {
+        console.error('Error fetching drills:', error)
+        setLoading(false)
+        return
+      }
 
     // Get stats for each drill
     const drillsWithStats = await Promise.all(
@@ -38,28 +42,49 @@ export default function DrillsPage() {
           .eq('id', drill.id)
           .single()
         
+        // Get user's vote if logged in
+        let userVote = null
+        if (user) {
+          const { data: voteData, error: voteError } = await supabase
+            .from('votes')
+            .select('value')
+            .eq('user_id', user.id)
+            .eq('content_kind', 'drill')
+            .eq('content_id', drill.id)
+            .maybeSingle()
+          
+          if (!voteError && voteData) {
+            userVote = voteData.value
+          }
+        }
+        
         return {
           ...drill,
-          drill_stats: statsData || { score: 0, comment_count: 0 }
+          drill_stats: statsData || { score: 0, comment_count: 0 },
+          user_vote: userVote
         }
       })
     )
 
-    // Sort based on selected option
-    let sortedDrills = [...drillsWithStats]
-    if (sort === 'hot') {
-      // Hot algorithm: score / time_decay
-      sortedDrills.sort((a, b) => {
-        const aHot = (a.drill_stats.score || 0) / (Math.max(1, (Date.now() - new Date(a.created_at)) / (1000 * 60 * 60)))
-        const bHot = (b.drill_stats.score || 0) / (Math.max(1, (Date.now() - new Date(b.created_at)) / (1000 * 60 * 60)))
-        return bHot - aHot
-      })
-    } else if (sort === 'top') {
-      sortedDrills.sort((a, b) => (b.drill_stats.score || 0) - (a.drill_stats.score || 0))
+      // Sort based on selected option
+      let sortedDrills = [...drillsWithStats]
+      if (sort === 'hot') {
+        // Hot algorithm: score / time_decay
+        sortedDrills.sort((a, b) => {
+          const aHot = (a.drill_stats.score || 0) / (Math.max(1, (Date.now() - new Date(a.created_at)) / (1000 * 60 * 60)))
+          const bHot = (b.drill_stats.score || 0) / (Math.max(1, (Date.now() - new Date(b.created_at)) / (1000 * 60 * 60)))
+          return bHot - aHot
+        })
+      } else if (sort === 'top') {
+        sortedDrills.sort((a, b) => (b.drill_stats.score || 0) - (a.drill_stats.score || 0))
+      }
+      
+      setDrills(sortedDrills)
+      setLoading(false)
+    } catch (error) {
+      console.error('Error in fetchDrills:', error)
+      setLoading(false)
     }
-    
-    setDrills(sortedDrills)
-    setLoading(false)
   }
 
   return (

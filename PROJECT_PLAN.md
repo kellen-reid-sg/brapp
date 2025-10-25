@@ -990,6 +990,9 @@ scripts/
 - Drill templates and categories
 - Email notifications
 - Session templates
+- **Drill Modal Enhancement:** Add detailed sections to drill modal (equipment needed, coaching points, variations, setup instructions, diagrams, etc.) - structure TBD based on user needs
+- **Coach Profile Card - Simple Version (COMPLETED):** Basic profile modal showing coaching experience, licenses, specialties, current club - self-reported text fields
+- **Coach Profile Card - Advanced Version:** Full gamification with XP system, badges, achievements, stats (drills posted, upvotes received, sessions created), leaderboards, credential verification
 
 ### Phase 3 (Months 3-6)
 - Sandbox drill builder (visual editor)
@@ -997,6 +1000,88 @@ scripts/
 - PDF export
 - Analytics dashboard
 - Mobile apps (React Native)
+
+#### Coach Profile Gamification System (Advanced)
+**Overview:** Full gamification system to build coach credibility and community engagement
+
+**Database Schema:**
+```sql
+-- Extend profiles table
+alter table profiles add column if not exists xp integer default 0;
+alter table profiles add column if not exists level integer default 1;
+alter table profiles add column if not exists coaching_licenses text[];
+alter table profiles add column if not exists age_groups_coached text[];
+alter table profiles add column if not exists clubs_schools text[];
+alter table profiles add column if not exists years_experience integer;
+
+-- Badges system
+create table badges (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  description text,
+  icon_url text,
+  criteria jsonb not null,  -- e.g., {"drills_posted": 10}
+  tier text,  -- bronze, silver, gold
+  created_at timestamptz default now()
+);
+
+create table user_badges (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references auth.users(id) on delete cascade,
+  badge_id uuid references badges(id) on delete cascade,
+  earned_at timestamptz default now(),
+  unique(user_id, badge_id)
+);
+
+-- Activity tracking for XP
+create table user_activities (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references auth.users(id) on delete cascade,
+  activity_type text not null,  -- drill_posted, upvote_received, etc.
+  xp_earned integer not null,
+  created_at timestamptz default now()
+);
+```
+
+**Stats to Calculate:**
+- **Drills Posted:** COUNT from drills table
+- **Upvotes Received:** SUM of positive votes on user's content
+- **Downvotes Received:** SUM of negative votes on user's content
+- **Sessions Created:** COUNT from sessions table
+- **Comments Made:** COUNT from comments table
+- **XP Points:** Calculated from activities
+- **Level:** Derived from XP thresholds
+
+**Badge Examples:**
+- **First Drill:** Post your first drill (Bronze)
+- **Drill Master:** Post 50 drills (Gold)
+- **Community Leader:** Receive 100 upvotes (Silver)
+- **Session Planner:** Create 10 sessions (Bronze)
+- **Rising Star:** Reach Level 10 (Silver)
+- **Licensed Coach:** Verify coaching license (Gold)
+
+**XP Earning Rules:**
+- Post a drill: +10 XP
+- Receive upvote on drill: +2 XP
+- Post a session: +15 XP
+- Comment on content: +1 XP
+- Get your comment upvoted: +1 XP
+- Daily login: +5 XP
+
+**Verification System:**
+- Upload credential documents
+- Admin review queue
+- Verified badge display
+- Trust score calculation
+
+**Implementation Steps:**
+1. Create badge assets/icons
+2. Build badge earning engine (background job)
+3. Create XP calculation service
+4. Add level-up notifications
+5. Build admin verification dashboard
+6. Create public leaderboard
+7. Add achievement notifications
 
 ---
 

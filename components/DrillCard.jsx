@@ -1,15 +1,87 @@
 'use client'
-import Link from 'next/link'
+import { useState, useEffect } from 'react'
+import { supabase } from '@/app/lib/supabaseClient'
 import VoteButtons from './VoteButtons'
+import DrillModal from './DrillModal'
 
 export default function DrillCard({ drill }) {
+  const [isFavorited, setIsFavorited] = useState(false)
+  const [showTooltip, setShowTooltip] = useState(false)
+  const [isUpdating, setIsUpdating] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const score = drill.drill_stats?.score || 0
   const commentCount = drill.drill_stats?.comment_count || 0
+  const userVote = drill.user_vote || null
   const author = drill.author_name || 'Anonymous Coach'
   const duration = drill.duration || 20
   const ageGroup = drill.age_group || 'All Ages'
   const createdAt = new Date(drill.created_at)
   const timeAgo = getTimeAgo(createdAt)
+
+  // Check if drill is favorited on mount
+  useEffect(() => {
+    checkIfFavorited()
+  }, [drill.id])
+
+  async function checkIfFavorited() {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+
+    const { data, error } = await supabase
+      .from('favorites')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('content_kind', 'drill')
+      .eq('content_id', drill.id)
+      .maybeSingle()
+
+    if (!error && data) {
+      setIsFavorited(true)
+    }
+  }
+
+  async function toggleFavorite() {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      alert('Please log in to save favorites')
+      return
+    }
+
+    setIsUpdating(true)
+
+    try {
+      if (isFavorited) {
+        // Remove from favorites
+        const { error } = await supabase
+          .from('favorites')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('content_kind', 'drill')
+          .eq('content_id', drill.id)
+
+        if (!error) {
+          setIsFavorited(false)
+        }
+      } else {
+        // Add to favorites
+        const { error } = await supabase
+          .from('favorites')
+          .insert({
+            user_id: user.id,
+            content_kind: 'drill',
+            content_id: drill.id
+          })
+
+        if (!error) {
+          setIsFavorited(true)
+        }
+      }
+    } catch (error) {
+      console.error('Error toggling favorite:', error)
+    } finally {
+      setIsUpdating(false)
+    }
+  }
 
   return (
     <div style={{
@@ -24,44 +96,96 @@ export default function DrillCard({ drill }) {
     onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'}
     onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.10)'}
     >
-      {/* Add to Session Button - Top Right */}
-      <button
-        onClick={(e) => {
-          e.preventDefault()
-          console.log('Add to session:', drill.id)
-          // TODO: Implement add to session functionality
-        }}
-        style={{
-          position: 'absolute',
-          top: '16px',
-          right: '16px',
-          padding: '6px 12px',
-          backgroundColor: 'rgba(255,255,255,0.08)',
-          border: '1px solid rgba(255,255,255,0.20)',
-          borderRadius: '4px',
-          color: 'rgba(255,255,255,0.9)',
-          fontSize: '12px',
-          fontWeight: '600',
-          cursor: 'pointer',
-          transition: 'all 0.2s',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
-          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
-          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
-        }}
-      >
-        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 5v14M5 12h14" />
-        </svg>
-        Add to Session
-      </button>
+      {/* Top Right Actions */}
+      <div style={{ position: 'absolute', top: '16px', right: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        {/* Star/Favorite Icon */}
+        <div style={{ position: 'relative' }}>
+          <button
+            onClick={(e) => {
+              e.preventDefault()
+              toggleFavorite()
+            }}
+            disabled={isUpdating}
+            style={{
+              padding: '6px',
+              backgroundColor: 'transparent',
+              border: 'none',
+              color: isFavorited ? '#EAB308' : 'rgba(255,255,255,0.6)',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = '#EAB308'
+              setShowTooltip(true)
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = isFavorited ? '#EAB308' : 'rgba(255,255,255,0.6)'
+              setShowTooltip(false)
+            }}
+          >
+            <svg width="20" height="20" fill={isFavorited ? '#EAB308' : 'none'} stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          </button>
+          {showTooltip && (
+            <div style={{
+              position: 'absolute',
+              bottom: '-32px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              backgroundColor: 'rgba(0,0,0,0.9)',
+              color: 'white',
+              padding: '6px 10px',
+              borderRadius: '4px',
+              fontSize: '12px',
+              fontWeight: '500',
+              whiteSpace: 'nowrap',
+              zIndex: 1000,
+              pointerEvents: 'none'
+            }}>
+              Add to Favorites
+            </div>
+          )}
+        </div>
+        
+        {/* Add to Session Button */}
+        <button
+          onClick={(e) => {
+            e.preventDefault()
+            console.log('Add to session:', drill.id)
+            // TODO: Implement add to session functionality
+          }}
+          style={{
+            padding: '6px 12px',
+            backgroundColor: 'rgba(255,255,255,0.08)',
+            border: '1px solid rgba(255,255,255,0.20)',
+            borderRadius: '4px',
+            color: 'rgba(255,255,255,0.9)',
+            fontSize: '12px',
+            fontWeight: '600',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+          }}
+        >
+          <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          Add to Session
+        </button>
+      </div>
 
       <div className="flex" style={{ gap: '40px' }}>
         <div style={{ 
@@ -70,12 +194,21 @@ export default function DrillCard({ drill }) {
           alignItems: 'center', 
           justifyContent: 'center' 
         }}>
-          <VoteButtons score={score} />
+          <VoteButtons 
+            contentKind="drill" 
+            contentId={drill.id} 
+            initialScore={score} 
+            userVote={userVote} 
+          />
         </div>
         
         <div className="flex-1">
-          <Link href={`/drills/${drill.id}`} className="block group" style={{ textDecoration: 'none' }}>
-            <div className="flex items-center gap-2 mb-2" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)' }}>
+          <div 
+            onClick={() => setIsModalOpen(true)} 
+            className="block group" 
+            style={{ textDecoration: 'none', cursor: 'pointer' }}
+          >
+            <div className="flex items-center mb-2" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', gap: '10px' }}>
               <span>Posted by <span style={{ color: 'rgba(255,255,255,0.7)' }}>{author}</span></span>
               <span>•</span>
               <span>{timeAgo}</span>
@@ -148,9 +281,16 @@ export default function DrillCard({ drill }) {
                 )
               })()}
             </div>
-          </Link>
+          </div>
         </div>
       </div>
+
+      {/* Modal */}
+      <DrillModal 
+        drill={drill} 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </div>
   )
 }
