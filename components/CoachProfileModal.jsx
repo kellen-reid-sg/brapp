@@ -72,7 +72,7 @@ export default function CoachProfileModal({ authorId, isOpen, onClose }) {
         maxHeight: '85vh',
         backgroundColor: 'rgba(26,26,26,0.95)',
         borderRadius: '12px',
-        border: '2px solid #16a34a',
+        border: '2px solid rgba(255,255,255,0.20)',
         zIndex: 51,
         overflow: 'hidden',
         boxShadow: '0 24px 48px rgba(0,0,0,0.5)',
@@ -103,29 +103,29 @@ export default function CoachProfileModal({ authorId, isOpen, onClose }) {
               
               {/* Close Button */}
               <button
-                onClick={onClose}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onClose()
+                }}
                 style={{
-                  padding: '6px',
-                  backgroundColor: 'rgba(255,255,255,0.08)',
-                  border: '1px solid rgba(255,255,255,0.20)',
-                  borderRadius: '8px',
+                  padding: '4px',
+                  backgroundColor: 'transparent',
+                  border: 'none',
                   color: 'rgba(255,255,255,0.7)',
                   cursor: 'pointer',
-                  transition: 'all 0.2s',
+                  transition: 'color 0.2s',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
                   e.currentTarget.style.color = 'white'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
                   e.currentTarget.style.color = 'rgba(255,255,255,0.7)'
                 }}
               >
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 6L6 18M6 6l12 12" />
                 </svg>
               </button>

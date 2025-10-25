@@ -17,6 +17,9 @@ export default function DrillCard({ drill }) {
   const ageGroup = drill.age_group || 'All Ages'
   const createdAt = new Date(drill.created_at)
   const timeAgo = getTimeAgo(createdAt)
+  
+  const category = drill.category || getCategoryFromTitle(drill.title)
+  const categoryColor = getCategoryColor(category)
 
   // Check if drill is favorited on mount
   useEffect(() => {
@@ -84,17 +87,19 @@ export default function DrillCard({ drill }) {
   }
 
   return (
-    <div style={{
-      backgroundColor: 'rgba(255,255,255,0.06)',
-      border: '1px solid rgba(255,255,255,0.10)',
-      borderRadius: '12px',
-      padding: '20px',
-      transition: 'all 0.2s',
-      position: 'relative'
-    }}
-    className="hover:border-green-500"
-    onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'}
-    onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.10)'}
+    <div 
+      onClick={() => window.location.href = `/drills/${drill.id}`}
+      style={{
+        backgroundColor: 'rgba(255,255,255,0.06)',
+        border: '1px solid rgba(255,255,255,0.10)',
+        borderRadius: '12px',
+        padding: '20px',
+        transition: 'all 0.2s',
+        position: 'relative',
+        cursor: 'pointer'
+      }}
+      onMouseEnter={(e) => e.currentTarget.style.borderColor = categoryColor.text}
+      onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.10)'}
     >
       {/* Top Right Actions */}
       <div style={{ position: 'absolute', top: '16px', right: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -203,11 +208,7 @@ export default function DrillCard({ drill }) {
         </div>
         
         <div className="flex-1">
-          <div 
-            onClick={() => setIsModalOpen(true)} 
-            className="block group" 
-            style={{ textDecoration: 'none', cursor: 'pointer' }}
-          >
+          <div className="block group">
             <div className="flex items-center mb-2" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', gap: '10px' }}>
               <span>Posted by <span style={{ color: 'rgba(255,255,255,0.7)' }}>{author}</span></span>
               <span>•</span>
@@ -256,30 +257,79 @@ export default function DrillCard({ drill }) {
                 {ageGroup}
               </span>
               
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  window.location.href = `/drills/${drill.id}`
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: 'none',
+                  border: 'none',
+                  color: 'rgba(255,255,255,0.6)',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  padding: '0',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.9)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.6)'}
+              >
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
                 {commentCount} {commentCount === 1 ? 'Comment' : 'Comments'}
-              </span>
+              </button>
               
-              {(() => {
-                const category = drill.category || getCategoryFromTitle(drill.title)
-                const categoryColor = getCategoryColor(category)
-                return (
-                  <span style={{ 
-                    padding: '4px 12px',
-                    backgroundColor: categoryColor.bg,
-                    border: `1px solid ${categoryColor.border}`,
-                    borderRadius: '4px',
-                    color: categoryColor.text,
-                    fontSize: '12px',
-                    fontWeight: '600'
-                  }}>
-                    {category}
-                  </span>
-                )
-              })()}
+              <span style={{ 
+                padding: '4px 12px',
+                backgroundColor: categoryColor.bg,
+                border: `1px solid ${categoryColor.border}`,
+                borderRadius: '4px',
+                color: categoryColor.text,
+                fontSize: '12px',
+                fontWeight: '600'
+              }}>
+                {category}
+              </span>
+
+              {/* Preview Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIsModalOpen(true)
+                }}
+                style={{
+                  padding: '4px 12px',
+                  backgroundColor: 'rgba(255,255,255,0.08)',
+                  border: '1px solid rgba(255,255,255,0.20)',
+                  borderRadius: '4px',
+                  color: 'rgba(255,255,255,0.9)',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                }}
+              >
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                Preview
+              </button>
             </div>
           </div>
         </div>
@@ -350,9 +400,9 @@ function getCategoryColor(category) {
       text: '#F472B6'
     },
     'Technical': {
-      bg: 'rgba(156, 163, 175, 0.15)',
-      border: 'rgba(156, 163, 175, 0.3)',
-      text: '#9CA3AF'
+      bg: 'rgba(34, 211, 238, 0.15)',
+      border: 'rgba(34, 211, 238, 0.3)',
+      text: '#22D3EE'
     }
   }
   

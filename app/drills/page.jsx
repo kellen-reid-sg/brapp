@@ -9,10 +9,14 @@ export default function DrillsPage() {
   const [drills, setDrills] = useState([])
   const [sort, setSort] = useState('new')
   const [loading, setLoading] = useState(true)
+  const [selectedAgeGroups, setSelectedAgeGroups] = useState([])
+  const [selectedCategories, setSelectedCategories] = useState([])
+  const [showAgeDropdown, setShowAgeDropdown] = useState(false)
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false)
 
   useEffect(() => {
     fetchDrills()
-  }, [sort])
+  }, [sort, selectedAgeGroups, selectedCategories])
 
   async function fetchDrills() {
     setLoading(true)
@@ -66,8 +70,25 @@ export default function DrillsPage() {
       })
     )
 
+      // Filter by age group
+      let filteredDrills = [...drillsWithStats]
+      if (selectedAgeGroups.length > 0) {
+        filteredDrills = filteredDrills.filter(drill => {
+          const drillAge = drill.age_group || 'All Ages'
+          return selectedAgeGroups.includes(drillAge)
+        })
+      }
+
+      // Filter by category
+      if (selectedCategories.length > 0) {
+        filteredDrills = filteredDrills.filter(drill => {
+          const category = drill.category || getCategoryFromTitle(drill.title)
+          return selectedCategories.includes(category)
+        })
+      }
+
       // Sort based on selected option
-      let sortedDrills = [...drillsWithStats]
+      let sortedDrills = [...filteredDrills]
       if (sort === 'hot') {
         // Hot algorithm: score / time_decay
         sortedDrills.sort((a, b) => {
@@ -86,6 +107,41 @@ export default function DrillsPage() {
       setLoading(false)
     }
   }
+
+  function getCategoryFromTitle(title) {
+    const lower = title.toLowerCase()
+    if (lower.includes('warm') || lower.includes('stretch')) return 'Warm-up'
+    if (lower.includes('pass')) return 'Passing'
+    if (lower.includes('rondo') || lower.includes('possession')) return 'Possession'
+    if (lower.includes('finish') || lower.includes('shoot') || lower.includes('1v1')) return 'Finishing'
+    if (lower.includes('defend')) return 'Defending'
+    if (lower.includes('dribbl')) return 'Dribbling'
+    return 'Technical'
+  }
+
+  function toggleAgeGroup(age) {
+    if (selectedAgeGroups.includes(age)) {
+      setSelectedAgeGroups(selectedAgeGroups.filter(a => a !== age))
+    } else {
+      setSelectedAgeGroups([...selectedAgeGroups, age])
+    }
+  }
+
+  function toggleCategory(category) {
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter(c => c !== category))
+    } else {
+      setSelectedCategories([...selectedCategories, category])
+    }
+  }
+
+  function clearFilters() {
+    setSelectedAgeGroups([])
+    setSelectedCategories([])
+  }
+
+  const ageGroups = ['All Ages', 'U6', 'U8', 'U10', 'U12', 'U14', 'U16', 'U18+']
+  const categories = ['Warm-up', 'Passing', 'Possession', 'Finishing', 'Defending', 'Dribbling', 'Technical']
 
   return (
     <div className="min-h-screen relative" style={{ backgroundColor: '#0a0a0a' }}>
@@ -133,9 +189,197 @@ export default function DrillsPage() {
         </h2>
         <p className="text-gray-400 italic text-lg mb-8">Browse community-shared training drills</p>
         
-        <SortTabs active={sort} onChange={setSort} />
+        {/* Sort Tabs and Filters Row */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+          <SortTabs active={sort} onChange={setSort} />
+          
+          {/* Filters */}
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            {/* Age Group Filter */}
+            <div style={{ position: 'relative' }}>
+              <button
+                onClick={() => {
+                  setShowAgeDropdown(!showAgeDropdown)
+                  setShowCategoryDropdown(false)
+                }}
+                style={{
+                  padding: '8px 16px',
+                  backgroundColor: 'rgba(255,255,255,0.08)',
+                  border: '1px solid rgba(255,255,255,0.20)',
+                  borderRadius: '6px',
+                  color: 'white',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                }}
+              >
+                Age Group {selectedAgeGroups.length > 0 && `(${selectedAgeGroups.length})`}
+                <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 9l6 6 6-6"/>
+                </svg>
+              </button>
+
+              {showAgeDropdown && (
+                <div style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 8px)',
+                  right: 0,
+                  minWidth: '200px',
+                  backgroundColor: 'rgba(26,26,26,0.98)',
+                  border: '1px solid rgba(255,255,255,0.20)',
+                  borderRadius: '8px',
+                  padding: '8px',
+                  zIndex: 100,
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.5)'
+                }}>
+                  {ageGroups.map(age => (
+                    <label
+                      key={age}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        padding: '8px 12px',
+                        cursor: 'pointer',
+                        borderRadius: '4px',
+                        transition: 'background 0.2s'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedAgeGroups.includes(age)}
+                        onChange={() => toggleAgeGroup(age)}
+                        style={{ cursor: 'pointer' }}
+                      />
+                      <span style={{ color: 'white', fontSize: '14px' }}>{age}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Category Filter */}
+            <div style={{ position: 'relative' }}>
+              <button
+                onClick={() => {
+                  setShowCategoryDropdown(!showCategoryDropdown)
+                  setShowAgeDropdown(false)
+                }}
+                style={{
+                  padding: '8px 16px',
+                  backgroundColor: 'rgba(255,255,255,0.08)',
+                  border: '1px solid rgba(255,255,255,0.20)',
+                  borderRadius: '6px',
+                  color: 'white',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                }}
+              >
+                Category {selectedCategories.length > 0 && `(${selectedCategories.length})`}
+                <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 9l6 6 6-6"/>
+                </svg>
+              </button>
+
+              {showCategoryDropdown && (
+                <div style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 8px)',
+                  right: 0,
+                  minWidth: '200px',
+                  backgroundColor: 'rgba(26,26,26,0.98)',
+                  border: '1px solid rgba(255,255,255,0.20)',
+                  borderRadius: '8px',
+                  padding: '8px',
+                  zIndex: 100,
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.5)'
+                }}>
+                  {categories.map(category => (
+                    <label
+                      key={category}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        padding: '8px 12px',
+                        cursor: 'pointer',
+                        borderRadius: '4px',
+                        transition: 'background 0.2s'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedCategories.includes(category)}
+                        onChange={() => toggleCategory(category)}
+                        style={{ cursor: 'pointer' }}
+                      />
+                      <span style={{ color: 'white', fontSize: '14px' }}>{category}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Clear Filters */}
+            {(selectedAgeGroups.length > 0 || selectedCategories.length > 0) && (
+              <button
+                onClick={clearFilters}
+                style={{
+                  padding: '8px 16px',
+                  backgroundColor: 'transparent',
+                  border: '1px solid rgba(255,255,255,0.20)',
+                  borderRadius: '6px',
+                  color: 'rgba(255,255,255,0.7)',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = 'white'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'rgba(255,255,255,0.7)'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                }}
+              >
+                Clear Filters
+              </button>
+            )}
+          </div>
+        </div>
         
-        <div style={{ marginTop: '32px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {loading ? (
             <div className="text-center py-8 text-gray-400">Loading...</div>
           ) : drills.length === 0 ? (

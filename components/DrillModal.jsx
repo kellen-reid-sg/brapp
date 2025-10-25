@@ -2,16 +2,47 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '@/app/lib/supabaseClient'
 import CoachProfileModal from './CoachProfileModal'
+import CommentList from './CommentList'
+import CommentForm from './CommentForm'
 
 export default function DrillModal({ drill, isOpen, onClose }) {
   const [isFavorited, setIsFavorited] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
   const [showProfileModal, setShowProfileModal] = useState(false)
+  const [comments, setComments] = useState([])
+  const [loadingComments, setLoadingComments] = useState(false)
 
   const author = drill.author_name || 'Anonymous Coach'
   const duration = drill.duration || 20
   const ageGroup = drill.age_group || 'All Ages'
+
+  function getCategoryFromTitle(title) {
+    const lower = title.toLowerCase()
+    if (lower.includes('warm') || lower.includes('stretch')) return 'Warm-up'
+    if (lower.includes('pass')) return 'Passing'
+    if (lower.includes('rondo') || lower.includes('possession')) return 'Possession'
+    if (lower.includes('finish') || lower.includes('shoot') || lower.includes('1v1')) return 'Finishing'
+    if (lower.includes('defend')) return 'Defending'
+    if (lower.includes('dribbl')) return 'Dribbling'
+    return 'Technical'
+  }
+
+  function getCategoryColor(category) {
+    const colors = {
+      'Warm-up': { bg: 'rgba(251, 191, 36, 0.15)', border: 'rgba(251, 191, 36, 0.3)', text: '#FCD34D' },
+      'Passing': { bg: 'rgba(59, 130, 246, 0.15)', border: 'rgba(59, 130, 246, 0.3)', text: '#60A5FA' },
+      'Possession': { bg: 'rgba(139, 92, 246, 0.15)', border: 'rgba(139, 92, 246, 0.3)', text: '#A78BFA' },
+      'Finishing': { bg: 'rgba(239, 68, 68, 0.15)', border: 'rgba(239, 68, 68, 0.3)', text: '#F87171' },
+      'Defending': { bg: 'rgba(34, 197, 94, 0.15)', border: 'rgba(34, 197, 94, 0.3)', text: '#4ADE80' },
+      'Dribbling': { bg: 'rgba(236, 72, 153, 0.15)', border: 'rgba(236, 72, 153, 0.3)', text: '#F472B6' },
+      'Technical': { bg: 'rgba(34, 211, 238, 0.15)', border: 'rgba(34, 211, 238, 0.3)', text: '#22D3EE' }
+    }
+    return colors[category] || colors['Technical']
+  }
+
+  const category = drill.category || getCategoryFromTitle(drill.title)
+  const categoryColor = getCategoryColor(category)
 
   // Check if drill is favorited on mount
   useEffect(() => {
@@ -86,7 +117,10 @@ export default function DrillModal({ drill, isOpen, onClose }) {
     <>
       {/* Backdrop - Dark scrim */}
       <div 
-        onClick={onClose}
+        onClick={(e) => {
+          e.stopPropagation()
+          onClose()
+        }}
         style={{
           position: 'fixed',
           inset: 0,
@@ -96,7 +130,7 @@ export default function DrillModal({ drill, isOpen, onClose }) {
         }}
       />
 
-      {/* Modal - Dark card with white border */}
+      {/* Modal - Dark card with category border */}
       <div style={{
         position: 'fixed',
         top: '50%',
@@ -106,7 +140,7 @@ export default function DrillModal({ drill, isOpen, onClose }) {
         maxHeight: '85vh',
         backgroundColor: 'rgba(26,26,26,0.95)',
         borderRadius: '12px',
-        border: '2px solid rgba(255,255,255,0.20)',
+        border: `2px solid ${categoryColor.text}`,
         zIndex: 51,
         overflow: 'hidden',
         boxShadow: '0 24px 48px rgba(0,0,0,0.5)'
@@ -154,34 +188,7 @@ export default function DrillModal({ drill, isOpen, onClose }) {
             </div>
           </div>
           
-          {/* Close Button */}
-          <button
-            onClick={onClose}
-            style={{
-              padding: '8px',
-              backgroundColor: 'rgba(255,255,255,0.08)',
-              border: '1px solid rgba(255,255,255,0.20)',
-              borderRadius: '8px',
-              color: 'rgba(255,255,255,0.7)',
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
-              e.currentTarget.style.color = 'white'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
-              e.currentTarget.style.color = 'rgba(255,255,255,0.7)'
-            }}
-          >
-            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 6L6 18M6 6l12 12" />
-            </svg>
-          </button>
+
         </div>
 
         {/* Content - Scrollable */}
