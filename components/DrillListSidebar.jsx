@@ -1,9 +1,10 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { supabase } from '@/app/lib/supabaseClient'
+import { createClientComponentClient } from '@/app/lib/supabase'
 import DrillModal from './DrillModal'
 
 export default function DrillListSidebar({ onAddDrill, onRemoveDrill, selectedDrillIds = [] }) {
+  const supabase = createClientComponentClient()
   const [drills, setDrills] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')

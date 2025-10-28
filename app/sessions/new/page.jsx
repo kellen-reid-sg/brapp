@@ -8,6 +8,7 @@ export default function NewSessionPage() {
   const [selectedDrills, setSelectedDrills] = useState([])
   const [sessionTitle, setSessionTitle] = useState('')
   const [sessionDescription, setSessionDescription] = useState('')
+  const [sessionDate, setSessionDate] = useState('')
 
   function addDrill(drill) {
     setSelectedDrills([...selectedDrills, {
@@ -113,9 +114,11 @@ export default function NewSessionPage() {
               selectedDrills={selectedDrills}
               sessionTitle={sessionTitle}
               sessionDescription={sessionDescription}
+              sessionDate={sessionDate}
               totalDuration={totalDuration}
               onTitleChange={setSessionTitle}
               onDescriptionChange={setSessionDescription}
+              onDateChange={setSessionDate}
               onRemoveDrill={removeDrill}
               onMoveDrill={moveDrill}
               onUpdateDuration={updateDuration}

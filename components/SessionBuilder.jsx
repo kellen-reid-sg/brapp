@@ -1,21 +1,24 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/app/lib/supabaseClient'
+import { createClientComponentClient } from '@/app/lib/supabase'
 import { useState } from 'react'
 
 export default function SessionBuilder({
   selectedDrills,
   sessionTitle,
   sessionDescription,
+  sessionDate,
   totalDuration,
   onTitleChange,
   onDescriptionChange,
+  onDateChange,
   onRemoveDrill,
   onMoveDrill,
   onUpdateDuration,
   onUpdateNotes
 }) {
   const router = useRouter()
+  const supabase = createClientComponentClient()
   const [saving, setSaving] = useState(false)
 
   // Custom scrollbar styles
@@ -65,6 +68,7 @@ export default function SessionBuilder({
           author_id: user.id,
           title: sessionTitle,
           description: sessionDescription,
+          session_date: sessionDate || null,
           total_duration: totalDuration,
           is_public: true
         })
@@ -165,6 +169,39 @@ export default function SessionBuilder({
         }}>
           Craft your perfect session
         </p>
+      </div>
+
+      {/* Session Date Input */}
+      <div style={{ marginBottom: '12px' }}>
+        <label style={{
+          display: 'block',
+          fontSize: '10px',
+          fontWeight: '600',
+          color: 'white',
+          marginBottom: '3px',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px'
+        }}>
+          Session Date
+        </label>
+        <input
+          type="date"
+          value={sessionDate}
+          onChange={(e) => onDateChange(e.target.value)}
+          style={{
+            width: '130px',
+            padding: '6px 10px',
+            backgroundColor: 'rgba(255,255,255,0.06)',
+            border: '1px solid rgba(255,255,255,0.10)',
+            borderRadius: '5px',
+            color: 'white',
+            fontSize: '12px',
+            fontWeight: '600',
+            outline: 'none',
+            boxSizing: 'border-box',
+            colorScheme: 'dark'
+          }}
+        />
       </div>
 
       {/* Session Title Input */}

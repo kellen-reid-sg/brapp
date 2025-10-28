@@ -1,11 +1,12 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { supabase } from '@/app/lib/supabaseClient'
+import { createClientComponentClient } from '@/app/lib/supabase'
 import Navigation from '@/components/Navigation'
 import DrillCard from '@/components/DrillCard'
 import SortTabs from '@/components/SortTabs'
 
 export default function DrillsPage() {
+  const supabase = createClientComponentClient()
   const [drills, setDrills] = useState([])
   const [sort, setSort] = useState('new')
   const [loading, setLoading] = useState(true)

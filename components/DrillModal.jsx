@@ -1,11 +1,12 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { supabase } from '@/app/lib/supabaseClient'
+import { createClientComponentClient } from '@/app/lib/supabase'
 import CoachProfileModal from './CoachProfileModal'
 import CommentList from './CommentList'
 import CommentForm from './CommentForm'
 
 export default function DrillModal({ drill, isOpen, onClose, onAddToSession, isInSession }) {
+  const supabase = createClientComponentClient()
   const [isFavorited, setIsFavorited] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)

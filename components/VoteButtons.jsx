@@ -1,8 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { supabase } from '@/app/lib/supabaseClient'
+import { createClientComponentClient } from '@/app/lib/supabase'
 
 export default function VoteButtons({ contentKind, contentId, initialScore, userVote }) {
+  const supabase = createClientComponentClient()
   const [score, setScore] = useState(initialScore || 0)
   const [voted, setVoted] = useState(userVote || null)
   const [isHovered, setIsHovered] = useState(false)

@@ -1,8 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { supabase } from '@/app/lib/supabaseClient'
+import { createClientComponentClient } from '@/app/lib/supabase'
 
 export default function CoachProfileModal({ authorId, isOpen, onClose }) {
+  const supabase = createClientComponentClient()
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
   const [drillCount, setDrillCount] = useState(0)

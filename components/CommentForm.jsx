@@ -1,8 +1,9 @@
 'use client'
 import { useState } from 'react'
-import { supabase } from '@/app/lib/supabaseClient'
+import { createClientComponentClient } from '@/app/lib/supabase'
 
 export default function CommentForm({ contentKind, contentId, onCommentAdded }) {
+  const supabase = createClientComponentClient()
   const [body, setBody] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState(null)

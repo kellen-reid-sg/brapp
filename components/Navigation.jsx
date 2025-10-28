@@ -72,7 +72,7 @@ export default function Navigation() {
             BUILD SESSION
           </Link>
           <Link 
-            href="/profile" 
+            href="/sessions" 
             style={{ 
               color: 'white',
               fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',

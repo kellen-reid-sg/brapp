@@ -1,12 +1,13 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { supabase } from '@/app/lib/supabaseClient'
+import { createClientComponentClient } from '@/app/lib/supabase'
 import Navigation from '@/components/Navigation'
 import CommentList from '@/components/CommentList'
 import CommentForm from '@/components/CommentForm'
 
 export default function DrillDetailPage() {
+  const supabase = createClientComponentClient()
   const params = useParams()
   const router = useRouter()
   const [drill, setDrill] = useState(null)

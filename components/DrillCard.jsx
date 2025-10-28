@@ -1,10 +1,11 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { supabase } from '@/app/lib/supabaseClient'
+import { createClientComponentClient } from '@/app/lib/supabase'
 import VoteButtons from './VoteButtons'
 import DrillModal from './DrillModal'
 
 export default function DrillCard({ drill }) {
+  const supabase = createClientComponentClient()
   const [isFavorited, setIsFavorited] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)

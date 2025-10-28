@@ -653,35 +653,54 @@ Dead-simple session builder, save/share sessions, votes/comments on sessions, ba
 
 **Deliverable:** ✅ Sessions save to database
 
-### Day 14: Session View Page
+### Day 14: Session View Page ✅ COMPLETED
 
-**Task:** Create public session view
+**Files created:**
+- ✅ `app/sessions/[id]/page.jsx` - Public session view page
+- ✅ `app/sessions/page.jsx` - My Sessions repository page
 
-**Files:**
-- `app/sessions/[id]/page.jsx` - Display saved session
+**Features implemented:**
 
-**Query to fetch session:**
-```javascript
-const { data } = await supabase
-  .from('sessions')
-  .select(`
-    *,
-    profiles(display_name, avatar_url),
-    session_drills(
-      order_index,
-      custom_duration,
-      notes,
-      drills(*)
-    ),
-    session_stats!inner(score, comment_count)
-  `)
-  .eq('id', sessionId)
-  .single()
-```
+**Session View Page (`/sessions/[id]`):**
+- ✅ Fetch session with multi-table joins (sessions, profiles, session_drills, drills)
+- ✅ Display session header (title, author, date, description, duration, drill count)
+- ✅ Expandable/collapsible drill cards with full details
+- ✅ Two-column expandable layout (details left, diagram placeholder right)
+- ✅ Section headers for Equipment, Setup, Coaching Points, Progressions (placeholders)
+- ✅ Custom drill durations and notes from session_drills
+- ✅ Voting system with tooltips (content_kind='session')
+- ✅ Favorites counter and toggle functionality with tooltips
+- ✅ Comments section with scroll-to functionality and tooltips
+- ✅ Share button (copy link)
+- ✅ Clickable drill cards link to drill detail pages
+- ✅ Loading and error states
+- ✅ Public access if is_public: true (RLS handles this)
 
-**Add VoteButtons and Comments (reuse components with `content_kind='session'`)**
+**My Sessions Page (`/sessions`):**
+- ✅ Two tabs: "My Sessions" and "Favorites"
+- ✅ Grid layout with responsive session cards
+- ✅ Session cards show: title, date, duration, drill count, description preview
+- ✅ Color-coded category breakdown bars (shows drill type distribution)
+- ✅ Hover tooltips on category bars showing breakdown
+- ✅ View and Delete actions for owned sessions
+- ✅ View and Remove actions for favorited sessions
+- ✅ Empty states with CTAs for both tabs
+- ✅ Auth protection (redirects to login)
+- ✅ Consistent card heights with bottom-aligned actions
 
-**Deliverable:** ✅ Shareable session page with voting/comments
+**Session Builder Enhancements:**
+- ✅ Added session_date field (compact date picker above title)
+- ✅ Database schema updated: `ALTER TABLE sessions ADD COLUMN session_date date`
+
+**Critical Bug Fixes:**
+- ✅ Unified Supabase client across all 10+ components (fixed auth state sharing)
+- ✅ Fixed session_stats query (separated joins to handle new sessions without votes)
+- ✅ Fixed favorites query (two-step process due to generic content_id relationship)
+
+**Navigation:**
+- ✅ Updated "MY SESSIONS" link to point to `/sessions` instead of `/profile`
+
+**Deliverable:** ✅ Complete session workflow (build → save → view → manage → favorite)
 
 ### Day 15: Profile Page
 
@@ -708,12 +727,14 @@ const { data } = await supabase
 4. Verify RLS allows/blocks correctly
 
 **🎯 Week 3 Success Criteria:**
-- [ ] Coaches can build complete sessions
-- [ ] Sessions save and load correctly
-- [ ] Session pages are publicly viewable
-- [ ] Voting/commenting works on sessions
-- [ ] Profile shows user's content
-- [ ] Can edit profile info
+- [x] Coaches can build complete sessions
+- [x] Sessions save and load correctly
+- [x] Session pages are publicly viewable
+- [x] Voting/commenting works on sessions
+- [x] Session favoriting works
+- [x] My Sessions repository page functional
+- [ ] Profile shows user's content (moved to Week 4)
+- [ ] Can edit profile info (moved to Week 4)
 
 ---
 
@@ -722,9 +743,11 @@ const { data } = await supabase
 ### 🎯 Goal
 Mobile-first polish, error handling, production deployment, first beta users
 
-### Day 16: Mobile Polish Pass
+### Day 16: Mobile Polish Pass + Navigation Improvements
 
 **Tasks:**
+
+**1. Mobile Polish:**
 - Ensure 1-column layout on mobile
 - Touch targets minimum 44px
 - Sticky sort tabs on /drills
@@ -732,11 +755,22 @@ Mobile-first polish, error handling, production deployment, first beta users
 - Review typography and spacing
 - Test on actual mobile devices
 
-**Deliverable:** ✅ Smooth mobile experience
+**2. Navigation Bar Improvements:**
+- Update navigation structure to separate Profile from Sessions
+- Add user avatar/name dropdown for profile access
+- Keep "MY SESSIONS" as main navigation item linking to `/sessions`
+- Move "SIGN OUT" to profile dropdown
+- Improve mobile navigation (hamburger menu)
+- Consider adding user authentication state indicators
+- Optional: Add notifications icon for comments/upvotes
 
-### Day 17: Error States + Loading
+**Deliverable:** ✅ Smooth mobile experience + Improved navigation UX
+
+### Day 17: Error States + Loading + Database Schema Enhancement
 
 **Tasks:**
+
+**1. Error States & Loading:**
 - Add skeleton loaders for lists
 - Friendly empty states:
   - No drills found
@@ -748,7 +782,19 @@ Mobile-first polish, error handling, production deployment, first beta users
   - "Comment posted!"
 - Loading spinners for save operations
 
-**Deliverable:** ✅ Professional error/loading UX
+**2. Drill Schema Enhancement:**
+- Add missing fields to `drills` table:
+  - `equipment` (text array) - Required equipment list
+  - `difficulty` (text) - Beginner/Intermediate/Advanced
+  - `setup_instructions` (text array) - Step-by-step setup
+  - `coaching_points` (text array) - Key teaching points
+  - `progressions` (text array) - Ways to advance the drill
+- Update seed script to import full drill data from drills.json
+- Update drill queries across components to include new fields
+- Update DrillModal and drill detail page to display new fields
+- Populate expandable drill cards on session view page with real data
+
+**Deliverable:** ✅ Professional error/loading UX + Enhanced drill data model
 
 ### Day 18: Security + RLS Review
 
