@@ -599,109 +599,57 @@ const { data } = await supabase.rpc('get_hot_drills', { lim: 25 })
 ### 🎯 Goal
 Dead-simple session builder, save/share sessions, votes/comments on sessions, basic profile
 
-### Day 11: Session Builder Scaffold
+### Day 11: Session Builder Scaffold ✅ COMPLETED
 
-**Files to create:**
-- `app/sessions/new/page.jsx` - Builder page
-- `components/SessionBuilder.jsx` - Parent component
-- `components/DrillListSidebar.jsx` - Left: searchable drills
-- `components/SessionCanvas.jsx` - Right: session timeline
+**Files created:**
+- ✅ `app/sessions/new/page.jsx` - Builder page with split-view layout
+- ✅ `components/SessionBuilder.jsx` - Right panel: session canvas
+- ✅ `components/DrillListSidebar.jsx` - Left panel: searchable drills
 
-**Layout structure:**
-```
-┌─────────────────────────────────────┐
-│  [Save Session] [Cancel]            │
-├──────────────┬──────────────────────┤
-│              │                      │
-│  Drill List  │   Your Session       │
-│  (search)    │   1. [Drill Name]    │
-│  - Drill A   │      Duration: 15min │
-│  - Drill B   │   2. [Drill Name]    │
-│  - Drill C   │      Duration: 10min │
-│              │   ─────────────────  │
-│  [+ Add]     │   Total: 25 min      │
-└──────────────┴──────────────────────┘
-```
+**Features implemented:**
+- ✅ Split-view layout (50/50 grid, 16px gap)
+- ✅ Background image (background-training-foto.png)
+- ✅ Search drills functionality
+- ✅ Age Group & Category dropdown filters (matching drill library)
+- ✅ Favorites filter toggle
+- ✅ Drill preview modal with "Add to Session" button
+- ✅ Click drill card to add/remove from session (toggle)
+- ✅ Preview tooltip on hover
+- ✅ Green checkmark for selected drills
+- ✅ Custom scrollbar styling (translucent)
 
 **Deliverable:** ✅ UI scaffold with local state
 
-### Day 12: Add/Remove/Reorder Drills
+### Day 12: Add/Remove/Reorder Drills ✅ COMPLETED
 
-**Task:** Implement session building logic
-
-**Key features:**
-- Click drill to add to session
-- Up/down arrows to reorder (NO drag-and-drop yet)
-- Input field for custom duration
-- Compute total_duration automatically
-
-**Example state management:**
-```javascript
-const [selectedDrills, setSelectedDrills] = useState([])
-
-function addDrill(drill) {
-  setSelectedDrills([...selectedDrills, {
-    drill,
-    order_index: selectedDrills.length,
-    custom_duration: drill.duration || 15,
-    notes: ''
-  }])
-}
-
-function moveDrill(index, direction) {
-  const newDrills = [...selectedDrills]
-  const newIndex = index + direction
-  [newDrills[index], newDrills[newIndex]] = [newDrills[newIndex], newDrills[index]]
-  setSelectedDrills(newDrills.map((d, i) => ({ ...d, order_index: i })))
-}
-```
+**Features implemented:**
+- ✅ Click drill card to add to session
+- ✅ Click again to remove from session (toggle functionality)
+- ✅ Up/down arrows to reorder drills (NO drag-and-drop)
+- ✅ Remove drill button (X) on each drill card
+- ✅ Input field for custom duration (per drill)
+- ✅ Notes field for each drill (optional)
+- ✅ Automatic total duration calculation
+- ✅ Session title & description inputs
+- ✅ Empty state when no drills selected
+- ✅ Numbered drill list (#1, #2, etc.)
+- ✅ Category badges on drill cards
 
 **Deliverable:** ✅ Fully interactive builder (client-side only)
 
-### Day 13: Persist Session
+### Day 13: Persist Session ✅ COMPLETED
 
-**Task:** Save session to database
-
-**Implementation:**
-```javascript
-async function saveSession() {
-  const { data: { user } } = await supabase.auth.getUser()
-  
-  if (!user) return
-  
-  // 1. Insert session
-  const { data: session, error } = await supabase
-    .from('sessions')
-    .insert({
-      author_id: user.id,
-      title: sessionTitle,
-      description: sessionDescription,
-      total_duration: selectedDrills.reduce((sum, d) => sum + d.custom_duration, 0),
-      is_public: true
-    })
-    .select()
-    .single()
-  
-  if (error) {
-    alert('Error saving session')
-    return
-  }
-  
-  // 2. Insert session_drills
-  const drillsToInsert = selectedDrills.map(d => ({
-    session_id: session.id,
-    drill_id: d.drill.id,
-    order_index: d.order_index,
-    custom_duration: d.custom_duration,
-    notes: d.notes
-  }))
-  
-  await supabase.from('session_drills').insert(drillsToInsert)
-  
-  // 3. Navigate to session view
-  router.push(`/sessions/${session.id}`)
-}
-```
+**Features implemented:**
+- ✅ Save Session button with validation
+- ✅ Requires session title and at least one drill
+- ✅ Inserts session record to database
+- ✅ Inserts session_drills with order, duration, notes
+- ✅ Calculates total_duration automatically
+- ✅ Sets is_public: true by default
+- ✅ Links to authenticated user as author
+- ✅ Redirects to `/sessions/${session.id}` after save
+- ✅ Loading state while saving
+- ✅ Disabled button when invalid/saving
 
 **Deliverable:** ✅ Sessions save to database
 

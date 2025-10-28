@@ -5,7 +5,7 @@ import CoachProfileModal from './CoachProfileModal'
 import CommentList from './CommentList'
 import CommentForm from './CommentForm'
 
-export default function DrillModal({ drill, isOpen, onClose }) {
+export default function DrillModal({ drill, isOpen, onClose, onAddToSession, isInSession }) {
   const [isFavorited, setIsFavorited] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
@@ -300,40 +300,61 @@ export default function DrillModal({ drill, isOpen, onClose }) {
               </div>
               
               {/* Add to Session Button */}
-              <button
-                onClick={(e) => {
-                  e.preventDefault()
-                  console.log('Add to session:', drill.id)
-                  // TODO: Implement add to session functionality
-                }}
-                style={{
-                  padding: '6px 12px',
-                  backgroundColor: 'rgba(255,255,255,0.08)',
-                  border: '1px solid rgba(255,255,255,0.20)',
-                  borderRadius: '4px',
-                  color: 'rgba(255,255,255,0.9)',
-                  fontSize: '12px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
-                }}
-              >
-                <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 5v14M5 12h14" />
-                </svg>
-                Add to Session
-              </button>
+              {onAddToSession && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault()
+                    onAddToSession()
+                  }}
+                  disabled={isInSession}
+                  style={{
+                    padding: '6px 12px',
+                    backgroundColor: isInSession 
+                      ? 'rgba(34, 197, 94, 0.10)' 
+                      : 'rgba(255,255,255,0.08)',
+                    border: isInSession
+                      ? '1px solid rgba(34, 197, 94, 0.4)'
+                      : '1px solid rgba(255,255,255,0.20)',
+                    borderRadius: '4px',
+                    color: isInSession ? '#4ADE80' : 'rgba(255,255,255,0.9)',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    cursor: isInSession ? 'default' : 'pointer',
+                    transition: 'all 0.2s',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isInSession) {
+                      e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isInSession) {
+                      e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                    }
+                  }}
+                >
+                  {isInSession ? (
+                    <>
+                      <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M20 6L9 17l-5-5" />
+                      </svg>
+                      In Session
+                    </>
+                  ) : (
+                    <>
+                      <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 5v14M5 12h14" />
+                      </svg>
+                      Add to Session
+                    </>
+                  )}
+                </button>
+              )}
             </div>
           </div>
 
