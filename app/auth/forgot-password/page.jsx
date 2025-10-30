@@ -34,141 +34,239 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      {/* Top Navigation Bar */}
-      <nav className="bg-green-800 text-white shadow-md border-b-2 border-green-600">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center py-3">
-            <Link href="/" className="flex items-center border-0 outline-none no-underline">
-              <span className="br-main-heading text-2xl br-logo">The Boot Room</span>
-            </Link>
-          </div>
+    <div className="min-h-screen flex flex-col relative" style={{ backgroundColor: '#0a0a0a' }}>
+      {/* Blurred Background Layer */}
+      <div 
+        style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundImage: 'url(/images/gemini-soccer-stadium-background.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          filter: 'blur(10px) grayscale(30%)',
+          WebkitFilter: 'blur(10px) grayscale(30%)',
+          opacity: 0.6,
+          zIndex: 0
+        }}
+      />
+      
+      {/* Fade to Black Gradient Overlay */}
+      <div 
+        style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'linear-gradient(180deg, rgba(10,10,10,1) 0%, rgba(10,10,10,0.85) 30%, rgba(10,10,10,0.60) 60%, rgba(10,10,10,0.50) 100%)',
+          zIndex: 1
+        }}
+      />
+
+      {/* Navigation */}
+      <nav className="px-8 py-6 relative z-30">
+        <div className="max-w-7xl mx-auto">
+          <Link href="/" style={{ textDecoration: 'none' }}>
+            <h1 style={{
+              fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
+              fontSize: '1.5rem',
+              fontWeight: '900',
+              fontStyle: 'italic',
+              color: 'transparent',
+              WebkitTextStroke: '1.5px white',
+              textStroke: '1.5px white',
+              letterSpacing: '0.1em',
+              transform: 'skew(-5deg)',
+              cursor: 'pointer'
+            }}
+            className="hover:opacity-80 transition">
+              THE BOOT ROOM
+            </h1>
+          </Link>
         </div>
       </nav>
 
-      <div className="py-10 px-4">
-        <div className="flex flex-col items-center justify-center min-h-screen">
-        {/* Boot Room Title */}
-        <div style={{marginBottom: '3rem', textAlign: 'center'}}>
-          <h1 style={{
+      {/* Main Content */}
+      <main 
+        className="flex-1 flex flex-col items-center justify-center px-4 relative z-20"
+        style={{
+          paddingTop: '60px',
+          paddingBottom: '60px'
+        }}
+      >
+        {/* Large Title */}
+        <h1 
+          style={{
             fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-            fontSize: '3rem',
+            fontSize: 'clamp(2.5rem, 6vw, 4rem)',
             fontWeight: '900',
             fontStyle: 'italic',
             color: 'transparent',
             WebkitTextStroke: '2px white',
             textStroke: '2px white',
-            letterSpacing: '-0.01em',
-            transform: 'skew(-5deg)',
-            display: 'inline-block',
+            letterSpacing: '0.1em',
             textTransform: 'uppercase',
-            marginBottom: '0'
-          }}>The Boot Room</h1>
-        </div>
+            textAlign: 'center',
+            marginBottom: '48px'
+          }}
+        >
+          THE BOOT ROOM
+        </h1>
 
-        {/* Forgot Password Form Container */}
-        <div style={{
-          backgroundColor: 'rgba(40, 40, 40, 0.95)',
-          borderRadius: '24px',
-          padding: '48px 40px',
-          maxWidth: '400px',
-          width: '100%',
-          border: '1px solid rgba(255, 255, 255, 0.1)'
-        }}>
+        {/* Reset Password Card */}
+        <div 
+        style={{
+        width: '100%',
+        maxWidth: '600px',
+        borderRadius: '24px',
+        backgroundColor: 'rgba(26,26,26,0.8)',
+        border: '1px solid white',
+        padding: '48px',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
+        }}
+        >
+          {/* Card Title */}
           <h2 style={{
             fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-            color: 'white',
-            fontSize: '1.5rem',
-            fontWeight: '600',
+            fontSize: '1.75rem',
+            fontWeight: '900',
             fontStyle: 'italic',
+            color: 'white',
             textAlign: 'center',
-            marginBottom: '2rem',
-            marginTop: '0'
-          }}>Reset Password</h2>
-          
-          {error && (
-            <div style={{
-              backgroundColor: 'rgba(220, 38, 38, 0.1)',
-              color: '#ef4444',
-              padding: '12px',
-              borderRadius: '8px',
-              marginBottom: '20px',
-              border: '1px solid rgba(220, 38, 38, 0.3)'
-            }}>
-              <p style={{ margin: 0 }}>{error}</p>
-            </div>
-          )}
+            marginBottom: '12px',
+            letterSpacing: '0.05em'
+          }}>
+            Reset Password
+          </h2>
+          <p style={{
+            fontFamily: '"Helvetica Neue", Arial, sans-serif',
+            fontSize: '1rem',
+            fontStyle: 'italic',
+            color: 'rgba(255,255,255,0.7)',
+            textAlign: 'center',
+            marginBottom: '32px'
+          }}>
+            Enter your email to receive a reset link
+          </p>
 
-          {message && (
-            <div style={{
-              backgroundColor: 'rgba(16, 185, 129, 0.1)',
-              color: '#10b981',
-              padding: '12px',
-              borderRadius: '8px',
-              marginBottom: '20px',
-              border: '1px solid rgba(16, 185, 129, 0.3)'
-            }}>
-              <p style={{ margin: 0 }}>{message}</p>
-            </div>
-          )}
+          <div>
+            {error && (
+              <div 
+                className="rounded-lg p-3 mb-5 text-sm"
+                style={{
+                  background: 'rgba(239,68,68,0.15)',
+                  border: '1px solid rgba(239,68,68,0.4)',
+                  color: '#FCA5A5'
+                }}
+              >
+                {error}
+              </div>
+            )}
 
-          <form onSubmit={handleSubmit}>
-            {/* Email Input */}
-            <div style={{marginBottom: '2rem'}}>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
+            {message && (
+              <div 
+                className="rounded-lg p-3 mb-5 text-sm"
+                style={{
+                  background: 'rgba(16,185,129,0.15)',
+                  border: '1px solid rgba(16,185,129,0.4)',
+                  color: '#6EE7B7'
+                }}
+              >
+                {message}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+              {/* Email Input */}
+              <div style={{ marginBottom: '32px' }}>
+                <label htmlFor="email" style={{ 
+                  display: 'block',
+                  color: 'rgba(255,255,255,0.7)',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  marginBottom: '8px'
+                }}>
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="coach@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '14px 16px',
+                    borderRadius: '8px',
+                    background: 'rgba(255,255,255,0.08)',
+                    border: '1px solid rgba(255,255,255,0.20)',
+                    color: 'white',
+                    fontSize: '16px',
+                    transition: 'all 0.2s',
+                    boxSizing: 'border-box'
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.12)'
+                    e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                  }}
+                />
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={loading || !email.trim()}
                 style={{
                   width: '100%',
                   padding: '16px',
-                  backgroundColor: 'rgba(60, 60, 60, 0.8)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '12px',
-                  color: 'white',
-                  fontSize: '1rem',
-                  outline: 'none',
+                  borderRadius: '8px',
+                  backgroundColor: (loading || !email.trim())
+                    ? 'rgba(255,255,255,0.10)' 
+                    : 'rgba(34,197,94,0.20)',
+                  border: (loading || !email.trim())
+                    ? '1px solid rgba(255,255,255,0.10)'
+                    : '2px solid #4ADE80',
+                  color: (loading || !email.trim())
+                    ? 'rgba(255,255,255,0.4)'
+                    : '#4ADE80',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  fontStyle: 'italic',
+                  textTransform: 'uppercase',
+                  cursor: (loading || !email.trim()) ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.2s',
                   boxSizing: 'border-box'
                 }}
-              />
-            </div>
+              >
+                {loading ? 'Sending...' : 'Send Reset Link'}
+              </button>
+            </form>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                width: '100%',
-                padding: '16px',
-                backgroundColor: loading ? '#6aa18c' : '#16a34a',
-                color: 'white',
-                border: 'none',
-                borderRadius: '12px',
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                fontStyle: 'italic',
-                opacity: loading ? 0.7 : 1
-              }}
-            >
-              {loading ? 'Sending...' : 'Send Reset Link'}
-            </button>
-          </form>
+            {/* Back to Login Link */}
+            <div style={{ marginTop: '24px', textAlign: 'center' }}>
+              <Link 
+                href="/auth/login" 
+                style={{
+                  fontSize: '14px',
+                  color: 'rgba(255,255,255,0.7)',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#16a34a'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}
+              >
+                ← Back to Login
+              </Link>
+            </div>
+          </div>
         </div>
-        
-        {/* Back to Login */}
-        <div style={{ marginTop: '2rem', textAlign: 'center', color: 'white' }}>
-          <p>
-            <Link href="/auth/login" style={{ color: '#16a34a', textDecoration: 'none', fontWeight: 'bold' }}>
-              Back to Login
-            </Link>
-          </p>
-        </div>
-        
-        </div>
-      </div>
+      </main>
     </div>
   );
 };

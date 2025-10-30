@@ -18,7 +18,6 @@ export default function Signup() {
     setLoading(true)
     setError(null)
     
-    // Validate passwords match
     if (password !== confirmPassword) {
       setError('Passwords do not match')
       setLoading(false)
@@ -37,7 +36,6 @@ export default function Signup() {
       
       if (error) throw error
       
-      // Show success message and redirect to login
       alert('Check your email for the confirmation link!')
       router.push('/auth/login')
     } catch (error) {
@@ -48,88 +46,309 @@ export default function Signup() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Create your account
-          </h2>
+    <div className="min-h-screen flex flex-col relative" style={{ backgroundColor: '#0a0a0a' }}>
+      {/* Blurred Background Layer */}
+      <div 
+        style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundImage: 'url(/images/gemini-soccer-stadium-background.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          filter: 'blur(10px) grayscale(30%)',
+          WebkitFilter: 'blur(10px) grayscale(30%)',
+          opacity: 0.6,
+          zIndex: 0
+        }}
+      />
+      
+      {/* Fade to Black Gradient Overlay */}
+      <div 
+        style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'linear-gradient(180deg, rgba(10,10,10,1) 0%, rgba(10,10,10,0.85) 30%, rgba(10,10,10,0.60) 60%, rgba(10,10,10,0.50) 100%)',
+          zIndex: 1
+        }}
+      />
+
+      {/* Navigation */}
+      <nav className="px-8 py-6 relative z-30">
+        <div className="max-w-7xl mx-auto">
+          <Link href="/" style={{ textDecoration: 'none' }}>
+            <h1 style={{
+              fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
+              fontSize: '1.5rem',
+              fontWeight: '900',
+              fontStyle: 'italic',
+              color: 'transparent',
+              WebkitTextStroke: '1.5px white',
+              textStroke: '1.5px white',
+              letterSpacing: '0.1em',
+              transform: 'skew(-5deg)',
+              cursor: 'pointer'
+            }}
+            className="hover:opacity-80 transition">
+              THE BOOT ROOM
+            </h1>
+          </Link>
         </div>
-        
-        {error && (
-          <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
-            <p className="text-red-700">{error}</p>
-          </div>
-        )}
-        
-        <form className="mt-8 space-y-6" onSubmit={handleSignup}>
-          <div className="-space-y-px rounded-md shadow-sm">
-            <div>
-              <label htmlFor="email" className="sr-only">Email address</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="relative block w-full rounded-t-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Email address"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">Password</label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="relative block w-full border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Password"
-              />
-            </div>
-            <div>
-              <label htmlFor="confirm-password" className="sr-only">Confirm Password</label>
-              <input
-                id="confirm-password"
-                name="confirm-password"
-                type="password"
-                autoComplete="new-password"
-                required
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="relative block w-full rounded-b-md border-0 py-1.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Confirm Password"
-              />
-            </div>
-          </div>
+      </nav>
+
+      {/* Main Content */}
+      <main 
+        className="flex-1 flex flex-col items-center justify-center px-4 relative z-20"
+        style={{
+          paddingTop: '60px',
+          paddingBottom: '60px'
+        }}
+      >
+        {/* Large Title */}
+        <h1 
+          style={{
+            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
+            fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+            fontWeight: '900',
+            fontStyle: 'italic',
+            color: 'transparent',
+            WebkitTextStroke: '2px white',
+            textStroke: '2px white',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            textAlign: 'center',
+            marginBottom: '48px'
+          }}
+        >
+          THE BOOT ROOM
+        </h1>
+
+        {/* Signup Card */}
+        <div 
+        style={{
+        width: '100%',
+        maxWidth: '600px',
+        borderRadius: '24px',
+        backgroundColor: 'rgba(26,26,26,0.8)',
+        border: '1px solid white',
+        padding: '48px',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
+        }}
+        >
+          {/* Card Title */}
+          <h2 style={{
+            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
+            fontSize: '1.75rem',
+            fontWeight: '900',
+            fontStyle: 'italic',
+            color: 'white',
+            textAlign: 'center',
+            marginBottom: '12px',
+            letterSpacing: '0.05em'
+          }}>
+            Join The Boot Room
+          </h2>
+          <p style={{
+            fontFamily: '"Helvetica Neue", Arial, sans-serif',
+            fontSize: '1rem',
+            fontStyle: 'italic',
+            color: 'rgba(255,255,255,0.7)',
+            textAlign: 'center',
+            marginBottom: '32px'
+          }}>
+            Create your account and start building sessions
+          </p>
 
           <div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-indigo-300"
-            >
-              {loading ? 'Creating account...' : 'Sign up'}
-            </button>
-          </div>
-          
-          <div className="flex items-center justify-center">
-            <div className="text-sm">
-              <p className="font-medium text-gray-600">
+            {error && (
+              <div 
+                className="rounded-lg p-3 mb-5 text-sm"
+                style={{
+                  background: 'rgba(239,68,68,0.15)',
+                  border: '1px solid rgba(239,68,68,0.4)',
+                  color: '#FCA5A5'
+                }}
+              >
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSignup}>
+              {/* Email Input */}
+              <div style={{ marginBottom: '20px' }}>
+                <label htmlFor="email" style={{ 
+                  display: 'block',
+                  color: 'rgba(255,255,255,0.7)',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  marginBottom: '8px'
+                }}>
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="coach@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '14px 16px',
+                    borderRadius: '8px',
+                    background: 'rgba(255,255,255,0.08)',
+                    border: '1px solid rgba(255,255,255,0.20)',
+                    color: 'white',
+                    fontSize: '16px',
+                    transition: 'all 0.2s',
+                    boxSizing: 'border-box'
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.12)'
+                    e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                  }}
+                />
+              </div>
+
+              {/* Password Input */}
+              <div style={{ marginBottom: '20px' }}>
+                <label htmlFor="password" style={{ 
+                  display: 'block',
+                  color: 'rgba(255,255,255,0.7)',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  marginBottom: '8px'
+                }}>
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '14px 16px',
+                    borderRadius: '8px',
+                    background: 'rgba(255,255,255,0.08)',
+                    border: '1px solid rgba(255,255,255,0.20)',
+                    color: 'white',
+                    fontSize: '16px',
+                    transition: 'all 0.2s',
+                    boxSizing: 'border-box'
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.12)'
+                    e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                  }}
+                />
+              </div>
+
+              {/* Confirm Password Input */}
+              <div style={{ marginBottom: '32px' }}>
+                <label htmlFor="confirm-password" style={{ 
+                  display: 'block',
+                  color: 'rgba(255,255,255,0.7)',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  marginBottom: '8px'
+                }}>
+                  Confirm Password
+                </label>
+                <input
+                  id="confirm-password"
+                  type="password"
+                  name="confirm-password"
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '14px 16px',
+                    borderRadius: '8px',
+                    background: 'rgba(255,255,255,0.08)',
+                    border: '1px solid rgba(255,255,255,0.20)',
+                    color: 'white',
+                    fontSize: '16px',
+                    transition: 'all 0.2s',
+                    boxSizing: 'border-box'
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.12)'
+                    e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                  }}
+                />
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={loading || !email.trim() || !password.trim() || !confirmPassword.trim()}
+                style={{
+                  width: '100%',
+                  padding: '16px',
+                  borderRadius: '8px',
+                  backgroundColor: (loading || !email.trim() || !password.trim() || !confirmPassword.trim())
+                    ? 'rgba(255,255,255,0.10)' 
+                    : 'rgba(34,197,94,0.20)',
+                  border: (loading || !email.trim() || !password.trim() || !confirmPassword.trim())
+                    ? '1px solid rgba(255,255,255,0.10)'
+                    : '2px solid #4ADE80',
+                  color: (loading || !email.trim() || !password.trim() || !confirmPassword.trim())
+                    ? 'rgba(255,255,255,0.4)'
+                    : '#4ADE80',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  fontStyle: 'italic',
+                  textTransform: 'uppercase',
+                  cursor: (loading || !email.trim() || !password.trim() || !confirmPassword.trim()) ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.2s',
+                  boxSizing: 'border-box'
+                }}
+              >
+                {loading ? 'Creating Account...' : 'Create Account'}
+              </button>
+            </form>
+
+            {/* Sign In Link */}
+            <div style={{ marginTop: '24px', textAlign: 'center' }}>
+              <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}>
                 Already have an account?{' '}
-                <Link href="/auth/login" className="text-indigo-600 hover:text-indigo-500">
+                <Link 
+                  href="/auth/login" 
+                  style={{
+                    color: '#16a34a',
+                    fontWeight: '600',
+                    textDecoration: 'none',
+                    transition: 'color 0.2s'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#22C55E'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = '#16a34a'}
+                >
                   Sign in
                 </Link>
               </p>
             </div>
           </div>
-        </form>
-      </div>
+        </div>
+      </main>
     </div>
   )
 }
