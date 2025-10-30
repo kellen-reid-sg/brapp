@@ -702,23 +702,52 @@ Dead-simple session builder, save/share sessions, votes/comments on sessions, ba
 
 **Deliverable:** ✅ Complete session workflow (build → save → view → manage → favorite)
 
-### Day 15: Profile Page
+### Day 15: Profile Page & About Page ✅ COMPLETED
 
-**Task:** Create user profile
+**Profile Page Implementation:**
 
-**Files:**
-- `app/profile/page.jsx` - Own profile
-- `components/ProfileHeader.jsx` - Display name, avatar, edit
-- `components/SessionList.jsx` - User's sessions
-- `components/DrillList.jsx` - User's uploaded drills
+**Files Created:**
+- ✅ `app/profile/page.jsx` - Own profile page with dark theme
+- ✅ `components/ProfileHeader.jsx` - Avatar, stats, bio, clubs/licenses
+- ✅ `components/SessionList.jsx` - Sessions with Created/Upvoted/Favorited tabs
+- ✅ `components/DrillList.jsx` - Drills with Created/Upvoted/Favorited tabs
 
-**Features:**
-- Edit display name inline
-- Show user's sessions
-- Show user's uploaded drills
-- Basic stats (sessions created, drills uploaded)
+**Profile Page Features:**
+- ✅ Dark theme with blurred coach-background-image.png overlay
+- ✅ Two-column layout (380px sidebar + flexible content panel)
+- ✅ Semi-transparent card design matching site-wide aesthetic
+- ✅ Profile Header with:
+  - ✅ Avatar with white border and upload functionality
+  - ✅ Display name, location, and bio (editable inline)
+  - ✅ 2x2 stats grid with green numbers and white borders (Sessions, Drills, Upvotes, Boot Room Age)
+  - ✅ Clubs & Schools section with pill badges
+  - ✅ Licenses & Badges section with colored badges
+  - ✅ Edit mode with save/cancel buttons
+- ✅ Main content tabs: Sessions | Drills (pill-style, green active state)
+- ✅ Underlined subtabs within each section: Created | Upvoted | Favorited
+- ✅ Session/drill cards with hover effects (green border on hover)
+- ✅ Empty states for all content types
+- ✅ Responsive layout (collapses to single column on mobile)
+- ✅ Navigation bar integration
+- ✅ Data fetching for:
+  - ✅ User-created sessions and drills
+  - ✅ Upvoted sessions and drills
+  - ✅ Favorited sessions and drills
 
-**Deliverable:** ✅ Working profile page
+**Design System Compliance:**
+- ✅ Consistent with PROJECT_DESIGN.md specifications
+- ✅ Matches /drills and /sessions/new page aesthetics
+- ✅ Italic, bold, uppercase typography for headings
+- ✅ Green accent color (#16a34a) throughout
+- ✅ Semi-transparent cards (rgba(255,255,255,0.06))
+- ✅ Subtle white borders with green hover states
+- ✅ Tabular numerals for stats
+- ✅ Smooth transitions and hover effects
+
+**About Page:**
+- ⏳ Not yet implemented (deferred to next sprint)
+
+**Deliverable:** ✅ Fully functional and styled profile page
 
 **🔍 Testing Checkpoint:**
 1. Create session from scratch
@@ -733,8 +762,8 @@ Dead-simple session builder, save/share sessions, votes/comments on sessions, ba
 - [x] Voting/commenting works on sessions
 - [x] Session favoriting works
 - [x] My Sessions repository page functional
-- [ ] Profile shows user's content (moved to Week 4)
-- [ ] Can edit profile info (moved to Week 4)
+- [x] Profile shows user's content (Created/Upvoted/Favorited tabs)
+- [x] Can edit profile info (Display name, bio, location, clubs, avatar)
 
 ---
 
@@ -747,24 +776,47 @@ Mobile-first polish, error handling, production deployment, first beta users
 
 **Tasks:**
 
-**1. Mobile Polish:**
+**1. Profile Page Polish:**
+- Clean up profile badge styling and positioning
+- Enhance biography section layout and design
+- Add functional social links section with input fields (Twitter, LinkedIn, Instagram, Website)
+- Improve clubs & schools badge visual hierarchy
+- Refine licenses display with better iconography
+- Add character count for bio field (max 500 characters)
+- Improve edit mode UX and validation
+- Add placeholder text for empty sections
+
+**2. Mobile Polish:**
 - Ensure 1-column layout on mobile
 - Touch targets minimum 44px
 - Sticky sort tabs on /drills
 - Sticky save bar on /sessions/new
 - Review typography and spacing
 - Test on actual mobile devices
+- Test profile page responsiveness
 
-**2. Navigation Bar Improvements:**
+**3. Navigation Bar Improvements:**
 - Update navigation structure to separate Profile from Sessions
 - Add user avatar/name dropdown for profile access
-- Keep "MY SESSIONS" as main navigation item linking to `/sessions`
+- **Rename "MY SESSIONS" to "MY LIBRARY"** - Update navigation item and route
+- **Expand /library (or /sessions) page functionality:**
+  - Add tab for "Favorited Drills" alongside "My Sessions" and "Favorited Sessions"
+  - Show grid of favorited individual drills (not just sessions)
+  - Consistent card styling for both drills and sessions
 - Move "SIGN OUT" to profile dropdown
 - Improve mobile navigation (hamburger menu)
 - Consider adding user authentication state indicators
 - Optional: Add notifications icon for comments/upvotes
 
-**Deliverable:** ✅ Smooth mobile experience + Improved navigation UX
+**4. Community Features:**
+- **Define "Join Community" destination from home page:**
+  - Option A: Create `/community` page with coach profiles/leaderboard
+  - Option B: Redirect to `/drills` with community tab/filter
+  - Option C: Create `/coaches` page to browse coach profiles
+  - Option D: Create community forum/discussion board
+  - **Decision needed:** Determine what "Join Community" means for MVP
+
+**Deliverable:** ✅ Smooth mobile experience + Improved navigation UX + Community direction defined
 
 ### Day 17: Error States + Loading + Database Schema Enhancement
 
