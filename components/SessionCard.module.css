@@ -1,0 +1,105 @@
+/* Desktop styles (default) */
+
+.card {
+  background-color: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.2s;
+  position: relative;
+  cursor: pointer;
+}
+
+.cardLayout {
+  display: flex;
+  gap: 40px;
+}
+
+.voteColumn {
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topActions {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.favoriteButton {
+  padding: 6px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.metadataRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 13px;
+}
+
+.mobileFavorite {
+  display: none;
+}
+
+/* Mobile styles (<640px) */
+@media (max-width: 639px) {
+  .card {
+    padding: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Keep horizontal layout, reduce spacing */
+  .cardLayout {
+    gap: 12px;
+  }
+
+  .voteColumn {
+    width: 56px;
+  }
+
+  /* Hide top actions on mobile - star will show in metadata row */
+  .topActions {
+    display: none;
+  }
+
+  /* Enlarge touch targets to 44px */
+  .favoriteButton {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 12px;
+  }
+
+  /* Reduce metadata gaps */
+  .metadataRow {
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  /* Show favorite star in metadata row on mobile */
+  .mobileFavorite {
+    display: flex;
+    padding: 6px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-items: center;
+    min-width: 32px;
+    min-height: 32px;
+  }
+}

@@ -1,0 +1,92 @@
+/* Desktop styles (default) */
+
+.pageMain {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.pageTitle {
+  font-family: "Arial Black", "Helvetica Neue", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  font-style: italic;
+  color: white;
+  text-transform: uppercase;
+  transform: skew(-5deg);
+  margin-bottom: 0.5rem;
+}
+
+.sortTabsContainer {
+  margin-bottom: 32px;
+}
+
+.sessionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Hide Load More button on desktop */
+.loadMoreContainer {
+  display: none;
+}
+
+/* Mobile styles (<640px) */
+@media (max-width: 639px) {
+  .pageMain {
+    padding: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  .pageTitle {
+    font-size: 2rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .sortTabsContainer {
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .sessionsList {
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Show Load More button on mobile */
+  .loadMoreContainer {
+    display: block;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .loadMoreButton {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 600;
+    font-style: italic;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .loadMoreButton:active {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
