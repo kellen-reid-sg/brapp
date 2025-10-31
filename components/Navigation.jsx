@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@/app/lib/supabase'
+import styles from './Navigation.module.css'
 
 export default function Navigation() {
   const router = useRouter()
@@ -10,6 +11,7 @@ export default function Navigation() {
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const dropdownRef = useRef(null)
 
   useEffect(() => {
@@ -80,7 +82,7 @@ export default function Navigation() {
           </h1>
         </Link>
         
-        <nav style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+        <nav className={styles.desktopNav}>
           <Link 
             href="/about" 
             style={{ 
@@ -380,6 +382,102 @@ export default function Navigation() {
             </>
           )}
         </nav>
+
+        {/* Mobile Hamburger */}
+        <button
+          type="button"
+          className={styles.mobileHamburger}
+          onClick={() => setMobileOpen(true)}
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '40px',
+            height: '40px',
+            border: '1px solid rgba(255,255,255,0.5)',
+            borderRadius: '6px',
+            background: 'transparent',
+            color: 'white',
+            cursor: 'pointer'
+          }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+
+        {/* Mobile Menu Overlay */}
+        {mobileOpen && (
+          <div style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 2000,
+            backgroundColor: 'rgba(0,0,0,0.95)',
+            padding: '24px'
+          }}>
+            <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '32px' }}>
+                <button
+                  onClick={() => setMobileOpen(false)}
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    border: '1px solid rgba(255,255,255,0.5)',
+                    borderRadius: '6px',
+                    background: 'transparent',
+                    color: 'white',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
+              </div>
+              
+              <nav style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                <Link href="/about" onClick={() => setMobileOpen(false)} style={{ color: 'white', fontFamily: '"Arial Black", "Helvetica Neue", sans-serif', fontStyle: 'italic', fontWeight: '900', fontSize: '20px', textDecoration: 'none' }}>ABOUT</Link>
+                <Link href="/drills" onClick={() => setMobileOpen(false)} style={{ color: 'white', fontFamily: '"Arial Black", "Helvetica Neue", sans-serif', fontStyle: 'italic', fontWeight: '900', fontSize: '20px', textDecoration: 'none' }}>BROWSE DRILLS</Link>
+                <Link href="/sessions/browse" onClick={() => setMobileOpen(false)} style={{ color: 'white', fontFamily: '"Arial Black", "Helvetica Neue", sans-serif', fontStyle: 'italic', fontWeight: '900', fontSize: '20px', textDecoration: 'none' }}>BROWSE SESSIONS</Link>
+                <Link href="/sessions/new" onClick={() => setMobileOpen(false)} style={{ color: 'white', fontFamily: '"Arial Black", "Helvetica Neue", sans-serif', fontStyle: 'italic', fontWeight: '900', fontSize: '20px', textDecoration: 'none' }}>BUILD SESSION</Link>
+                
+                {!loading && user && (
+                  <>
+                    <Link href="/sessions" onClick={() => setMobileOpen(false)} style={{ color: 'white', fontFamily: '"Arial Black", "Helvetica Neue", sans-serif', fontStyle: 'italic', fontWeight: '900', fontSize: '20px', textDecoration: 'none' }}>MY SESSIONS</Link>
+                    <Link href="/profile" onClick={() => setMobileOpen(false)} style={{ color: 'white', fontFamily: '"Arial Black", "Helvetica Neue", sans-serif', fontStyle: 'italic', fontWeight: '900', fontSize: '20px', textDecoration: 'none' }}>MY PROFILE</Link>
+                  </>
+                )}
+
+                <div style={{ borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '24px', marginTop: '16px' }}>
+                  {!loading && (
+                    user ? (
+                      <button
+                        onClick={() => { setMobileOpen(false); handleSignOut() }}
+                        style={{ width: '100%', padding: '14px', background: 'rgba(239,68,68,0.2)', border: '2px solid #ef4444', borderRadius: '6px', color: '#ef4444', fontSize: '16px', fontWeight: '700', fontStyle: 'italic', textTransform: 'uppercase', cursor: 'pointer' }}
+                      >
+                        SIGN OUT
+                      </button>
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        <Link href="/auth/login" onClick={() => setMobileOpen(false)}>
+                          <button style={{ width: '100%', padding: '14px', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '6px', color: 'white', fontSize: '16px', fontWeight: '700', fontStyle: 'italic', textTransform: 'uppercase', cursor: 'pointer' }}>SIGN IN</button>
+                        </Link>
+                        <Link href="/auth/signup" onClick={() => setMobileOpen(false)}>
+                          <button style={{ width: '100%', padding: '14px', background: 'rgba(34,197,94,0.2)', border: '2px solid #4ADE80', borderRadius: '6px', color: '#4ADE80', fontSize: '16px', fontWeight: '700', fontStyle: 'italic', textTransform: 'uppercase', cursor: 'pointer' }}>GET STARTED</button>
+                        </Link>
+                      </div>
+                    )
+                  )}
+                </div>
+              </nav>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   )

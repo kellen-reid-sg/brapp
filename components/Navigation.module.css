@@ -1,0 +1,27 @@
+/* Desktop nav - hide on mobile */
+.desktopNav {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+/* Hamburger - hide on desktop */
+.mobileHamburger {
+  display: none;
+}
+
+/* Mobile overlay */
+.mobileOverlay {
+  display: none;
+}
+
+/* Below 640px - show hamburger, hide desktop nav */
+@media (max-width: 639px) {
+  .desktopNav {
+    display: none;
+  }
+  
+  .mobileHamburger {
+    display: inline-flex;
+  }
+}
