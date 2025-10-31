@@ -32,6 +32,21 @@
   display: none;
 }
 
+.tooltip {
+  position: absolute;
+  bottom: -28px;
+  right: 0;
+  background-color: rgba(0,0,0,0.9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+}
+
 /* Mobile styles (<640px) */
 @media (max-width: 639px) {
   .container {
@@ -74,5 +89,10 @@
   .loadMoreButton:active {
     background-color: rgba(255, 255, 255, 0.12);
     border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  /* Hide tooltips on mobile (hover doesn't work on touch) */
+  .tooltip {
+    display: none;
   }
 }

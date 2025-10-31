@@ -491,6 +491,7 @@ export default function DrillListSidebar({ onAddDrill, onRemoveDrill, selectedDr
                         <button
                           onClick={(e) => {
                             e.stopPropagation()
+                            setTooltipDrillId(null) // Clear tooltip when opening modal
                             setPreviewDrill(drill)
                             setIsModalOpen(true)
                           }}
@@ -514,20 +515,7 @@ export default function DrillListSidebar({ onAddDrill, onRemoveDrill, selectedDr
 
                         {/* Tooltip */}
                         {tooltipDrillId === drill.id && (
-                          <div style={{
-                            position: 'absolute',
-                            bottom: '-28px',
-                            right: '0',
-                            backgroundColor: 'rgba(0,0,0,0.9)',
-                            color: 'white',
-                            padding: '4px 8px',
-                            borderRadius: '3px',
-                            fontSize: '10px',
-                            fontWeight: '500',
-                            whiteSpace: 'nowrap',
-                            zIndex: 1000,
-                            pointerEvents: 'none'
-                          }}>
+                          <div className={styles.tooltip}>
                             Preview
                           </div>
                         )}
