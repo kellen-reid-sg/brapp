@@ -1,8 +1,8 @@
 'use client'
 import { useState } from 'react'
-import Navigation from '@/components/Navigation'
 import DrillListSidebar from '@/components/DrillListSidebar'
 import SessionBuilder from '@/components/SessionBuilder'
+import Navigation from '@/components/Navigation'
 
 export default function NewSessionPage() {
   const [selectedDrills, setSelectedDrills] = useState([])
@@ -56,6 +56,7 @@ export default function NewSessionPage() {
 
   return (
     <div className="min-h-screen relative" style={{ backgroundColor: '#0a0a0a' }}>
+      <Navigation />
       {/* Blurred Background Layer */}
       <div 
         style={{
@@ -83,8 +84,6 @@ export default function NewSessionPage() {
       />
 
       <div style={{ position: 'relative', zIndex: 2 }}>
-        <Navigation />
-
         <main className="max-w-7xl mx-auto px-8 py-8">
           <h2 style={{
             fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',

@@ -1,9 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { createClientComponentClient } from '@/app/lib/supabase'
-import Navigation from '@/components/Navigation'
 import DrillCard from '@/components/DrillCard'
 import SortTabs from '@/components/SortTabs'
+import Navigation from '@/components/Navigation'
 
 export default function DrillsPage() {
   const supabase = createClientComponentClient()
@@ -146,6 +146,7 @@ export default function DrillsPage() {
 
   return (
     <div className="min-h-screen relative" style={{ backgroundColor: '#0a0a0a' }}>
+      <Navigation />
       {/* Blurred Background Layer */}
       <div 
         style={{
@@ -173,8 +174,6 @@ export default function DrillsPage() {
       />
 
       <div style={{ position: 'relative', zIndex: 2 }}>
-        <Navigation />
-
         <main className="max-w-7xl mx-auto px-8 py-8">
         <h2 style={{
           fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
@@ -204,13 +203,14 @@ export default function DrillsPage() {
                   setShowCategoryDropdown(false)
                 }}
                 style={{
-                  padding: '8px 16px',
-                  backgroundColor: 'rgba(255,255,255,0.08)',
+                  padding: '10px 16px',
+                  backgroundColor: selectedAgeGroups.length > 0 ? 'rgba(34, 197, 94, 0.25)' : 'rgba(255,255,255,0.08)',
                   border: '1px solid rgba(255,255,255,0.20)',
-                  borderRadius: '6px',
-                  color: 'white',
-                  fontSize: '13px',
+                  borderRadius: '8px',
+                  color: selectedAgeGroups.length > 0 ? '#4ADE80' : 'white',
+                  fontSize: '14px',
                   fontWeight: '600',
+                  fontStyle: 'italic',
                   cursor: 'pointer',
                   transition: 'all 0.2s',
                   display: 'flex',
@@ -218,12 +218,12 @@ export default function DrillsPage() {
                   gap: '6px'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
+                  e.currentTarget.style.backgroundColor = 'rgba(34, 197, 94, 0.15)'
+                  e.currentTarget.style.color = '#4ADE80'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                  e.currentTarget.style.backgroundColor = selectedAgeGroups.length > 0 ? 'rgba(34, 197, 94, 0.25)' : 'rgba(255,255,255,0.08)'
+                  e.currentTarget.style.color = selectedAgeGroups.length > 0 ? '#4ADE80' : 'white'
                 }}
               >
                 Age Group {selectedAgeGroups.length > 0 && `(${selectedAgeGroups.length})`}
@@ -281,13 +281,14 @@ export default function DrillsPage() {
                   setShowAgeDropdown(false)
                 }}
                 style={{
-                  padding: '8px 16px',
-                  backgroundColor: 'rgba(255,255,255,0.08)',
+                  padding: '10px 16px',
+                  backgroundColor: selectedCategories.length > 0 ? 'rgba(34, 197, 94, 0.25)' : 'rgba(255,255,255,0.08)',
                   border: '1px solid rgba(255,255,255,0.20)',
-                  borderRadius: '6px',
-                  color: 'white',
-                  fontSize: '13px',
+                  borderRadius: '8px',
+                  color: selectedCategories.length > 0 ? '#4ADE80' : 'white',
+                  fontSize: '14px',
                   fontWeight: '600',
+                  fontStyle: 'italic',
                   cursor: 'pointer',
                   transition: 'all 0.2s',
                   display: 'flex',
@@ -295,12 +296,12 @@ export default function DrillsPage() {
                   gap: '6px'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
+                  e.currentTarget.style.backgroundColor = 'rgba(34, 197, 94, 0.15)'
+                  e.currentTarget.style.color = '#4ADE80'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                  e.currentTarget.style.backgroundColor = selectedCategories.length > 0 ? 'rgba(34, 197, 94, 0.25)' : 'rgba(255,255,255,0.08)'
+                  e.currentTarget.style.color = selectedCategories.length > 0 ? '#4ADE80' : 'white'
                 }}
               >
                 Category {selectedCategories.length > 0 && `(${selectedCategories.length})`}
@@ -355,23 +356,24 @@ export default function DrillsPage() {
               <button
                 onClick={clearFilters}
                 style={{
-                  padding: '8px 16px',
-                  backgroundColor: 'transparent',
+                  padding: '10px 16px',
+                  backgroundColor: 'rgba(255,255,255,0.08)',
                   border: '1px solid rgba(255,255,255,0.20)',
-                  borderRadius: '6px',
-                  color: 'rgba(255,255,255,0.7)',
-                  fontSize: '13px',
+                  borderRadius: '8px',
+                  color: 'white',
+                  fontSize: '14px',
                   fontWeight: '600',
+                  fontStyle: 'italic',
                   cursor: 'pointer',
                   transition: 'all 0.2s'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = 'white'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
+                  e.currentTarget.style.backgroundColor = 'rgba(34, 197, 94, 0.15)'
+                  e.currentTarget.style.color = '#4ADE80'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = 'rgba(255,255,255,0.7)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
+                  e.currentTarget.style.color = 'white'
                 }}
               >
                 Clear Filters

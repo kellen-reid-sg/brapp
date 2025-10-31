@@ -2,9 +2,9 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@/app/lib/supabase'
-import Navigation from '@/components/Navigation'
 import CommentList from '@/components/CommentList'
 import CommentForm from '@/components/CommentForm'
+import Navigation from '@/components/Navigation'
 
 export default function DrillDetailPage() {
   const supabase = createClientComponentClient()
@@ -239,6 +239,7 @@ export default function DrillDetailPage() {
 
   return (
     <div className="min-h-screen relative" style={{ backgroundColor: '#0a0a0a' }}>
+      <Navigation />
       {/* Blurred Background Layer */}
       <div 
         style={{
@@ -266,8 +267,6 @@ export default function DrillDetailPage() {
       />
 
       <div style={{ position: 'relative', zIndex: 2 }}>
-        <Navigation />
-
         <main className="max-w-4xl mx-auto px-8 py-8">
           <button 
             onClick={() => router.push('/drills')}

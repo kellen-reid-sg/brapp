@@ -43,15 +43,28 @@ export default function SortTabs({ active, onChange }) {
             borderRadius: '8px',
             fontWeight: '600',
             fontSize: '14px',
+            fontStyle: 'italic',
             transition: 'all 0.2s',
-            backgroundColor: active === tab.id ? '#16a34a' : 'rgba(255,255,255,0.08)',
-            color: active === tab.id ? 'white' : 'rgba(255,255,255,0.7)',
-            border: '1px solid ' + (active === tab.id ? '#16a34a' : 'rgba(255,255,255,0.20)'),
+            backgroundColor: active === tab.id ? 'rgba(34, 197, 94, 0.25)' : 'rgba(255,255,255,0.08)',
+            color: active === tab.id ? '#4ADE80' : 'white',
+            border: '1px solid rgba(255,255,255,0.20)',
             display: 'flex',
             alignItems: 'center',
-            gap: '6px'
+            gap: '6px',
+            cursor: 'pointer'
           }}
-          className="hover:bg-opacity-60"
+          onMouseEnter={(e) => {
+            if (active !== tab.id) {
+              e.currentTarget.style.backgroundColor = 'rgba(34, 197, 94, 0.15)'
+              e.currentTarget.style.color = '#4ADE80'
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (active !== tab.id) {
+              e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
+              e.currentTarget.style.color = 'white'
+            }
+          }}
         >
           {tab.icon}
           {tab.label}

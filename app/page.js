@@ -1,5 +1,6 @@
+'use client'
 import Link from 'next/link';
-import Navigation from '@/components/Navigation';
+import Navigation from '@/components/Navigation'
 
 export default function HomePage() {
   return (
@@ -129,7 +130,16 @@ export default function HomePage() {
                 justifyContent: 'space-between',
                 transition: 'all 0.3s ease'
               }}
-              className="hover:bg-opacity-60 hover:border-green-500"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.6)'
+                e.currentTarget.style.borderColor = '#22c55e'
+                e.currentTarget.style.transform = 'scale(1.02)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.4)'
+                e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
+                e.currentTarget.style.transform = 'scale(1)'
+              }}
             >
               <div>
                 <h3 style={{
@@ -171,7 +181,16 @@ export default function HomePage() {
                 justifyContent: 'space-between',
                 transition: 'all 0.3s ease'
               }}
-              className="hover:bg-opacity-60 hover:border-green-500"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.6)'
+                e.currentTarget.style.borderColor = '#22c55e'
+                e.currentTarget.style.transform = 'scale(1.02)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.4)'
+                e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
+                e.currentTarget.style.transform = 'scale(1)'
+              }}
             >
               <div>
                 <h3 style={{
@@ -213,7 +232,16 @@ export default function HomePage() {
                 justifyContent: 'space-between',
                 transition: 'all 0.3s ease'
               }}
-              className="hover:bg-opacity-60 hover:border-green-500"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.6)'
+                e.currentTarget.style.borderColor = '#22c55e'
+                e.currentTarget.style.transform = 'scale(1.02)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.4)'
+                e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
+                e.currentTarget.style.transform = 'scale(1)'
+              }}
             >
               <div>
                 <h3 style={{
@@ -231,7 +259,7 @@ export default function HomePage() {
                   color: 'rgba(255,255,255,0.7)',
                   lineHeight: '1.4'
                 }}>
-                  Connect with coaches
+                  Vote, comment, discuss
                 </p>
               </div>
               <div style={{ fontSize: '20px', color: 'white' }}>→</div>
@@ -239,7 +267,7 @@ export default function HomePage() {
 
             {/* Card 4: My Library */}
             <Link 
-              href="/profile"
+              href="/sessions"
               style={{
                 borderRadius: '8px',
                 position: 'relative',
@@ -255,7 +283,16 @@ export default function HomePage() {
                 justifyContent: 'space-between',
                 transition: 'all 0.3s ease'
               }}
-              className="hover:bg-opacity-60 hover:border-green-500"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.6)'
+                e.currentTarget.style.borderColor = '#22c55e'
+                e.currentTarget.style.transform = 'scale(1.02)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.4)'
+                e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
+                e.currentTarget.style.transform = 'scale(1)'
+              }}
             >
               <div>
                 <h3 style={{
