@@ -282,7 +282,6 @@ export default function SessionViewPage() {
 
   return (
     <div className="min-h-screen relative" style={{ backgroundColor: '#0a0a0a' }}>
-      <Navigation />
       {/* Blurred Background Layer */}
       <div 
         style={{
@@ -310,6 +309,7 @@ export default function SessionViewPage() {
       />
 
       <div style={{ position: 'relative', zIndex: 2 }}>
+        <Navigation />
         <main className="max-w-4xl mx-auto px-8 py-8">
           <button 
             onClick={() => router.push('/drills')}

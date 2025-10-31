@@ -175,7 +175,6 @@ export default function MySessionsPage() {
 
   return (
     <div className="min-h-screen relative" style={{ backgroundColor: '#0a0a0a' }}>
-      <Navigation />
       {/* Blurred Background Layer */}
       <div 
         style={{
@@ -203,6 +202,7 @@ export default function MySessionsPage() {
       />
 
       <div style={{ position: 'relative', zIndex: 2 }}>
+        <Navigation />
         <main className="max-w-6xl mx-auto px-8 py-8">
           {/* Page Header */}
           <h2 style={{

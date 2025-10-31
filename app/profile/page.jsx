@@ -238,7 +238,6 @@ export default function ProfilePage() {
 
     return (
         <div style={{ minHeight: '100vh', position: 'relative', backgroundColor: '#0a0a0a' }}>
-            <Navigation />
             {/* Blurred Background Layer */}
             <div
                 style={{
@@ -266,6 +265,7 @@ export default function ProfilePage() {
             />
 
             <div style={{ position: 'relative', zIndex: 2 }}>
+                <Navigation />
                 <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px 24px' }}>
                     {/* Page Title */}
                     <h2 style={{
