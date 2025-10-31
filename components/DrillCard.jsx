@@ -304,6 +304,30 @@ export default function DrillCard({ drill }) {
                 Preview
               </button>
 
+              {/* Favorite Star - Mobile Only (next to Preview) */}
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  toggleFavorite()
+                }}
+                disabled={isUpdating}
+                className={styles.mobileFavorite}
+                style={{
+                  color: isFavorited ? '#EAB308' : 'rgba(255,255,255,0.6)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#EAB308'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = isFavorited ? '#EAB308' : 'rgba(255,255,255,0.6)'
+                }}
+              >
+                <svg width="20" height="20" fill={isFavorited ? '#EAB308' : 'none'} stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              </button>
+
               {/* Add to Session - Mobile Only (next to Preview) */}
               <button
                 onClick={(e) => {

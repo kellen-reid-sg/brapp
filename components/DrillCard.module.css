@@ -71,6 +71,10 @@
   display: none;
 }
 
+.mobileFavorite {
+  display: none;
+}
+
 /* Mobile styles (<640px) */
 @media (max-width: 639px) {
   .card {
@@ -88,11 +92,9 @@
     width: 56px;
   }
 
-  /* Only show favorite at top on mobile */
+  /* Hide top actions on mobile - star will show in metadata row */
   .topActions {
-    top: 12px;
-    right: 12px;
-    gap: 6px;
+    display: none;
   }
 
   /* Enlarge touch targets to 44px */
@@ -100,11 +102,6 @@
     min-width: 44px;
     min-height: 44px;
     padding: 12px;
-  }
-
-  /* Hide top Add to Session on mobile (will show in metadata row instead) */
-  .topActions .addToSessionButton {
-    display: none;
   }
 
   /* Reduce metadata gaps */
@@ -127,5 +124,18 @@
     align-items: center;
     gap: 4px;
     white-space: nowrap;
+  }
+
+  /* Show favorite star in metadata row on mobile */
+  .mobileFavorite {
+    display: flex;
+    padding: 6px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-items: center;
+    min-width: 32px;
+    min-height: 32px;
   }
 }
