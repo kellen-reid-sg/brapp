@@ -1,8 +1,81 @@
 'use client'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link';
 import Navigation from '@/components/Navigation'
+import styles from './Home.module.css'
 
 export default function HomePage() {
+  const [pathIndex, setPathIndex] = useState(0)
+  const [featureIndex, setFeatureIndex] = useState(0)
+  const [stepsIndex, setStepsIndex] = useState(0)
+  
+  const pathRef = useRef(null)
+  const featureRef = useRef(null)
+  const stepsRef = useRef(null)
+
+  // Scroll to specific card
+  const scrollToCard = (ref, index) => {
+    if (!ref.current) return
+    const cardWidth = ref.current.scrollWidth / ref.current.children.length
+    ref.current.scrollTo({ left: cardWidth * index, behavior: 'smooth' })
+  }
+
+  // Navigate left/right
+  const navigate = (ref, direction, currentIndex, maxIndex) => {
+    const newIndex = direction === 'left' 
+      ? Math.max(0, currentIndex - 1)
+      : Math.min(maxIndex, currentIndex + 1)
+    scrollToCard(ref, newIndex)
+  }
+
+  // Initial scroll hint animation
+  useEffect(() => {
+    const scrollHint = (ref) => {
+      if (ref.current && window.innerWidth < 640) {
+        setTimeout(() => {
+          ref.current.scrollTo({ left: 100, behavior: 'smooth' })
+          setTimeout(() => {
+            ref.current.scrollTo({ left: 0, behavior: 'smooth' })
+          }, 800)
+        }, 300)
+      }
+    }
+
+    scrollHint(pathRef)
+    setTimeout(() => scrollHint(featureRef), 1500)
+    setTimeout(() => scrollHint(stepsRef), 3000)
+  }, [])
+
+  // Track scroll position for dots
+  useEffect(() => {
+    const handleScroll = (ref, setIndex, cardCount) => {
+      if (!ref.current) return
+      const scrollLeft = ref.current.scrollLeft
+      const containerWidth = ref.current.offsetWidth
+      // Each card is 85% of container width + 16px gap
+      const cardWidth = (containerWidth * 0.85) + 16
+      const index = Math.min(Math.round(scrollLeft / cardWidth), cardCount - 1)
+      setIndex(index)
+    }
+
+    const pathHandler = () => handleScroll(pathRef, setPathIndex, 4)
+    const featureHandler = () => handleScroll(featureRef, setFeatureIndex, 4)
+    const stepsHandler = () => handleScroll(stepsRef, setStepsIndex, 3)
+
+    const pathEl = pathRef.current
+    const featureEl = featureRef.current
+    const stepsEl = stepsRef.current
+
+    if (pathEl) pathEl.addEventListener('scroll', pathHandler)
+    if (featureEl) featureEl.addEventListener('scroll', featureHandler)
+    if (stepsEl) stepsEl.addEventListener('scroll', stepsHandler)
+
+    return () => {
+      if (pathEl) pathEl.removeEventListener('scroll', pathHandler)
+      if (featureEl) featureEl.removeEventListener('scroll', featureHandler)
+      if (stepsEl) stepsEl.removeEventListener('scroll', stepsHandler)
+    }
+  }, [])
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
@@ -41,10 +114,10 @@ export default function HomePage() {
         />
 
         {/* Content Container - Split Layout */}
-        <div className="relative z-20 w-full max-w-7xl mx-auto flex items-center gap-12" style={{ minHeight: '70vh' }}>
+        <div className={`relative z-20 w-full max-w-7xl mx-auto ${styles.heroContent}`}>
           
           {/* Left Side: Hero Text */}
-          <div style={{ flex: '0 0 50%', maxWidth: '50%', paddingLeft: '3rem' }}>
+          <div className={styles.heroLeft}>
             <h2 style={{
               fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
               fontSize: 'clamp(3rem, 6vw, 5rem)',
@@ -88,11 +161,7 @@ export default function HomePage() {
           </div>
 
           {/* Right Side: Card Grid */}
-          <div style={{ 
-            flex: '0 0 45%', 
-            maxWidth: '45%',
-            paddingRight: '2rem'
-          }}>
+          <div className={styles.heroRight}>
             <h3 style={{
               fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
               fontSize: '1.25rem',
@@ -107,18 +176,14 @@ export default function HomePage() {
               SELECT YOUR PATH
             </h3>
             
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '12px'
-            }}>
+            <div className={styles.carouselContainer}>
+              <div ref={pathRef} className={styles.pathGrid}>
             {/* Card 1: Browse Drills */}
             <Link 
               href="/drills"
               style={{
                 borderRadius: '8px',
                 position: 'relative',
-                overflow: 'hidden',
                 backgroundColor: 'rgba(0,0,0,0.4)',
                 cursor: 'pointer',
                 textDecoration: 'none',
@@ -129,16 +194,6 @@ export default function HomePage() {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.6)'
-                e.currentTarget.style.borderColor = '#22c55e'
-                e.currentTarget.style.transform = 'scale(1.02)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.4)'
-                e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
-                e.currentTarget.style.transform = 'scale(1)'
               }}
             >
               <div>
@@ -169,7 +224,6 @@ export default function HomePage() {
               style={{
                 borderRadius: '8px',
                 position: 'relative',
-                overflow: 'hidden',
                 backgroundColor: 'rgba(0,0,0,0.4)',
                 cursor: 'pointer',
                 textDecoration: 'none',
@@ -180,16 +234,6 @@ export default function HomePage() {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.6)'
-                e.currentTarget.style.borderColor = '#22c55e'
-                e.currentTarget.style.transform = 'scale(1.02)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.4)'
-                e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
-                e.currentTarget.style.transform = 'scale(1)'
               }}
             >
               <div>
@@ -220,7 +264,6 @@ export default function HomePage() {
               style={{
                 borderRadius: '8px',
                 position: 'relative',
-                overflow: 'hidden',
                 backgroundColor: 'rgba(0,0,0,0.4)',
                 cursor: 'pointer',
                 textDecoration: 'none',
@@ -231,16 +274,6 @@ export default function HomePage() {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.6)'
-                e.currentTarget.style.borderColor = '#22c55e'
-                e.currentTarget.style.transform = 'scale(1.02)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.4)'
-                e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
-                e.currentTarget.style.transform = 'scale(1)'
               }}
             >
               <div>
@@ -271,7 +304,6 @@ export default function HomePage() {
               style={{
                 borderRadius: '8px',
                 position: 'relative',
-                overflow: 'hidden',
                 backgroundColor: 'rgba(0,0,0,0.4)',
                 cursor: 'pointer',
                 textDecoration: 'none',
@@ -282,16 +314,6 @@ export default function HomePage() {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.6)'
-                e.currentTarget.style.borderColor = '#22c55e'
-                e.currentTarget.style.transform = 'scale(1.02)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.4)'
-                e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
-                e.currentTarget.style.transform = 'scale(1)'
               }}
             >
               <div>
@@ -315,6 +337,20 @@ export default function HomePage() {
               </div>
               <div style={{ fontSize: '20px', color: 'white' }}>→</div>
             </Link>
+              </div>
+              
+              {/* Dots Indicator */}
+              <div className={styles.dotsContainer}>
+                {[0, 1, 2, 3].map((i) => (
+                  <button
+                    key={i}
+                    className={`${styles.dot} ${pathIndex === i ? styles.active : ''}`}
+                    onClick={() => scrollToCard(pathRef, i)}
+                    aria-label={`Go to card ${i + 1}`}
+                    style={{ border: 'none', cursor: 'pointer', padding: 0 }}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -327,11 +363,8 @@ export default function HomePage() {
         padding: '120px 24px',
       }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '24px'
-          }}>
+          <div className={styles.carouselContainer}>
+            <div ref={featureRef} className={styles.featureGrid}>
             {/* Feature 1: Community-Driven Library */}
             <div style={{
               border: '2px solid #16a34a',
@@ -477,6 +510,20 @@ export default function HomePage() {
                 Coming Soon
               </p>
             </div>
+            </div>
+            
+            {/* Dots Indicator */}
+            <div className={styles.dotsContainer}>
+              {[0, 1, 2, 3].map((i) => (
+                <button
+                  key={i}
+                  className={`${styles.dot} ${featureIndex === i ? styles.active : ''}`}
+                  onClick={() => scrollToCard(featureRef, i)}
+                  aria-label={`Go to feature ${i + 1}`}
+                  style={{ border: 'none', cursor: 'pointer', padding: 0 }}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -503,11 +550,8 @@ export default function HomePage() {
           </h2>
 
           {/* Timeline Steps */}
-          <div style={{ 
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '32px'
-          }}>
+          <div className={styles.carouselContainer}>
+            <div ref={stepsRef} className={styles.stepsGrid}>
             {/* Step 1: Browse */}
             <div style={{
               backgroundColor: '#0a0a0a',
@@ -675,6 +719,20 @@ export default function HomePage() {
                 Export to PDF or share a link with your team for instant access
               </p>
             </div>
+            </div>
+            
+            {/* Dots Indicator */}
+            <div className={styles.dotsContainer}>
+              {[0, 1, 2].map((i) => (
+                <button
+                  key={i}
+                  className={`${styles.dot} ${stepsIndex === i ? styles.active : ''}`}
+                  onClick={() => scrollToCard(stepsRef, i)}
+                  aria-label={`Go to step ${i + 1}`}
+                  style={{ border: 'none', cursor: 'pointer', padding: 0 }}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -687,21 +745,10 @@ export default function HomePage() {
         borderBottom: '1px solid rgba(255,255,255,0.1)'
       }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <div style={{ 
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '64px',
-            textAlign: 'center'
-          }}>
+          <div className={styles.statsGrid}>
             {/* Stat 1: Drills */}
             <div>
-              <div style={{
-                fontSize: '48px',
-                fontWeight: '700',
-                color: 'white',
-                marginBottom: '8px',
-                fontVariantNumeric: 'tabular-nums'
-              }}>
+              <div className={styles.statNumber}>
                 1,247
               </div>
               <div style={{
@@ -740,13 +787,7 @@ export default function HomePage() {
 
             {/* Stat 2: Coaches */}
             <div>
-              <div style={{
-                fontSize: '48px',
-                fontWeight: '700',
-                color: 'white',
-                marginBottom: '8px',
-                fontVariantNumeric: 'tabular-nums'
-              }}>
+              <div className={styles.statNumber}>
                 523
               </div>
               <div style={{
@@ -785,13 +826,7 @@ export default function HomePage() {
 
             {/* Stat 3: Sessions */}
             <div>
-              <div style={{
-                fontSize: '48px',
-                fontWeight: '700',
-                color: 'white',
-                marginBottom: '8px',
-                fontVariantNumeric: 'tabular-nums'
-              }}>
+              <div className={styles.statNumber}>
                 2,831
               </div>
               <div style={{
@@ -832,33 +867,16 @@ export default function HomePage() {
       </section>
 
       {/* Section 6: CTA Section */}
-      <section style={{ 
+      <section className={styles.ctaSection} style={{ 
         background: 'linear-gradient(135deg, rgba(22,163,74,0.15) 0%, rgba(10,10,10,1) 100%)',
-        backgroundColor: '#0a0a0a',
-        padding: '160px 24px',
-        textAlign: 'center'
+        backgroundColor: '#0a0a0a'
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h2 style={{
-            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-            fontSize: '48px',
-            fontWeight: '900',
-            fontStyle: 'italic',
-            color: 'white',
-            textTransform: 'uppercase',
-            marginBottom: '24px',
-            letterSpacing: '0.02em',
-            lineHeight: '1.2'
-          }}>
+          <h2 className={styles.ctaTitle}>
             READY TO ELEVATE YOUR COACHING?
           </h2>
 
-          <p style={{
-            fontSize: '18px',
-            color: 'rgba(255,255,255,0.8)',
-            marginBottom: '48px',
-            lineHeight: '1.6'
-          }}>
+          <p className={styles.ctaText}>
             Join 500+ coaches using The Boot Room to build better sessions
           </p>
 

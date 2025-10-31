@@ -38,13 +38,70 @@
 - ✅ Desktop browser resize works correctly
 - ✅ Desktop nav shows ≥640px
 - ✅ Hamburger shows <640px
-- ⏳ Real device testing pending (iPhone/Android)
+- ✅ Real device testing complete (verified on phone)
+
+---
+
+## ✅ Completed Tasks
+
+### 2. Home Page Mobile Layout (COMPLETED - Jan 31, 2025)
+
+**Problem:** Desktop grid layouts too cramped on mobile; 2-4 column grids don't work on small screens.
+
+**Solution Implemented:**
+- CSS modules with horizontal scroll carousels for mobile (<640px)
+- Three sections made swipeable:
+  1. Select Your Path cards (4 cards)
+  2. Feature Highlights (4 cards)
+  3. How It Works (3 steps)
+- Scroll-snap for smooth card-to-card swiping
+- Each card takes 85% width with peek of next card visible
+- Stats section changed to single column stack
+- Hero section stacked vertically with reduced typography
+
+**Files Created/Modified:**
+- `app/Home.module.css` - Media query breakpoints and carousel styles
+- `app/page.js` - Applied CSS module classes
+
+**Technical Details:**
+- CSS media query: `@media (max-width: 639px)` (consistent with Navigation)
+- Horizontal scroll: `overflow-x: auto`, `scroll-snap-type: x mandatory`
+- Card sizing: `flex: 0 0 85%`, `scroll-snap-align: start`
+- Scrollbar hidden for clean UI
+- Hero typography reduced: title 48px → 32-44px, subtitle 18px → 16px
+- Stats numbers: 48px → 36px
+
+**Time Taken:** 1 hour
+
+**Mobile Enhancements:**
+- ✅ Dots indicator below each carousel (shows progress)
+- ✅ **Clickable dots** - tap to jump to any card
+- ✅ Active dot highlighted in green with elongated shape
+- ✅ Initial scroll hint animation on page load
+- ✅ Auto-scrolls slightly right then back to show swipe affordance
+- ✅ Staggered hints (path cards → features → steps)
+- ✅ Only visible/active on mobile (<640px)
+
+**Bug Fixes:**
+- ✅ Fixed border clipping/disappearing on hover (all cards)
+- ✅ Removed `overflow: hidden` from card styles (was clipping borders)
+- ✅ Replaced `transform: scale(1.02)` with `box-shadow` for hover effect
+- ✅ Removed JS hover handlers (onMouseEnter/onMouseLeave)
+- ✅ Using CSS `@media (hover: hover)` for proper desktop-only hover
+- ✅ Prevents touch events from triggering hover states on mobile
+
+**Testing:**
+- ✅ Build successful
+- ✅ Browser resize testing complete
+- ✅ Dot tracking working correctly
+- ✅ Border hover issue resolved
+- ✅ All carousel interactions verified
 
 ---
 
 ## 🔲 Remaining Tasks (Priority Order)
 
-### 2. Session Builder Mobile Layout (HIGH PRIORITY - Next)
+### 3. Session Builder Mobile Layout (HIGH PRIORITY - Next)
 **Estimated Time:** 3-6 hours
 
 **Issues:**
@@ -60,7 +117,7 @@
 - Remove fixed height, let it flow naturally
 - Ensure inputs are full-width on mobile
 
-### 3. Drill Filters Mobile Layout (HIGH PRIORITY)
+### 4. Drill Filters Mobile Layout (HIGH PRIORITY)
 **Estimated Time:** 1-2 hours
 
 **Issues:**
@@ -74,21 +131,7 @@
 - 44px touch targets for all buttons
 - Allow filter options to wrap
 
-### 4. Home Page Mobile Layout (HIGH PRIORITY)
-**Estimated Time:** 1-2 hours
-
-**Issues:**
-- 50/50 hero split squeezes content
-- 2x2 card grid cramped
-- 3-column stats section too narrow
-
-**Plan:**
-- Stack hero text above cards (flex-direction: column)
-- Single-column card grid on mobile
-- Single-column stats on mobile
-- Use existing clamp() for headings
-
-### 5. Browse Sessions Mobile Layout (MEDIUM PRIORITY)
+### 6. Browse Sessions Mobile Layout (MEDIUM PRIORITY)
 **Estimated Time:** 2-3 hours
 
 **Issues:**
@@ -102,7 +145,7 @@
 - Larger favorite tap target (44px)
 - Font size adjustments
 
-### 6. Performance - Background Blur (MEDIUM PRIORITY)
+### 7. Performance - Background Blur (MEDIUM PRIORITY)
 **Estimated Time:** 1 hour
 
 **Issues:**
@@ -114,7 +157,7 @@
 - Keep dark overlay for readability
 - Use background-attachment: scroll (not fixed)
 
-### 7. My Sessions Grid Fix (LOW PRIORITY)
+### 8. My Sessions Grid Fix (LOW PRIORITY)
 **Estimated Time:** 1 hour
 
 **Issues:**
@@ -133,22 +176,22 @@
 | Task | Priority | Status | Time Spent | Completion Date |
 |------|----------|--------|------------|-----------------|
 | Mobile Navigation | 🔴 Critical | ✅ Done | 1h | Jan 31, 2025 |
+| Home Page | 🔴 Critical | ✅ Done | 1h | Jan 31, 2025 |
 | Session Builder | 🔴 Critical | ⏳ Next | - | - |
 | Drill Filters | 🟡 High | 📋 Todo | - | - |
-| Home Page | 🟡 High | 📋 Todo | - | - |
 | Browse Sessions | 🟢 Medium | 📋 Todo | - | - |
 | Performance | 🟢 Medium | 📋 Todo | - | - |
 | My Sessions | 🟢 Low | 📋 Todo | - | - |
 | Device Testing | 🔴 Critical | 📋 Todo | - | - |
 
-**Total Estimated Remaining:** 8-10 hours  
-**Total Time Spent:** 2.5 hours
+**Total Estimated Remaining:** 7-9 hours  
+**Total Time Spent:** 2 hours
 
 ---
 
 ## 🎯 Beta Launch Checklist
 
-- [x] Navigation accessible on mobile
+- [x] Navigation accessible on mobile ✅
 - [ ] Session builder usable on mobile
 - [ ] Drill browsing smooth on mobile
 - [ ] All touch targets ≥ 44px

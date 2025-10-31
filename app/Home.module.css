@@ -1,0 +1,237 @@
+/* Desktop styles (default) */
+
+/* Hide dots on desktop */
+.dotsContainer {
+  display: none;
+}
+
+/* Hero Section */
+.heroContent {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.heroLeft {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding-left: 3rem;
+}
+
+.heroRight {
+  flex: 0 0 45%;
+  max-width: 45%;
+  padding-right: 2rem;
+}
+
+.heroTitle {
+  font-family: "Arial Black", "Helvetica Neue", sans-serif;
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 900;
+  font-style: italic;
+  color: white;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.heroSubtitle {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.125rem;
+  font-style: italic;
+  color: white;
+  max-width: 520px;
+  line-height: 1.6;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* Select Your Path Cards */
+.pathGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Feature Highlights */
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+/* How It Works */
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+/* Stats Section */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 64px;
+  text-align: center;
+}
+
+.statNumber {
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* CTA Section */
+.ctaSection {
+  padding: 160px 24px;
+  text-align: center;
+}
+
+.ctaTitle {
+  font-family: "Arial Black", "Helvetica Neue", sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  font-style: italic;
+  color: white;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.ctaText {
+  font-size: 18px;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 48px;
+  line-height: 1.6;
+}
+
+/* Mobile styles (<640px) */
+@media (max-width: 639px) {
+  /* Hero Section - Stack vertically */
+  .heroContent {
+    min-height: auto;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  .heroLeft,
+  .heroRight {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .heroTitle {
+    font-size: clamp(2rem, 9vw, 2.75rem);
+    line-height: 1;
+  }
+
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+
+  /* Horizontal Scroll Carousels */
+  .pathGrid,
+  .featureGrid,
+  .stepsGrid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    padding-bottom: 8px;
+  }
+
+  /* Hide scrollbar for Chrome/Safari */
+  .pathGrid::-webkit-scrollbar,
+  .featureGrid::-webkit-scrollbar,
+  .stepsGrid::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Card sizing for horizontal scroll */
+  .pathGrid > * {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+    min-height: 160px;
+  }
+
+  .featureGrid > * {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+  }
+
+  .stepsGrid > * {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+  }
+
+  /* Dots Indicator - Mobile Only */
+  .dotsContainer {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding-bottom: 8px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .dot.active {
+    background-color: #16a34a;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* Stats Section - Single column */
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .statNumber {
+    font-size: 36px;
+  }
+
+  /* CTA Section */
+  .ctaSection {
+    padding: 96px 16px;
+  }
+
+  .ctaTitle {
+    font-size: 32px;
+    line-height: 1.15;
+  }
+
+  .ctaText {
+    font-size: 16px;
+  }
+
+  .carouselContainer {
+    position: relative;
+  }
+}
+
+/* Card hover fix - remove scale and overflow to prevent border clipping */
+@media (hover: hover) {
+  .pathGrid > a:hover,
+  .featureGrid > div:hover,
+  .stepsGrid > div:hover {
+    background-color: rgba(0,0,0,0.6) !important;
+    border-color: #22c55e !important;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3) !important;
+  }
+}
