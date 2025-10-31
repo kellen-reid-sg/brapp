@@ -3,6 +3,7 @@ import { useState } from 'react'
 import DrillListSidebar from '@/components/DrillListSidebar'
 import SessionBuilder from '@/components/SessionBuilder'
 import Navigation from '@/components/Navigation'
+import styles from './SessionBuilder.module.css'
 
 export default function NewSessionPage() {
   const [selectedDrills, setSelectedDrills] = useState([])
@@ -84,23 +85,14 @@ export default function NewSessionPage() {
 
       <div style={{ position: 'relative', zIndex: 2 }}>
         <Navigation />
-        <main className="max-w-7xl mx-auto px-8 py-8">
-          <h2 style={{
-            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-            fontSize: '3.5rem',
-            fontWeight: '900',
-            fontStyle: 'italic',
-            color: 'white',
-            textTransform: 'uppercase',
-            transform: 'skew(-5deg)',
-            marginBottom: '0.5rem'
-          }}>
+        <main className={styles.pageMain}>
+          <h2 className={styles.pageTitle}>
             BUILD YOUR SESSION
           </h2>
           <p className="text-gray-400 italic text-lg mb-8">Select drills and build your custom training session</p>
 
           {/* Split Layout */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          <div className={styles.splitLayout}>
             {/* Left: Drill List */}
             <DrillListSidebar 
               onAddDrill={addDrill} 

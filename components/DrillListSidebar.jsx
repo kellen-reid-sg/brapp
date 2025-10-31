@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { createClientComponentClient } from '@/app/lib/supabase'
 import DrillModal from './DrillModal'
+import styles from './DrillListSidebar.module.css'
 
 export default function DrillListSidebar({ onAddDrill, onRemoveDrill, selectedDrillIds = [] }) {
   const supabase = createClientComponentClient()
@@ -17,6 +18,7 @@ export default function DrillListSidebar({ onAddDrill, onRemoveDrill, selectedDr
   const [previewDrill, setPreviewDrill] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [tooltipDrillId, setTooltipDrillId] = useState(null)
+  const [visibleCount, setVisibleCount] = useState(15) // Mobile pagination
 
   // Custom scrollbar styles
   const scrollbarStyles = `
@@ -40,6 +42,11 @@ export default function DrillListSidebar({ onAddDrill, onRemoveDrill, selectedDr
     fetchDrills()
     fetchFavorites()
   }, [])
+
+  // Reset pagination when filters/search change
+  useEffect(() => {
+    setVisibleCount(15)
+  }, [searchQuery, selectedAgeGroups, selectedCategories, showFavoritesOnly])
 
   async function fetchDrills() {
     setLoading(true)
@@ -122,6 +129,7 @@ export default function DrillListSidebar({ onAddDrill, onRemoveDrill, selectedDr
     setSelectedAgeGroups([])
     setSelectedCategories([])
     setShowFavoritesOnly(false)
+    setVisibleCount(15) // Reset pagination
   }
 
   const filteredDrills = drills.filter(drill => {
@@ -139,20 +147,14 @@ export default function DrillListSidebar({ onAddDrill, onRemoveDrill, selectedDr
     return matchesSearch && matchesAge && matchesCategory && matchesFavorites
   })
 
+  // For mobile: slice to visible count; for desktop: show all
+  const displayedDrills = filteredDrills
+  const hasMore = filteredDrills.length > visibleCount
+
   return (
     <>
       <style>{scrollbarStyles}</style>
-      <div style={{
-        backgroundColor: 'rgba(26,26,26,0.95)',
-        border: '1px solid rgba(34, 197, 94, 0.5)',
-        borderRadius: '12px',
-        padding: '24px',
-        height: 'calc(100vh - 280px)',
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'sticky',
-        top: '120px'
-      }}>
+      <div className={styles.container}>
       {/* Header */}
       <div style={{ marginBottom: '16px' }}>
         <h3 style={{
@@ -433,7 +435,7 @@ export default function DrillListSidebar({ onAddDrill, onRemoveDrill, selectedDr
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {filteredDrills.map(drill => {
+            {displayedDrills.slice(0, visibleCount).map(drill => {
               const category = drill.category || getCategoryFromTitle(drill.title)
               const categoryColor = getCategoryColor(category)
               const isSelected = selectedDrillIds.includes(drill.id)
@@ -492,18 +494,7 @@ export default function DrillListSidebar({ onAddDrill, onRemoveDrill, selectedDr
                             setPreviewDrill(drill)
                             setIsModalOpen(true)
                           }}
-                          style={{
-                            padding: '4px',
-                            backgroundColor: 'rgba(255,255,255,0.08)',
-                            border: '1px solid rgba(255,255,255,0.15)',
-                            borderRadius: '4px',
-                            color: 'rgba(255,255,255,0.7)',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          }}
+                          className={styles.previewButton}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.15)'
                             e.currentTarget.style.color = 'white'
@@ -581,6 +572,18 @@ export default function DrillListSidebar({ onAddDrill, onRemoveDrill, selectedDr
                 </div>
               )
             })}
+          </div>
+        )}
+
+        {/* Load More Button (Mobile Only) */}
+        {!loading && filteredDrills.length > 0 && hasMore && (
+          <div className={styles.loadMoreContainer}>
+            <button
+              onClick={() => setVisibleCount(prev => prev + 15)}
+              className={styles.loadMoreButton}
+            >
+              Load More
+            </button>
           </div>
         )}
       </div>

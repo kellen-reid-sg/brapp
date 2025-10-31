@@ -4,6 +4,7 @@ import { createClientComponentClient } from '@/app/lib/supabase'
 import CoachProfileModal from './CoachProfileModal'
 import CommentList from './CommentList'
 import CommentForm from './CommentForm'
+import styles from './DrillModal.module.css'
 
 export default function DrillModal({ drill, isOpen, onClose, onAddToSession, isInSession }) {
   const supabase = createClientComponentClient()
@@ -122,30 +123,13 @@ export default function DrillModal({ drill, isOpen, onClose, onAddToSession, isI
           e.stopPropagation()
           onClose()
         }}
-        style={{
-          position: 'fixed',
-          inset: 0,
-          backgroundColor: 'rgba(0,0,0,0.70)',
-          zIndex: 50,
-          backdropFilter: 'blur(8px)'
-        }}
+        className={styles.backdrop}
       />
 
-      {/* Modal - Dark card with category border */}
-      <div style={{
-        position: 'fixed',
-        top: '50%',
-        left: 'calc(50% - 510px)',
-        transform: 'translateY(-50%)',
-        width: '700px',
-        maxHeight: '85vh',
-        backgroundColor: 'rgba(26,26,26,0.95)',
-        borderRadius: '12px',
-        border: `2px solid ${categoryColor.text}`,
-        zIndex: 51,
-        overflow: 'hidden',
-        boxShadow: '0 24px 48px rgba(0,0,0,0.5)'
-      }}>
+      {/* Modal Container - Vertical stack on mobile */}
+      <div className={styles.modalContainer}>
+        {/* Drill Modal */}
+        <div className={styles.drillModal} style={{ border: `2px solid ${categoryColor.text}` }}>
         {/* Header */}
         <div style={{
           padding: '24px',
@@ -376,15 +360,16 @@ export default function DrillModal({ drill, isOpen, onClose, onAddToSession, isI
             </div>
           </div>
         </div>
-      </div>
+        </div>
 
-      {/* Coach Profile Modal - Shows automatically if drill has author */}
-      {/* TEMP: Always showing for testing - will add condition later */}
-      <CoachProfileModal 
-        authorId={drill.author_id || 'test'}
-        isOpen={isOpen}
-        onClose={onClose}
-      />
+        {/* Coach Profile Modal */}
+        <CoachProfileModal 
+          authorId={drill.author_id || 'test'}
+          isOpen={isOpen}
+          onClose={onClose}
+          className={styles.coachModal}
+        />
+      </div>
     </>
   )
 }

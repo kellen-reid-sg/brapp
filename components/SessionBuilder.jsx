@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@/app/lib/supabase'
 import { useState } from 'react'
+import styles from './SessionBuilder.module.css'
 
 export default function SessionBuilder({
   selectedDrills,
@@ -138,17 +139,7 @@ export default function SessionBuilder({
   return (
     <>
       <style>{scrollbarStyles}</style>
-      <div style={{
-        backgroundColor: 'rgba(26,26,26,0.95)',
-        border: '1px solid rgba(34, 197, 94, 0.5)',
-        borderRadius: '12px',
-        padding: '24px',
-        height: 'calc(100vh - 280px)',
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'sticky',
-        top: '120px'
-      }}>
+      <div className={styles.container}>
       {/* Header */}
       <div style={{ marginBottom: '16px' }}>
         <h3 style={{
@@ -335,14 +326,10 @@ export default function SessionBuilder({
                       <button
                         onClick={() => onMoveDrill(index, -1)}
                         disabled={index === 0}
+                        className={styles.controlButton}
                         style={{
-                          padding: '4px',
-                          backgroundColor: 'rgba(255,255,255,0.06)',
-                          border: '1px solid rgba(255,255,255,0.10)',
-                          borderRadius: '4px',
                           color: index === 0 ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.7)',
-                          cursor: index === 0 ? 'not-allowed' : 'pointer',
-                          transition: 'all 0.2s'
+                          cursor: index === 0 ? 'not-allowed' : 'pointer'
                         }}
                       >
                         <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -354,14 +341,10 @@ export default function SessionBuilder({
                       <button
                         onClick={() => onMoveDrill(index, 1)}
                         disabled={index === selectedDrills.length - 1}
+                        className={styles.controlButton}
                         style={{
-                          padding: '4px',
-                          backgroundColor: 'rgba(255,255,255,0.06)',
-                          border: '1px solid rgba(255,255,255,0.10)',
-                          borderRadius: '4px',
                           color: index === selectedDrills.length - 1 ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.7)',
-                          cursor: index === selectedDrills.length - 1 ? 'not-allowed' : 'pointer',
-                          transition: 'all 0.2s'
+                          cursor: index === selectedDrills.length - 1 ? 'not-allowed' : 'pointer'
                         }}
                       >
                         <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -372,15 +355,7 @@ export default function SessionBuilder({
                       {/* Remove */}
                       <button
                         onClick={() => onRemoveDrill(index)}
-                        style={{
-                          padding: '4px',
-                          backgroundColor: 'rgba(239, 68, 68, 0.15)',
-                          border: '1px solid rgba(239, 68, 68, 0.3)',
-                          borderRadius: '4px',
-                          color: '#F87171',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s'
-                        }}
+                        className={styles.deleteButton}
                       >
                         <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                           <path d="M6 18L18 6M6 6l12 12" />

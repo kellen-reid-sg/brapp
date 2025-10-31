@@ -1,0 +1,52 @@
+/* Desktop styles (default) */
+
+.splitLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.pageMain {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px;
+}
+
+.pageTitle {
+  font-family: "Arial Black", "Helvetica Neue", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  font-style: italic;
+  color: white;
+  text-transform: uppercase;
+  transform: skew(-5deg);
+  margin-bottom: 0.5rem;
+}
+
+/* Mobile styles (<640px) */
+@media (max-width: 639px) {
+  .pageMain {
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  .pageTitle {
+    font-size: 2rem;
+  }
+
+  .splitLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Ensure both columns take full width on mobile */
+  .splitLayout > * {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}

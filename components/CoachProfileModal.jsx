@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { createClientComponentClient } from '@/app/lib/supabase'
 
-export default function CoachProfileModal({ authorId, isOpen, onClose }) {
+export default function CoachProfileModal({ authorId, isOpen, onClose, className }) {
   const supabase = createClientComponentClient()
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -61,25 +61,7 @@ export default function CoachProfileModal({ authorId, isOpen, onClose }) {
   }
 
   return (
-    <>
-
-      {/* Profile Card Modal - Positioned to the right of drill modal */}
-      <div style={{
-        position: 'fixed',
-        top: '50%',
-        left: 'calc(50% + 210px)',
-        transform: 'translateY(-50%)',
-        width: '300px',
-        maxHeight: '85vh',
-        backgroundColor: 'rgba(26,26,26,0.95)',
-        borderRadius: '12px',
-        border: '2px solid rgba(255,255,255,0.20)',
-        zIndex: 51,
-        overflow: 'hidden',
-        boxShadow: '0 24px 48px rgba(0,0,0,0.5)',
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
+    <div className={className}>
         {loading ? (
           <div style={{ padding: '40px', textAlign: 'center', color: 'rgba(255,255,255,0.6)' }}>
             Loading...
@@ -261,7 +243,6 @@ export default function CoachProfileModal({ authorId, isOpen, onClose }) {
             </div>
           </>
         )}
-      </div>
-    </>
+    </div>
   )
 }

@@ -1,0 +1,132 @@
+/* Desktop styles (default) */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.70);
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+.modalContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 20px;
+  z-index: 51;
+}
+
+.drillModal {
+  width: 700px;
+  max-height: 85vh;
+  background-color: rgba(26,26,26,0.95);
+  border-radius: 12px;
+  z-index: 51;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.5);
+}
+
+.coachModal {
+  width: 300px;
+  max-height: 85vh;
+  background-color: rgba(26,26,26,0.95);
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.20);
+  z-index: 51;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hide dots on desktop */
+.dotsContainer {
+  display: none;
+}
+
+/* Mobile styles (<640px) */
+@media (max-width: 639px) {
+  .modalContainer {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 380px !important;
+    max-width: 380px !important;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .drillModal,
+  .coachModal {
+    width: 380px !important;
+    max-width: 380px !important;
+    flex-shrink: 0;
+    border-radius: 6px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE/Edge */
+  }
+
+  /* Hide scrollbar for Chrome/Safari */
+  .drillModal::-webkit-scrollbar,
+  .coachModal::-webkit-scrollbar,
+  .drillModal *::-webkit-scrollbar,
+  .coachModal *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  /* Hide scrollbar on ALL child elements */
+  .drillModal *,
+  .coachModal * {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  .drillModal {
+    height: 32vh;
+    max-height: 32vh;
+  }
+
+  .coachModal {
+    height: 30vh;
+    max-height: 30vh;
+  }
+
+  /* Reduce content size inside modals */
+  .drillModal h2,
+  .drillModal h3,
+  .coachModal h2,
+  .coachModal h3 {
+    font-size: 18px !important;
+  }
+
+  .drillModal p,
+  .coachModal p,
+  .drillModal div,
+  .coachModal div {
+    font-size: 12px !important;
+  }
+
+  .drillModal > div,
+  .coachModal > div {
+    padding: 12px !important;
+  }
+
+  .drillModal button,
+  .coachModal button {
+    font-size: 11px !important;
+    padding: 6px 10px !important;
+  }
+
+  /* Hide dots on mobile for vertical layout */
+  .dotsContainer {
+    display: none;
+  }
+}
