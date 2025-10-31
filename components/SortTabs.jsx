@@ -1,4 +1,5 @@
 'use client'
+import styles from './SortTabs.module.css'
 
 export default function SortTabs({ active, onChange }) {
   const tabs = [
@@ -33,25 +34,15 @@ export default function SortTabs({ active, onChange }) {
   ]
   
   return (
-    <div style={{ display: 'flex', gap: '16px' }}>
+    <div className={styles.container}>
       {tabs.map(tab => (
         <button
           key={tab.id}
           onClick={() => onChange(tab.id)}
+          className={styles.tab}
           style={{
-            padding: '10px 16px',
-            borderRadius: '8px',
-            fontWeight: '600',
-            fontSize: '14px',
-            fontStyle: 'italic',
-            transition: 'all 0.2s',
             backgroundColor: active === tab.id ? 'rgba(34, 197, 94, 0.25)' : 'rgba(255,255,255,0.08)',
-            color: active === tab.id ? '#4ADE80' : 'white',
-            border: '1px solid rgba(255,255,255,0.20)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            cursor: 'pointer'
+            color: active === tab.id ? '#4ADE80' : 'white'
           }}
           onMouseEnter={(e) => {
             if (active !== tab.id) {

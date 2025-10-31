@@ -1,0 +1,129 @@
+/* Desktop styles (default) */
+
+.card {
+  background-color: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.2s;
+  position: relative;
+  cursor: pointer;
+}
+
+.cardLayout {
+  display: flex;
+  gap: 40px;
+}
+
+.voteColumn {
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topActions {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.favoriteButton {
+  padding: 6px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.addToSessionButton {
+  padding: 4px 12px;
+  background-color: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.metadataRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 13px;
+}
+
+.mobileAddToSession {
+  display: none;
+}
+
+/* Mobile styles (<640px) */
+@media (max-width: 639px) {
+  .card {
+    padding: 14px;
+  }
+
+  /* Keep horizontal layout, reduce spacing */
+  .cardLayout {
+    gap: 12px;
+  }
+
+  .voteColumn {
+    width: 56px;
+  }
+
+  /* Only show favorite at top on mobile */
+  .topActions {
+    top: 12px;
+    right: 12px;
+    gap: 6px;
+  }
+
+  /* Enlarge touch targets to 44px */
+  .favoriteButton {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 12px;
+  }
+
+  /* Hide top Add to Session on mobile (will show in metadata row instead) */
+  .topActions .addToSessionButton {
+    display: none;
+  }
+
+  /* Reduce metadata gaps */
+  .metadataRow {
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  /* Show Add to Session in metadata row on mobile */
+  .mobileAddToSession {
+    display: flex;
+    padding: 6px 10px;
+    background-color: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.20);
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+}

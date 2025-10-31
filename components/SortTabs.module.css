@@ -1,0 +1,33 @@
+/* Desktop styles (default) */
+
+.container {
+  display: flex;
+  gap: 16px;
+}
+
+.tab {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  font-style: italic;
+  transition: all 0.2s;
+  border: 1px solid rgba(255,255,255,0.20);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* Mobile styles (<640px) */
+@media (max-width: 639px) {
+  .container {
+    gap: 6px;
+  }
+
+  .tab {
+    padding: 8px 10px;
+    font-size: 11px;
+    min-height: 36px;
+  }
+}

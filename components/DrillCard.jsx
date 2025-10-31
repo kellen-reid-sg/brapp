@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { createClientComponentClient } from '@/app/lib/supabase'
 import VoteButtons from './VoteButtons'
 import DrillModal from './DrillModal'
+import styles from './DrillCard.module.css'
 
 export default function DrillCard({ drill }) {
   const supabase = createClientComponentClient()
@@ -90,20 +91,12 @@ export default function DrillCard({ drill }) {
   return (
     <div 
       onClick={() => window.location.href = `/drills/${drill.id}`}
-      style={{
-        backgroundColor: 'rgba(255,255,255,0.06)',
-        border: '1px solid rgba(255,255,255,0.10)',
-        borderRadius: '12px',
-        padding: '20px',
-        transition: 'all 0.2s',
-        position: 'relative',
-        cursor: 'pointer'
-      }}
+      className={styles.card}
       onMouseEnter={(e) => e.currentTarget.style.borderColor = categoryColor.text}
       onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.10)'}
     >
       {/* Top Right Actions */}
-      <div style={{ position: 'absolute', top: '16px', right: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div className={styles.topActions}>
         {/* Star/Favorite Icon */}
         <div style={{ position: 'relative' }}>
           <button
@@ -112,15 +105,9 @@ export default function DrillCard({ drill }) {
               toggleFavorite()
             }}
             disabled={isUpdating}
+            className={styles.favoriteButton}
             style={{
-              padding: '6px',
-              backgroundColor: 'transparent',
-              border: 'none',
-              color: isFavorited ? '#EAB308' : 'rgba(255,255,255,0.6)',
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-              display: 'flex',
-              alignItems: 'center'
+              color: isFavorited ? '#EAB308' : 'rgba(255,255,255,0.6)'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.color = '#EAB308'
@@ -163,19 +150,9 @@ export default function DrillCard({ drill }) {
             console.log('Add to session:', drill.id)
             // TODO: Implement add to session functionality
           }}
+          className={styles.addToSessionButton}
           style={{
-            padding: '6px 12px',
-            backgroundColor: 'rgba(255,255,255,0.08)',
-            border: '1px solid rgba(255,255,255,0.20)',
-            borderRadius: '4px',
-            color: 'rgba(255,255,255,0.9)',
-            fontSize: '12px',
-            fontWeight: '600',
-            cursor: 'pointer',
-            transition: 'all 0.2s',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px'
+            color: 'rgba(255,255,255,0.9)'
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
@@ -193,13 +170,8 @@ export default function DrillCard({ drill }) {
         </button>
       </div>
 
-      <div className="flex" style={{ gap: '40px' }}>
-        <div style={{ 
-          width: '80px', 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center' 
-        }}>
+      <div className={styles.cardLayout}>
+        <div className={styles.voteColumn}>
           <VoteButtons 
             contentKind="drill" 
             contentId={drill.id} 
@@ -239,7 +211,7 @@ export default function DrillCard({ drill }) {
               </p>
             )}
             
-            <div className="flex items-center" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', gap: '32px' }}>
+            <div className={styles.metadataRow} style={{ color: 'rgba(255,255,255,0.6)' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
@@ -330,6 +302,33 @@ export default function DrillCard({ drill }) {
                   <circle cx="12" cy="12" r="3" />
                 </svg>
                 Preview
+              </button>
+
+              {/* Add to Session - Mobile Only (next to Preview) */}
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  console.log('Add to session:', drill.id)
+                  // TODO: Implement add to session functionality
+                }}
+                className={styles.mobileAddToSession}
+                style={{
+                  color: 'rgba(255,255,255,0.9)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                }}
+              >
+                <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+                Add to Session
               </button>
             </div>
           </div>

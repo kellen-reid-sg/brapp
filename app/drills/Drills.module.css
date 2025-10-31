@@ -1,0 +1,116 @@
+/* Desktop styles (default) */
+
+.pageMain {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px;
+}
+
+.pageTitle {
+  font-family: "Arial Black", "Helvetica Neue", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  font-style: italic;
+  color: white;
+  text-transform: uppercase;
+  transform: skew(-5deg);
+  margin-bottom: 0.5rem;
+}
+
+.sortFilterRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.filtersContainer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.filterButton {
+  padding: 10px 16px;
+  border: 1px solid rgba(255,255,255,0.20);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: italic;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.drillsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Hide Load More button on desktop */
+.loadMoreContainer {
+  display: none;
+}
+
+/* Mobile styles (<640px) */
+@media (max-width: 639px) {
+  .pageMain {
+    padding: 16px;
+  }
+
+  .pageTitle {
+    font-size: 2rem;
+  }
+
+  /* Keep filters on right, just make smaller */
+  .sortFilterRow {
+    margin-bottom: 20px;
+    gap: 8px;
+  }
+
+  .filtersContainer {
+    gap: 6px;
+  }
+
+  .filterButton {
+    padding: 8px 10px;
+    font-size: 11px;
+    min-height: 36px;
+  }
+
+  .drillsList {
+    gap: 12px;
+  }
+
+  /* Show Load More button on mobile */
+  .loadMoreContainer {
+    display: block;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .loadMoreButton {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 600;
+    font-style: italic;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .loadMoreButton:active {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}

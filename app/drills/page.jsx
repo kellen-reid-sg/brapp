@@ -4,6 +4,7 @@ import { createClientComponentClient } from '@/app/lib/supabase'
 import DrillCard from '@/components/DrillCard'
 import SortTabs from '@/components/SortTabs'
 import Navigation from '@/components/Navigation'
+import styles from './Drills.module.css'
 
 export default function DrillsPage() {
   const supabase = createClientComponentClient()
@@ -14,9 +15,15 @@ export default function DrillsPage() {
   const [selectedCategories, setSelectedCategories] = useState([])
   const [showAgeDropdown, setShowAgeDropdown] = useState(false)
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false)
+  const [visibleCount, setVisibleCount] = useState(10) // Mobile pagination
 
   useEffect(() => {
     fetchDrills()
+  }, [sort, selectedAgeGroups, selectedCategories])
+
+  // Reset pagination when filters/sort change
+  useEffect(() => {
+    setVisibleCount(10)
   }, [sort, selectedAgeGroups, selectedCategories])
 
   async function fetchDrills() {
@@ -174,27 +181,18 @@ export default function DrillsPage() {
 
       <div style={{ position: 'relative', zIndex: 2 }}>
         <Navigation />
-        <main className="max-w-7xl mx-auto px-8 py-8">
-        <h2 style={{
-          fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-          fontSize: '3.5rem',
-          fontWeight: '900',
-          fontStyle: 'italic',
-          color: 'white',
-          textTransform: 'uppercase',
-          transform: 'skew(-5deg)',
-          marginBottom: '0.5rem'
-        }}>
+        <main className={styles.pageMain}>
+        <h2 className={styles.pageTitle}>
           DRILL LIBRARY
         </h2>
         <p className="text-gray-400 italic text-lg mb-8">Browse community-shared training drills</p>
         
         {/* Sort Tabs and Filters Row */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+        <div className={styles.sortFilterRow}>
           <SortTabs active={sort} onChange={setSort} />
           
           {/* Filters */}
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <div className={styles.filtersContainer}>
             {/* Age Group Filter */}
             <div style={{ position: 'relative' }}>
               <button
@@ -202,20 +200,10 @@ export default function DrillsPage() {
                   setShowAgeDropdown(!showAgeDropdown)
                   setShowCategoryDropdown(false)
                 }}
+                className={styles.filterButton}
                 style={{
-                  padding: '10px 16px',
                   backgroundColor: selectedAgeGroups.length > 0 ? 'rgba(34, 197, 94, 0.25)' : 'rgba(255,255,255,0.08)',
-                  border: '1px solid rgba(255,255,255,0.20)',
-                  borderRadius: '8px',
-                  color: selectedAgeGroups.length > 0 ? '#4ADE80' : 'white',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  fontStyle: 'italic',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
+                  color: selectedAgeGroups.length > 0 ? '#4ADE80' : 'white'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = 'rgba(34, 197, 94, 0.15)'
@@ -280,20 +268,10 @@ export default function DrillsPage() {
                   setShowCategoryDropdown(!showCategoryDropdown)
                   setShowAgeDropdown(false)
                 }}
+                className={styles.filterButton}
                 style={{
-                  padding: '10px 16px',
                   backgroundColor: selectedCategories.length > 0 ? 'rgba(34, 197, 94, 0.25)' : 'rgba(255,255,255,0.08)',
-                  border: '1px solid rgba(255,255,255,0.20)',
-                  borderRadius: '8px',
-                  color: selectedCategories.length > 0 ? '#4ADE80' : 'white',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  fontStyle: 'italic',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
+                  color: selectedCategories.length > 0 ? '#4ADE80' : 'white'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = 'rgba(34, 197, 94, 0.15)'
@@ -355,17 +333,10 @@ export default function DrillsPage() {
             {(selectedAgeGroups.length > 0 || selectedCategories.length > 0) && (
               <button
                 onClick={clearFilters}
+                className={styles.filterButton}
                 style={{
-                  padding: '10px 16px',
                   backgroundColor: 'rgba(255,255,255,0.08)',
-                  border: '1px solid rgba(255,255,255,0.20)',
-                  borderRadius: '8px',
-                  color: 'white',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  fontStyle: 'italic',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s'
+                  color: 'white'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = 'rgba(34, 197, 94, 0.15)'
@@ -382,15 +353,29 @@ export default function DrillsPage() {
           </div>
         </div>
         
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div className={styles.drillsList}>
           {loading ? (
             <div className="text-center py-8 text-gray-400">Loading...</div>
           ) : drills.length === 0 ? (
             <div className="text-center py-8 text-gray-400">No drills found</div>
           ) : (
-            drills.map(drill => (
-              <DrillCard key={drill.id} drill={drill} />
-            ))
+            <>
+              {drills.slice(0, visibleCount).map(drill => (
+                <DrillCard key={drill.id} drill={drill} />
+              ))}
+              
+              {/* Load More Button (Mobile Only) */}
+              {drills.length > visibleCount && (
+                <div className={styles.loadMoreContainer}>
+                  <button
+                    onClick={() => setVisibleCount(prev => prev + 10)}
+                    className={styles.loadMoreButton}
+                  >
+                    Load More
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </main>
