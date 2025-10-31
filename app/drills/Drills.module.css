@@ -5,6 +5,7 @@
   margin-left: auto;
   margin-right: auto;
   padding: 32px;
+  box-sizing: border-box;
 }
 
 .pageTitle {
@@ -60,7 +61,9 @@
 /* Mobile styles (<640px) */
 @media (max-width: 639px) {
   .pageMain {
-    padding: 16px;
+    padding: 12px;
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .pageTitle {
@@ -85,6 +88,8 @@
 
   .drillsList {
     gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   /* Show Load More button on mobile */

@@ -75,6 +75,8 @@
 @media (max-width: 639px) {
   .card {
     padding: 14px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   /* Keep horizontal layout, reduce spacing */
