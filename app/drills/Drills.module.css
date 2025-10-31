@@ -64,20 +64,28 @@
     padding: 12px;
     box-sizing: border-box;
     width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow-x: hidden;
   }
 
   .pageTitle {
     font-size: 2rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   /* Keep filters on right, just make smaller */
   .sortFilterRow {
     margin-bottom: 20px;
     gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .filtersContainer {
     gap: 6px;
+    flex-wrap: wrap;
   }
 
   .filterButton {

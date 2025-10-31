@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "The Boot Room - Build Better Training Sessions",
   description: "Share drills, build sessions, and connect with coaches worldwide",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 };
 
 export default function RootLayout({ children }) {
