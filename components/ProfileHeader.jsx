@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { createClientComponentClient } from '@/app/lib/supabase'
+import styles from './ProfileHeader.module.css'
 
 export default function ProfileHeader({ profile, stats, isOwnProfile, onUpdate }) {
     const [isEditing, setIsEditing] = useState(false)
@@ -96,73 +97,31 @@ export default function ProfileHeader({ profile, stats, isOwnProfile, onUpdate }
     }
 
     return (
-        <div style={{
-            backgroundColor: 'rgba(255,255,255,0.06)',
-            border: '1px solid rgba(255,255,255,0.10)',
-            borderRadius: '12px',
-            overflow: 'hidden',
-            transition: 'all 0.2s',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column'
-        }}>
+        <div className={styles.headerContainer}>
             {/* Avatar Section */}
-            <div style={{ padding: '32px 24px 24px', textAlign: 'center', borderBottom: '1px solid rgba(255,255,255,0.10)' }}>
-                <div style={{ position: 'relative', display: 'inline-block', marginBottom: '16px' }}>
-                    <div style={{
-                        width: '120px',
-                        height: '120px',
-                        borderRadius: '50%',
-                        border: '3px solid white',
-                        backgroundColor: 'rgba(255,255,255,0.08)',
-                        overflow: 'hidden'
-                    }}>
+            <div className={styles.avatarSection}>
+                <div className={styles.avatarWrapper}>
+                    <div className={styles.avatar}>
                         {profile?.avatar_url ? (
                             <img
                                 src={profile.avatar_url}
                                 alt={profile.display_name}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                className={styles.avatarImage}
                             />
                         ) : (
-                            <div style={{
-                                width: '100%',
-                                height: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                background: 'linear-gradient(135deg, #16a34a 0%, #15803D 100%)',
-                                color: 'white',
-                                fontSize: '48px',
-                                fontWeight: '900',
-                                fontStyle: 'italic'
-                            }}>
+                            <div className={styles.avatarPlaceholder}>
                                 {profile?.display_name?.charAt(0)?.toUpperCase() || 'C'}
                             </div>
                         )}
                     </div>
 
                     {isOwnProfile && (
-                        <label style={{
-                            position: 'absolute',
-                            bottom: '4px',
-                            right: '4px',
-                            backgroundColor: 'rgba(26,26,26,0.95)',
-                            border: '1px solid rgba(255,255,255,0.20)',
-                            borderRadius: '50%',
-                            padding: '8px',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }}
-                            onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'}
-                            onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'}>
+                        <label className={styles.uploadButton}>
                             <input
                                 type="file"
                                 accept="image/*"
                                 onChange={handleAvatarUpload}
-                                style={{ display: 'none' }}
+                                className={styles.uploadInput}
                                 disabled={uploading}
                             />
                             <svg width="16" height="16" fill="none" stroke="rgba(255,255,255,0.9)" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -180,58 +139,24 @@ export default function ProfileHeader({ profile, stats, isOwnProfile, onUpdate }
                             type="text"
                             value={formData.display_name}
                             onChange={(e) => setFormData({ ...formData, display_name: e.target.value })}
-                            style={{
-                                width: '100%',
-                                backgroundColor: 'rgba(255,255,255,0.08)',
-                                border: '1px solid rgba(255,255,255,0.20)',
-                                borderRadius: '6px',
-                                padding: '8px 12px',
-                                color: 'white',
-                                fontSize: '20px',
-                                fontWeight: '700',
-                                fontStyle: 'italic',
-                                textAlign: 'center',
-                                marginBottom: '8px'
-                            }}
+                            className={styles.inputField}
                             placeholder="Display Name"
                         />
                         <input
                             type="text"
                             value={formData.location}
                             onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                            style={{
-                                width: '100%',
-                                backgroundColor: 'rgba(255,255,255,0.08)',
-                                border: '1px solid rgba(255,255,255,0.20)',
-                                borderRadius: '6px',
-                                padding: '6px 12px',
-                                color: 'rgba(255,255,255,0.7)',
-                                fontSize: '14px',
-                                textAlign: 'center',
-                                marginBottom: '8px'
-                            }}
+                            className={styles.inputFieldSmall}
                             placeholder="Location"
                         />
                     </>
                 ) : (
                     <>
-                        <h2 style={{
-                            fontSize: '24px',
-                            fontWeight: '900',
-                            fontStyle: 'italic',
-                            color: 'white',
-                            marginBottom: '4px',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.02em'
-                        }}>
+                        <h2 className={styles.displayName}>
                             {profile?.display_name || 'Coach'}
                         </h2>
                         {profile?.location && (
-                            <p style={{
-                                fontSize: '14px',
-                                color: 'rgba(255,255,255,0.6)',
-                                marginBottom: '12px'
-                            }}>
+                            <p className={styles.location}>
                                 {profile.location}
                             </p>
                         )}
@@ -243,27 +168,11 @@ export default function ProfileHeader({ profile, stats, isOwnProfile, onUpdate }
                     <textarea
                         value={formData.bio}
                         onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                        style={{
-                            width: '100%',
-                            backgroundColor: 'rgba(255,255,255,0.08)',
-                            border: '1px solid rgba(255,255,255,0.20)',
-                            borderRadius: '6px',
-                            padding: '8px 12px',
-                            color: 'rgba(255,255,255,0.9)',
-                            fontSize: '14px',
-                            minHeight: '80px',
-                            fontFamily: 'inherit',
-                            resize: 'vertical'
-                        }}
+                        className={styles.textareaField}
                         placeholder="Bio"
                     />
                 ) : profile?.bio ? (
-                    <p style={{
-                        fontSize: '14px',
-                        color: 'rgba(255,255,255,0.7)',
-                        lineHeight: '1.5',
-                        marginTop: '12px'
-                    }}>
+                    <p className={styles.bio}>
                         {profile.bio}
                     </p>
                 ) : null}
@@ -271,27 +180,7 @@ export default function ProfileHeader({ profile, stats, isOwnProfile, onUpdate }
                 {isOwnProfile && !isEditing && (
                     <button
                         onClick={() => setIsEditing(true)}
-                        style={{
-                            marginTop: '16px',
-                            padding: '6px 16px',
-                            backgroundColor: 'rgba(255,255,255,0.08)',
-                            border: '1px solid rgba(255,255,255,0.20)',
-                            borderRadius: '6px',
-                            color: 'rgba(255,255,255,0.9)',
-                            fontSize: '13px',
-                            fontWeight: '600',
-                            fontStyle: 'italic',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s'
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
-                            e.currentTarget.style.borderColor = '#16a34a'
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
-                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
-                        }}
+                        className={styles.editButton}
                     >
                         Edit Profile
                     </button>
@@ -299,129 +188,44 @@ export default function ProfileHeader({ profile, stats, isOwnProfile, onUpdate }
             </div>
 
             {/* Stats Grid */}
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '8px',
-                padding: '20px',
-                borderBottom: '1px solid rgba(255,255,255,0.10)'
-            }}>
-                <div style={{
-                    padding: '20px',
-                    backgroundColor: 'rgba(255,255,255,0.06)',
-                    border: '2px solid rgba(255,255,255,0.20)',
-                    borderRadius: '8px',
-                    textAlign: 'center',
-                    transition: 'all 0.2s'
-                }}>
-                    <div style={{
-                        fontSize: '32px',
-                        fontWeight: '900',
-                        color: '#16a34a',
-                        fontVariantNumeric: 'tabular-nums'
-                    }}>
+            <div className={styles.statsGrid}>
+                <div className={styles.statCard}>
+                    <div className={styles.statNumber}>
                         {stats?.sessions_created || 0}
                     </div>
-                    <div style={{
-                        fontSize: '11px',
-                        fontWeight: '700',
-                        color: 'rgba(255,255,255,0.5)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.08em'
-                    }}>
+                    <div className={styles.statLabel}>
                         Sessions
                     </div>
                 </div>
-                <div style={{
-                    padding: '20px',
-                    backgroundColor: 'rgba(255,255,255,0.06)',
-                    border: '2px solid rgba(255,255,255,0.20)',
-                    borderRadius: '8px',
-                    textAlign: 'center',
-                    transition: 'all 0.2s'
-                }}>
-                    <div style={{
-                        fontSize: '32px',
-                        fontWeight: '900',
-                        color: '#16a34a',
-                        fontVariantNumeric: 'tabular-nums'
-                    }}>
+                <div className={styles.statCard}>
+                    <div className={styles.statNumber}>
                         {stats?.drills_posted || 0}
                     </div>
-                    <div style={{
-                        fontSize: '11px',
-                        fontWeight: '700',
-                        color: 'rgba(255,255,255,0.5)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.08em'
-                    }}>
+                    <div className={styles.statLabel}>
                         Drills
                     </div>
                 </div>
-                <div style={{
-                    padding: '20px',
-                    backgroundColor: 'rgba(255,255,255,0.06)',
-                    border: '2px solid rgba(255,255,255,0.20)',
-                    borderRadius: '8px',
-                    textAlign: 'center',
-                    transition: 'all 0.2s'
-                }}>
-                    <div style={{
-                        fontSize: '32px',
-                        fontWeight: '900',
-                        color: '#16a34a',
-                        fontVariantNumeric: 'tabular-nums'
-                    }}>
+                <div className={styles.statCard}>
+                    <div className={styles.statNumber}>
                         {stats?.upvotes_received || 0}
                     </div>
-                    <div style={{
-                        fontSize: '11px',
-                        fontWeight: '700',
-                        color: 'rgba(255,255,255,0.5)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.08em'
-                    }}>
+                    <div className={styles.statLabel}>
                         Upvotes
                     </div>
                 </div>
-                <div style={{
-                    padding: '20px',
-                    backgroundColor: 'rgba(255,255,255,0.06)',
-                    border: '2px solid rgba(255,255,255,0.20)',
-                    borderRadius: '8px',
-                    textAlign: 'center',
-                    transition: 'all 0.2s'
-                }}>
-                    <div style={{
-                        fontSize: '32px',
-                        fontWeight: '900',
-                        color: '#16a34a',
-                        fontVariantNumeric: 'tabular-nums'
-                    }}>
+                <div className={styles.statCard}>
+                    <div className={styles.statNumber}>
                         {bootRoomAge}
                     </div>
-                    <div style={{
-                        fontSize: '11px',
-                        fontWeight: '700',
-                        color: 'rgba(255,255,255,0.5)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.08em'
-                    }}>
+                    <div className={styles.statLabel}>
                         Boot Room Age
                     </div>
                 </div>
             </div>
 
             {/* Clubs & Schools */}
-            <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <h3 style={{
-                    fontSize: '12px',
-                    fontWeight: '700',
-                    color: 'rgba(255,255,255,0.6)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.08em',
-                    marginBottom: '12px'
-                }}>
+            <div className={styles.clubsSection}>
+                <h3 className={styles.sectionTitle}>
                     Clubs & Schools
                 </h3>
                 {isEditing ? (
@@ -429,42 +233,19 @@ export default function ProfileHeader({ profile, stats, isOwnProfile, onUpdate }
                         type="text"
                         value={formData.clubs_schools.join(', ')}
                         onChange={(e) => handleClubsChange(e.target.value)}
-                        style={{
-                            width: '100%',
-                            backgroundColor: 'rgba(255,255,255,0.08)',
-                            border: '1px solid rgba(255,255,255,0.20)',
-                            borderRadius: '6px',
-                            padding: '8px 12px',
-                            color: 'white',
-                            fontSize: '14px'
-                        }}
+                        className={styles.inputFieldSmall}
                         placeholder="e.g., Liverpool FC, Manchester United (comma-separated)"
                     />
                 ) : profile?.clubs_schools?.length > 0 ? (
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    <div className={styles.clubsList}>
                         {profile.clubs_schools.map((club, idx) => (
-                            <span
-                                key={idx}
-                                style={{
-                                    padding: '6px 12px',
-                                    backgroundColor: 'rgba(22,163,74,0.15)',
-                                    border: '1px solid rgba(22,163,74,0.3)',
-                                    borderRadius: '4px',
-                                    color: '#4ADE80',
-                                    fontSize: '12px',
-                                    fontWeight: '600'
-                                }}
-                            >
+                            <span key={idx} className={styles.clubBadge}>
                                 {club}
                             </span>
                         ))}
                     </div>
                 ) : (
-                    <p style={{
-                        fontSize: '14px',
-                        color: 'rgba(255,255,255,0.4)',
-                        fontStyle: 'italic'
-                    }}>
+                    <p className={styles.emptyText}>
                         No clubs or schools listed
                     </p>
                 )}
@@ -472,45 +253,20 @@ export default function ProfileHeader({ profile, stats, isOwnProfile, onUpdate }
 
             {/* Licenses */}
             {(profile?.licenses?.length > 0 || isEditing) && (
-                <div style={{
-                    padding: '20px',
-                    borderTop: '1px solid rgba(255,255,255,0.10)'
-                }}>
-                    <h3 style={{
-                        fontSize: '12px',
-                        fontWeight: '700',
-                        color: 'rgba(255,255,255,0.6)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.08em',
-                        marginBottom: '12px'
-                    }}>
+                <div className={styles.licensesSection}>
+                    <h3 className={styles.sectionTitle}>
                         Licenses & Badges
                     </h3>
                     {profile?.licenses?.length > 0 ? (
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                        <div className={styles.licensesList}>
                             {profile.licenses.map((license, idx) => (
-                                <span
-                                    key={idx}
-                                    style={{
-                                        padding: '6px 12px',
-                                        backgroundColor: 'rgba(251,191,36,0.15)',
-                                        border: '1px solid rgba(251,191,36,0.3)',
-                                        borderRadius: '4px',
-                                        color: '#FCD34D',
-                                        fontSize: '12px',
-                                        fontWeight: '600'
-                                    }}
-                                >
+                                <span key={idx} className={styles.licenseBadge}>
                                     {license}
                                 </span>
                             ))}
                         </div>
                     ) : (
-                        <p style={{
-                            fontSize: '14px',
-                            color: 'rgba(255,255,255,0.4)',
-                            fontStyle: 'italic'
-                        }}>
+                        <p className={styles.emptyText}>
                             No licenses listed
                         </p>
                     )}
@@ -519,48 +275,18 @@ export default function ProfileHeader({ profile, stats, isOwnProfile, onUpdate }
 
             {/* Save/Cancel Buttons */}
             {isEditing && (
-                <div style={{
-                    padding: '20px',
-                    borderTop: '1px solid rgba(255,255,255,0.10)',
-                    display: 'flex',
-                    gap: '12px'
-                }}>
+                <div className={styles.actionButtons}>
                     <button
                         onClick={handleSave}
                         disabled={saving}
-                        style={{
-                            flex: 1,
-                            padding: '12px',
-                            backgroundColor: '#16a34a',
-                            border: '1px solid #16a34a',
-                            borderRadius: '8px',
-                            color: 'white',
-                            fontSize: '14px',
-                            fontWeight: '700',
-                            fontStyle: 'italic',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            opacity: saving ? 0.5 : 1
-                        }}
+                        className={styles.saveButton}
                     >
                         {saving ? 'Saving...' : 'Save Changes'}
                     </button>
                     <button
                         onClick={handleCancel}
                         disabled={saving}
-                        style={{
-                            flex: 1,
-                            padding: '12px',
-                            backgroundColor: 'transparent',
-                            border: '1px solid rgba(255,255,255,0.20)',
-                            borderRadius: '8px',
-                            color: 'rgba(255,255,255,0.9)',
-                            fontSize: '14px',
-                            fontWeight: '700',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            opacity: saving ? 0.5 : 1
-                        }}
+                        className={styles.cancelButton}
                     >
                         Cancel
                     </button>

@@ -1,0 +1,126 @@
+/* Profile Page Styles */
+
+.pageContainer {
+  min-height: 100vh;
+  position: relative;
+  background-color: #0a0a0a;
+}
+
+.contentWrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.mainContent {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.pageTitle {
+  font-family: "Arial Black", "Helvetica Neue", sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  font-style: italic;
+  color: white;
+  text-transform: uppercase;
+  transform: skew(-5deg);
+  margin-bottom: 0.5rem;
+}
+
+.pageSubtitle {
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  font-size: 18px;
+  margin-bottom: 32px;
+}
+
+.gridLayout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.contentCard {
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabContainer {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.tabButton {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  font-style: italic;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tabButton:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: #16a34a;
+}
+
+.tabButton.active {
+  background-color: #16a34a;
+  color: white;
+  border-color: #16a34a;
+}
+
+.tabButton.active:hover {
+  background-color: #16a34a;
+  border-color: #16a34a;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 639px) {
+  .mainContent {
+    padding: 16px 12px;
+  }
+
+  .pageTitle {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .pageSubtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .gridLayout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .contentCard {
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .tabContainer {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .tabButton {
+    padding: 12px 18px;
+    font-size: 14px;
+    flex: 1;
+    min-height: 44px;
+  }
+}

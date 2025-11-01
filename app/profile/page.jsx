@@ -6,6 +6,7 @@ import ProfileHeader from '@/components/ProfileHeader'
 import SessionList from '@/components/SessionList'
 import DrillList from '@/components/DrillList'
 import Navigation from '@/components/Navigation'
+import styles from './Profile.module.css'
 
 export default function ProfilePage() {
     const router = useRouter()
@@ -237,7 +238,7 @@ export default function ProfilePage() {
     }
 
     return (
-        <div style={{ minHeight: '100vh', position: 'relative', backgroundColor: '#0a0a0a' }}>
+        <div className={styles.pageContainer}>
             {/* Blurred Background Layer */}
             <div
                 style={{
@@ -264,33 +265,19 @@ export default function ProfilePage() {
                 }}
             />
 
-            <div style={{ position: 'relative', zIndex: 2 }}>
+            <div className={styles.contentWrapper}>
                 <Navigation />
-                <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px 24px' }}>
+                <main className={styles.mainContent}>
                     {/* Page Title */}
-                    <h2 style={{
-                        fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-                        fontSize: '3.5rem',
-                        fontWeight: '900',
-                        fontStyle: 'italic',
-                        color: 'white',
-                        textTransform: 'uppercase',
-                        transform: 'skew(-5deg)',
-                        marginBottom: '0.5rem'
-                    }}>
+                    <h2 className={styles.pageTitle}>
                         MY PROFILE
                     </h2>
-                    <p style={{ color: 'rgba(255,255,255,0.6)', fontStyle: 'italic', fontSize: '18px', marginBottom: '32px' }}>
+                    <p className={styles.pageSubtitle}>
                         Manage your coaching profile and content
                     </p>
 
                     {/* Two Column Layout */}
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: '380px 1fr',
-                        gap: '24px',
-                        alignItems: 'stretch'
-                    }}>
+                    <div className={styles.gridLayout}>
                         {/* Left: Profile Header */}
                         <div>
                             <ProfileHeader
@@ -302,73 +289,20 @@ export default function ProfilePage() {
                         </div>
 
                         {/* Right: Content Tabs */}
-                        <div style={{
-                            backgroundColor: 'rgba(255,255,255,0.06)',
-                            border: '1px solid rgba(255,255,255,0.10)',
-                            borderRadius: '12px',
-                            padding: '24px',
-                            display: 'flex',
-                            flexDirection: 'column'
-                        }}>
+                        <div className={styles.contentCard}>
                             {/* Tab Buttons */}
-                            <div style={{ display: 'flex', gap: '12px', marginBottom: '24px' }}>
+                            <div className={styles.tabContainer}>
                                 <button
                                     onClick={() => setActiveTab('sessions')}
-                                    style={{
-                                        padding: '10px 16px',
-                                        borderRadius: '8px',
-                                        fontWeight: '600',
-                                        fontSize: '14px',
-                                        fontStyle: 'italic',
-                                        transition: 'all 0.2s',
-                                        backgroundColor: activeTab === 'sessions' ? '#16a34a' : 'rgba(255,255,255,0.08)',
-                                        color: activeTab === 'sessions' ? 'white' : 'rgba(255,255,255,0.7)',
-                                        border: '1px solid ' + (activeTab === 'sessions' ? '#16a34a' : 'rgba(255,255,255,0.20)'),
-                                        cursor: 'pointer'
-                                    }}
-                                    onMouseEnter={(e) => {
-                                        if (activeTab !== 'sessions') {
-                                            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
-                                            e.currentTarget.style.borderColor = '#16a34a'
-                                        }
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        if (activeTab !== 'sessions') {
-                                            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
-                                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
-                                        }
-                                    }}
+                                    className={`${styles.tabButton} ${activeTab === 'sessions' ? styles.active : ''}`}
                                 >
-                                    Sessions
+                                    SESSIONS
                                 </button>
                                 <button
                                     onClick={() => setActiveTab('drills')}
-                                    style={{
-                                        padding: '10px 16px',
-                                        borderRadius: '8px',
-                                        fontWeight: '600',
-                                        fontSize: '14px',
-                                        fontStyle: 'italic',
-                                        transition: 'all 0.2s',
-                                        backgroundColor: activeTab === 'drills' ? '#16a34a' : 'rgba(255,255,255,0.08)',
-                                        color: activeTab === 'drills' ? 'white' : 'rgba(255,255,255,0.7)',
-                                        border: '1px solid ' + (activeTab === 'drills' ? '#16a34a' : 'rgba(255,255,255,0.20)'),
-                                        cursor: 'pointer'
-                                    }}
-                                    onMouseEnter={(e) => {
-                                        if (activeTab !== 'drills') {
-                                            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
-                                            e.currentTarget.style.borderColor = '#16a34a'
-                                        }
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        if (activeTab !== 'drills') {
-                                            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
-                                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
-                                        }
-                                    }}
+                                    className={`${styles.tabButton} ${activeTab === 'drills' ? styles.active : ''}`}
                                 >
-                                    Drills
+                                    DRILLS
                                 </button>
                             </div>
 
@@ -395,15 +329,6 @@ export default function ProfilePage() {
                     </div>
                 </main>
             </div>
-
-            {/* Responsive CSS for mobile */}
-            <style jsx>{`
-                @media (max-width: 1024px) {
-                    main > div {
-                        grid-template-columns: 1fr !important;
-                    }
-                }
-            `}</style>
         </div>
     )
 }
