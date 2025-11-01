@@ -124,7 +124,9 @@
   .contentCard {
     padding: 12px;
     border-radius: 8px;
-    max-width: 100%;
+    max-width: calc(100vw - 24px);
+    width: calc(100vw - 24px);
+    margin: 0 auto;
   }
 
   .tabContainer {
