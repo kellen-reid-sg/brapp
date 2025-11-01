@@ -297,9 +297,8 @@
 /* Mobile Optimizations */
 @media (max-width: 639px) {
   .headerContainer {
-    max-width: calc(100vw - 24px);
-    width: calc(100vw - 24px);
-    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
   }
 
   .avatarSection {
