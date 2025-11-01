@@ -326,54 +326,18 @@ export default function SessionViewPage() {
 
           {/* Main Session Card */}
           <div className={styles.sessionCard}>
-            {/* Top Row: Author info and Duration/Drill count */}
+            {/* Session header */}
             <div style={{
               display: 'flex',
-              justifyContent: 'space-between',
               alignItems: 'center',
+              gap: '8px',
+              fontSize: '13px',
+              color: 'rgba(255,255,255,0.5)',
               marginBottom: '16px'
             }}>
-              {/* Session header */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                fontSize: '13px',
-                color: 'rgba(255,255,255,0.5)'
-              }}>
-                <span>Created by <span style={{ color: 'rgba(255,255,255,0.7)' }}>{author}</span></span>
-                <span>•</span>
-                <span>{new Date(session.created_at).toLocaleDateString()}</span>
-              </div>
-
-              {/* Total Duration & Drill Count */}
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '16px'
-              }}>
-                <span style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '6px',
-                  fontSize: '15px',
-                  fontWeight: '600',
-                  color: '#4ADE80'
-                }}>
-                  <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 6v6l4 2" />
-                  </svg>
-                  {session.total_duration} mins
-                </span>
-                <span style={{ 
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  color: 'rgba(255,255,255,0.6)'
-                }}>
-                  {session.session_drills?.length || 0} drills
-                </span>
-              </div>
+              <span>Created by <span style={{ color: 'rgba(255,255,255,0.7)' }}>{author}</span></span>
+              <span>•</span>
+              <span>{new Date(session.created_at).toLocaleDateString()}</span>
             </div>
 
             {/* Session Title */}
@@ -396,12 +360,36 @@ export default function SessionViewPage() {
                 color: 'rgba(255,255,255,0.7)', 
                 fontSize: '15px',
                 lineHeight: '1.6',
-                marginBottom: '20px',
+                marginBottom: '16px',
                 whiteSpace: 'pre-wrap'
               }}>
                 {session.description}
               </p>
             )}
+
+            {/* Session Metadata - Duration & Drill Count */}
+            <div className={styles.sessionMetadata}>
+              <span className={styles.metadataBadge}>
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 6v6l4 2" />
+                </svg>
+                {session.total_duration} mins
+              </span>
+              <span style={{ 
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                fontSize: '15px',
+                fontWeight: '600',
+                color: 'rgba(255,255,255,0.6)'
+              }}>
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                {session.session_drills?.length || 0} drills
+              </span>
+            </div>
 
             {/* Engagement Stats */}
             <div style={{
