@@ -302,7 +302,7 @@
   }
 
   .avatarSection {
-    padding: 20px 16px 16px;
+    padding: 16px 12px 12px;
   }
 
   .avatar {
@@ -319,14 +319,15 @@
   }
 
   .statsGrid {
-    padding: 12px;
-    gap: 6px;
+    padding: 8px;
+    gap: 4px;
     max-width: 100%;
   }
 
   .statCard {
-    padding: 16px 12px;
+    padding: 12px 8px;
     min-width: 0;
+    border-width: 1px;
   }
 
   .statNumber {
@@ -334,14 +335,14 @@
   }
 
   .clubsSection {
-    padding: 16px;
+    padding: 12px;
   }
 
   .licensesSection {
-    padding: 16px;
+    padding: 12px;
   }
 
   .actionButtons {
-    padding: 16px;
+    padding: 12px;
   }
 }

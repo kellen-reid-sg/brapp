@@ -122,14 +122,14 @@
   }
 
   .contentCard {
-    padding: 16px;
+    padding: 12px;
     border-radius: 8px;
     max-width: 100%;
   }
 
   .tabContainer {
-    gap: 8px;
-    margin-bottom: 16px;
+    gap: 6px;
+    margin-bottom: 12px;
   }
 
   .tabButton {
