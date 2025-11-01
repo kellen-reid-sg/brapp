@@ -13,7 +13,11 @@ export default function VoteButtons({ contentKind, contentId, initialScore, user
     setVoted(userVote || null)
   }, [initialScore, userVote])
 
-  async function handleVote(value) {
+  async function handleVote(e, value) {
+    // Stop click from bubbling to parent card
+    e.stopPropagation()
+    e.preventDefault()
+    
     const { data: { user } } = await supabase.auth.getUser()
     
     if (!user) {
@@ -74,7 +78,7 @@ export default function VoteButtons({ contentKind, contentId, initialScore, user
       <button 
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => handleVote(1)}
+        onClick={(e) => handleVote(e, 1)}
         style={{
           padding: '4px',
           background: 'transparent',

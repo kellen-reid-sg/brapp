@@ -270,26 +270,114 @@
 
 ---
 
+### 7. Browse Sessions Mobile Layout (COMPLETED - Jan 31, 2025)
+
+**Problem:** Desktop layout doesn't work on mobile - wide gaps, small touch targets, no pagination.
+
+**Solution Implemented:**
+- Applied same optimizations as Browse Drills (simpler - no filters)
+- CSS modules for responsive layouts (SessionCard.module.css, Sessions.module.css)
+- Desktop: Horizontal layout maintained (vote left, content right)
+- Mobile (<640px): Optimized spacing
+  - Vote column: 80px → 56px
+  - Gap between vote/content: 40px → 12px
+  - Star icon moved to metadata row (cleaner top-right)
+  - "Load More" pagination (10 sessions initial, +10 per click)
+- Extracted SessionCard to separate component
+- All touch targets appropriately sized
+- Tooltip bug fixed (same as drills)
+
+**Files Created:**
+- `components/SessionCard.module.css` - Responsive card styles
+- `app/sessions/browse/Sessions.module.css` - Page layout styles
+- `components/SessionCard.jsx` - Extracted card component
+
+**Files Modified:**
+- `app/sessions/browse/page.jsx` - Applied CSS modules, added pagination logic
+
+**Technical Details:**
+- CSS media query: `@media (max-width: 639px)` (consistent breakpoint)
+- Desktop: 80px vote, 40px gap, top-right star
+- Mobile: 56px vote, 12px gap, metadata row star
+- Pagination: 10 initial sessions, +10 per "Load More"
+- All containers: `box-sizing: border-box`, `width: 100%`
+- No filters (simpler than drills page)
+- Fixed green hover color (#16a34a)
+
+**Time Taken:** ~30 minutes (simpler than Browse Drills)
+
+**Testing:**
+- ✅ Build successful
+- ✅ Layout maintains horizontal structure on mobile
+- ✅ Session cards full width on real devices
+- ✅ Star icon in metadata row
+- ✅ Load More button works correctly
+- ✅ All touch targets accessible
+- ✅ Tooltip bug fixed
+- ✅ No errors or warnings
+
+---
+
+### 8. Fix Upvote Button Click-Through (COMPLETED - Jan 31, 2025)
+
+**Problem:** Clicking upvote buttons on drill/session cards triggered card navigation instead of just voting. Affected both mobile and desktop.
+
+**Solution Implemented:**
+- Added `e.stopPropagation()` and `e.preventDefault()` to VoteButtons component
+- Updated onClick handler to pass event object
+- Vote now registers without navigation
+
+**Files Modified:**
+- `components/VoteButtons.jsx` - Added event handling to prevent click bubbling
+
+**Technical Details:**
+- Changed `handleVote(value)` to `handleVote(e, value)`
+- Added `e.stopPropagation()` to stop event bubbling to parent card
+- Added `e.preventDefault()` to prevent default browser behavior
+- Updated button onClick: `onClick={(e) => handleVote(e, 1)}`
+
+**Time Taken:** 15 minutes
+
+**Testing:**
+- ✅ Build successful
+- ✅ Desktop: Upvote works without navigation (drills & sessions)
+- ✅ Desktop: Login prompt shows when not logged in
+- ✅ No errors or warnings
+- ⏳ Mobile: Pending production test
+
+---
+
 ## 🔲 Remaining Tasks (Priority Order)
 
-### 7. Browse Sessions Mobile Layout (MEDIUM PRIORITY)
-**Estimated Time:** 2-3 hours
+### 9. Drill Detail Page Mobile Layout (HIGH PRIORITY)
+**Estimated Time:** 1-2 hours
 
 **Issues:**
-- Wide gaps (40px, 32px) waste space
-- 80px vote column causes squeeze
-- Small favorite icon
-- Same issues as Browse Drills page
+- /drills/[id] page not optimized for mobile
+- Layout likely needs responsive adjustments
+- Comments section may need mobile optimization
 
 **Plan:**
-- Apply same optimizations as Browse Drills
-- Create SessionCard.module.css
-- Stack sort tabs above filters
-- Move star icon to metadata row
-- Add "Load More" pagination
-- Reduce vote column and gaps on mobile
+- Review current layout on mobile
+- Apply responsive CSS modules
+- Optimize comment section for mobile
+- Ensure all touch targets appropriately sized
 
-### 7. Performance - Background Blur (MEDIUM PRIORITY)
+### 10. Session Detail Page Mobile Layout (HIGH PRIORITY)
+**Estimated Time:** 1-2 hours
+
+**Issues:**
+- /sessions/[id] page not optimized for mobile
+- Layout likely needs responsive adjustments
+- Drill list and comments may need mobile optimization
+
+**Plan:**
+- Review current layout on mobile
+- Apply responsive CSS modules
+- Optimize drill list display for mobile
+- Ensure all touch targets appropriately sized
+
+### 11. Performance - Background Blur (MEDIUM PRIORITY)
 **Estimated Time:** 1 hour
 
 **Issues:**
@@ -301,7 +389,7 @@
 - Keep dark overlay for readability
 - Use background-attachment: scroll (not fixed)
 
-### 8. My Sessions Grid Fix (LOW PRIORITY)
+### 12. My Sessions Grid Fix (LOW PRIORITY)
 **Estimated Time:** 1 hour
 
 **Issues:**
@@ -325,13 +413,16 @@
 | Drill/Coach Modals | 🔴 Critical | ✅ Done | 1.5h | Jan 31, 2025 |
 | Pagination (Load More) | 🔴 Critical | ✅ Done | 0.5h | Jan 31, 2025 |
 | Browse Drills | 🔴 Critical | ✅ Done | 3h | Jan 31, 2025 |
-| Browse Sessions | 🟢 Medium | 📋 Todo | - | - |
+| Browse Sessions | 🔴 Critical | ✅ Done | 0.5h | Jan 31, 2025 |
+| Upvote Click-Through Bug | 🔴 Critical | ✅ Done | 0.25h | Jan 31, 2025 |
+| Drill Detail Page | 🟡 High | 📋 Todo | - | - |
+| Session Detail Page | 🟡 High | 📋 Todo | - | - |
 | Performance | 🟢 Medium | 📋 Todo | - | - |
 | My Sessions | 🟢 Low | 📋 Todo | - | - |
 | Device Testing | 🔴 Critical | 📋 Todo | - | - |
 
-**Total Estimated Remaining:** 3-5 hours  
-**Total Time Spent:** 8 hours
+**Total Estimated Remaining:** 4-6 hours  
+**Total Time Spent:** 8.75 hours
 
 ---
 
@@ -340,11 +431,11 @@
 - [x] Navigation accessible on mobile ✅
 - [x] Session builder usable on mobile ✅
 - [x] Drill browsing smooth on mobile ✅
+- [x] Session browsing smooth on mobile ✅
 - [x] All touch targets ≥ 44px (or appropriately sized) ✅
 - [x] No horizontal scrolling ✅
 - [x] Viewport meta tag added ✅
 - [x] Tested on iPhone (Safari) ✅
-- [ ] Session browsing smooth on mobile
 - [ ] Smooth scrolling performance (background blur optimization)
 - [ ] Tested on Android (Chrome)
 - [ ] Tested on small screens (320px width)
@@ -382,7 +473,7 @@
 ---
 
 **Last Updated:** January 31, 2025  
-**Next Priority:** Browse Sessions Mobile Layout
+**Next Priority:** Fix Upvote Click-Through Bug (critical), then Detail Pages Mobile Optimization
 
 ---
 
@@ -395,9 +486,10 @@
 - ✅ Drill & Coach Modals (responsive, scrollable)
 - ✅ Pagination (Load More button)
 - ✅ Browse Drills Page (full mobile optimization)
+- ✅ Browse Sessions Page (full mobile optimization)
 - ✅ Viewport Meta Tag (critical fix for mobile rendering)
 - ✅ Tooltip Bug Fix (hidden on mobile)
 
-**Total Progress:** 6/10 tasks complete (60%)
-**Hours Invested:** 8 hours
-**Major Milestone:** Browse Drills fully functional on mobile! 🚀
+**Total Progress:** 7/10 tasks complete (70%)
+**Hours Invested:** 8.5 hours
+**Major Milestone:** All critical browsing pages fully functional on mobile! 🚀
