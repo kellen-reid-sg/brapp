@@ -483,25 +483,49 @@
 - ✅ Form inputs properly sized for mobile
 - ✅ Navigation properly scaled down
 
+### 12. Signup Page Mobile Optimization (COMPLETED - Jan 31, 2025)
+
+**Problem:** Desktop layout not optimized for mobile; card padding too large; excessive spacing on small screens; same issues as login page.
+
+**Solution Implemented:**
+- Created `Signup.module.css` with responsive media queries (same pattern as login)
+- Desktop vs Mobile adjustments:
+  - Card padding: 48px → 24px
+  - Navigation padding: 32px → 16px
+  - Main content padding: 60px → 32px
+  - Logo font size: 1.5rem → 1.25rem
+  - Card title: 1.75rem → 1.5rem
+  - Card subtitle: 1rem → 0.875rem
+  - Input spacing: 20px → 16px (tighter for 3 inputs)
+  - Page title margin: 48px → 32px
+  - Submit button padding: 16px → 14px
+  - Border radius: 24px → 16px (card)
+  - **Card width: calc(100% - 32px) with 16px side margins**
+
+**Files Created/Modified:**
+- `app/auth/signup/Signup.module.css` - New responsive stylesheet
+- `app/auth/signup/page.jsx` - Migrated from inline styles to CSS modules
+
+**Technical Details:**
+- CSS media query: `@media (max-width: 639px)` (consistent breakpoint)
+- All form inputs maintain 16px font size (prevents iOS zoom on focus)
+- Input labels italicized for consistency with login page
+- Proper `:focus` states maintained via CSS
+- Link hover states handled with CSS only
+- Card has visible margins (16px) on mobile
+
+**Time Taken:** ~30 minutes
+
+**Testing:**
+- ✅ Build successful
+- ✅ No diagnostics errors
+- ✅ All CSS module classes applied correctly
+- ✅ Card properly sized with visible borders on mobile
+- ✅ Three input fields properly spaced
+
 ---
 
 ## 🔲 Remaining Tasks (Priority Order)
-
-### 12. Signup Page Mobile Optimization (HIGH PRIORITY)
-**Estimated Time:** 45 minutes
-
-**Issues:**
-- Same issues as login page
-- Card padding too large (48px)
-- Three input fields require more compact spacing
-
-**Plan:**
-- Create Signup.module.css with media queries
-- Mobile (<640px): Reduce card padding 48px → 24px
-- Mobile: Reduce title font size and logo
-- Mobile: Reduce spacing between inputs (20px → 16px)
-- Mobile: Adjust vertical spacing
-- Ensure all inputs and buttons touch-friendly (≥44px)
 
 ### 13. Profile Page Mobile Optimization (HIGH PRIORITY)
 **Estimated Time:** 1.5 hours
@@ -552,13 +576,13 @@
 | Drill Detail Page | 🟡 High | ✅ Done | 2h | Jan 31, 2025 |
 | Session Detail Page | 🟡 High | ✅ Done | 1.5h | Jan 31, 2025 |
 | Login Page | 🔴 High | ✅ Done | 0.75h | Jan 31, 2025 |
-| Signup Page | 🔴 High | 📋 Todo | - | - |
+| Signup Page | 🔴 High | ✅ Done | 0.5h | Jan 31, 2025 |
 | Profile Page | 🔴 High | 📋 Todo | - | - |
 | My Sessions | 🟢 Low | 📋 Todo | - | - |
 | Device Testing | 🔴 Critical | 📋 Todo | - | - |
 
-**Total Estimated Remaining:** 3.75 hours (Signup: 0.75h, Profile: 1.5h, My Sessions: 1h, Testing: 0.5h)  
-**Total Time Spent:** 13 hours
+**Total Estimated Remaining:** 3 hours (Profile: 1.5h, My Sessions: 1h, Testing: 0.5h)  
+**Total Time Spent:** 13.5 hours
 
 ---
 
@@ -575,7 +599,7 @@
 - [x] Viewport meta tag added ✅
 - [x] Tested on iPhone (Safari) ✅
 - [x] Login page mobile optimized ✅
-- [ ] Signup page mobile optimized
+- [x] Signup page mobile optimized ✅
 - [ ] Profile page mobile optimized
 - [ ] My Sessions page mobile optimized
 - [ ] Tested on Android (Chrome)

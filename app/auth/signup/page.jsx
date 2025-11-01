@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClientComponentClient } from '../../lib/supabase'
+import styles from './Signup.module.css'
 
 export default function Signup() {
   const router = useRouter()
@@ -46,7 +47,7 @@ export default function Signup() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col relative" style={{ backgroundColor: '#0a0a0a' }}>
+    <div className={styles.pageContainer}>
       {/* Blurred Background Layer */}
       <div 
         style={{
@@ -74,88 +75,28 @@ export default function Signup() {
       />
 
       {/* Navigation */}
-      <nav className="px-8 py-6 relative z-30">
-        <div className="max-w-7xl mx-auto">
-          <Link href="/" style={{ textDecoration: 'none' }}>
-            <h1 style={{
-              fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-              fontSize: '1.5rem',
-              fontWeight: '900',
-              fontStyle: 'italic',
-              color: 'transparent',
-              WebkitTextStroke: '1.5px white',
-              textStroke: '1.5px white',
-              letterSpacing: '0.1em',
-              transform: 'skew(-5deg)',
-              cursor: 'pointer'
-            }}
-            className="hover:opacity-80 transition">
-              THE BOOT ROOM
-            </h1>
+      <nav className={styles.navigation}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          <Link href="/" className={styles.logo}>
+            THE BOOT ROOM
           </Link>
         </div>
       </nav>
 
       {/* Main Content */}
-      <main 
-        className="flex-1 flex flex-col items-center justify-center px-4 relative z-20"
-        style={{
-          paddingTop: '60px',
-          paddingBottom: '60px'
-        }}
-      >
+      <main className={styles.mainContent}>
         {/* Large Title */}
-        <h1 
-          style={{
-            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-            fontSize: 'clamp(2.5rem, 6vw, 4rem)',
-            fontWeight: '900',
-            fontStyle: 'italic',
-            color: 'transparent',
-            WebkitTextStroke: '2px white',
-            textStroke: '2px white',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            textAlign: 'center',
-            marginBottom: '48px'
-          }}
-        >
+        <h1 className={styles.pageTitle}>
           THE BOOT ROOM
         </h1>
 
         {/* Signup Card */}
-        <div 
-        style={{
-        width: '100%',
-        maxWidth: '600px',
-        borderRadius: '24px',
-        backgroundColor: 'rgba(26,26,26,0.8)',
-        border: '1px solid white',
-        padding: '48px',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.4)'
-        }}
-        >
+        <div className={styles.signupCard}>
           {/* Card Title */}
-          <h2 style={{
-            fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-            fontSize: '1.75rem',
-            fontWeight: '900',
-            fontStyle: 'italic',
-            color: 'white',
-            textAlign: 'center',
-            marginBottom: '12px',
-            letterSpacing: '0.05em'
-          }}>
-            Join The Boot Room
+          <h2 className={styles.cardTitle}>
+            JOIN THE BOOT ROOM
           </h2>
-          <p style={{
-            fontFamily: '"Helvetica Neue", Arial, sans-serif',
-            fontSize: '1rem',
-            fontStyle: 'italic',
-            color: 'rgba(255,255,255,0.7)',
-            textAlign: 'center',
-            marginBottom: '32px'
-          }}>
+          <p className={styles.cardSubtitle}>
             Create your account and start building sessions
           </p>
 
@@ -175,14 +116,8 @@ export default function Signup() {
 
             <form onSubmit={handleSignup}>
               {/* Email Input */}
-              <div style={{ marginBottom: '20px' }}>
-                <label htmlFor="email" style={{ 
-                  display: 'block',
-                  color: 'rgba(255,255,255,0.7)',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  marginBottom: '8px'
-                }}>
+              <div className={styles.inputGroup}>
+                <label htmlFor="email" className={styles.inputLabel}>
                   Email
                 </label>
                 <input
@@ -193,37 +128,13 @@ export default function Signup() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  style={{
-                    width: '100%',
-                    padding: '14px 16px',
-                    borderRadius: '8px',
-                    background: 'rgba(255,255,255,0.08)',
-                    border: '1px solid rgba(255,255,255,0.20)',
-                    color: 'white',
-                    fontSize: '16px',
-                    transition: 'all 0.2s',
-                    boxSizing: 'border-box'
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.12)'
-                    e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
-                  }}
+                  className={styles.input}
                 />
               </div>
 
               {/* Password Input */}
-              <div style={{ marginBottom: '20px' }}>
-                <label htmlFor="password" style={{ 
-                  display: 'block',
-                  color: 'rgba(255,255,255,0.7)',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  marginBottom: '8px'
-                }}>
+              <div className={styles.inputGroup}>
+                <label htmlFor="password" className={styles.inputLabel}>
                   Password
                 </label>
                 <input
@@ -234,37 +145,13 @@ export default function Signup() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  style={{
-                    width: '100%',
-                    padding: '14px 16px',
-                    borderRadius: '8px',
-                    background: 'rgba(255,255,255,0.08)',
-                    border: '1px solid rgba(255,255,255,0.20)',
-                    color: 'white',
-                    fontSize: '16px',
-                    transition: 'all 0.2s',
-                    boxSizing: 'border-box'
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.12)'
-                    e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
-                  }}
+                  className={styles.input}
                 />
               </div>
 
               {/* Confirm Password Input */}
-              <div style={{ marginBottom: '32px' }}>
-                <label htmlFor="confirm-password" style={{ 
-                  display: 'block',
-                  color: 'rgba(255,255,255,0.7)',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  marginBottom: '8px'
-                }}>
+              <div className={styles.confirmPasswordGroup}>
+                <label htmlFor="confirm-password" className={styles.inputLabel}>
                   Confirm Password
                 </label>
                 <input
@@ -275,25 +162,7 @@ export default function Signup() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  style={{
-                    width: '100%',
-                    padding: '14px 16px',
-                    borderRadius: '8px',
-                    background: 'rgba(255,255,255,0.08)',
-                    border: '1px solid rgba(255,255,255,0.20)',
-                    color: 'white',
-                    fontSize: '16px',
-                    transition: 'all 0.2s',
-                    boxSizing: 'border-box'
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.12)'
-                    e.currentTarget.style.borderColor = 'rgba(22,163,74,0.5)'
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
-                  }}
+                  className={styles.input}
                 />
               </div>
 
@@ -301,47 +170,17 @@ export default function Signup() {
               <button
                 type="submit"
                 disabled={loading || !email.trim() || !password.trim() || !confirmPassword.trim()}
-                style={{
-                  width: '100%',
-                  padding: '16px',
-                  borderRadius: '8px',
-                  backgroundColor: (loading || !email.trim() || !password.trim() || !confirmPassword.trim())
-                    ? 'rgba(255,255,255,0.10)' 
-                    : 'rgba(34,197,94,0.20)',
-                  border: (loading || !email.trim() || !password.trim() || !confirmPassword.trim())
-                    ? '1px solid rgba(255,255,255,0.10)'
-                    : '2px solid #4ADE80',
-                  color: (loading || !email.trim() || !password.trim() || !confirmPassword.trim())
-                    ? 'rgba(255,255,255,0.4)'
-                    : '#4ADE80',
-                  fontSize: '16px',
-                  fontWeight: '700',
-                  fontStyle: 'italic',
-                  textTransform: 'uppercase',
-                  cursor: (loading || !email.trim() || !password.trim() || !confirmPassword.trim()) ? 'not-allowed' : 'pointer',
-                  transition: 'all 0.2s',
-                  boxSizing: 'border-box'
-                }}
+                className={styles.submitButton}
               >
                 {loading ? 'Creating Account...' : 'Create Account'}
               </button>
             </form>
 
             {/* Sign In Link */}
-            <div style={{ marginTop: '24px', textAlign: 'center' }}>
-              <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}>
+            <div className={styles.linksSection}>
+              <p className={styles.linkText}>
                 Already have an account?{' '}
-                <Link 
-                  href="/auth/login" 
-                  style={{
-                    color: '#16a34a',
-                    fontWeight: '600',
-                    textDecoration: 'none',
-                    transition: 'color 0.2s'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#22C55E'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#16a34a'}
-                >
+                <Link href="/auth/login" className={styles.link}>
                   Sign in
                 </Link>
               </p>
