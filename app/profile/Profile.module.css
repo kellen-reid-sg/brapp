@@ -113,11 +113,18 @@
   .gridLayout {
     grid-template-columns: 1fr;
     gap: 16px;
+    max-width: 100%;
+  }
+
+  .gridLayout > div {
+    max-width: 100%;
+    width: 100%;
   }
 
   .contentCard {
     padding: 16px;
     border-radius: 8px;
+    max-width: 100%;
   }
 
   .tabContainer {

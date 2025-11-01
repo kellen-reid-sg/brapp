@@ -290,6 +290,11 @@
 
 /* Mobile Optimizations */
 @media (max-width: 639px) {
+  .headerContainer {
+    max-width: 100%;
+    width: 100%;
+  }
+
   .avatarSection {
     padding: 20px 16px 16px;
   }
@@ -310,10 +315,12 @@
   .statsGrid {
     padding: 12px;
     gap: 6px;
+    max-width: 100%;
   }
 
   .statCard {
     padding: 16px 12px;
+    min-width: 0;
   }
 
   .statNumber {
