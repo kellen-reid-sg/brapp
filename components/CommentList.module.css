@@ -1,0 +1,75 @@
+/* Desktop styles (default) */
+
+.emptyState {
+  text-align: center;
+  padding: 32px 0;
+  color: rgba(255,255,255,0.5);
+}
+
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.commentItem {
+  background-color: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.commentHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.commentAuthor {
+  font-weight: 600;
+  color: white;
+}
+
+.commentDate {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+}
+
+.commentBody {
+  color: rgba(255,255,255,0.8);
+  line-height: 1.5;
+}
+
+/* Mobile styles (<640px) */
+@media (max-width: 639px) {
+  .emptyState {
+    padding: 24px 0;
+    font-size: 14px;
+  }
+
+  .commentsList {
+    gap: 12px;
+  }
+
+  .commentItem {
+    padding: 12px;
+  }
+
+  .commentHeader {
+    gap: 6px;
+    font-size: 13px;
+  }
+
+  .commentAuthor {
+    font-size: 14px;
+  }
+
+  .commentDate {
+    font-size: 12px;
+  }
+
+  .commentBody {
+    font-size: 14px;
+  }
+}

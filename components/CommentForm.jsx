@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { createClientComponentClient } from '@/app/lib/supabase'
+import styles from './CommentForm.module.css'
 
 export default function CommentForm({ contentKind, contentId, onCommentAdded }) {
   const supabase = createClientComponentClient()
@@ -61,75 +62,41 @@ export default function CommentForm({ contentKind, contentId, onCommentAdded }) 
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{
-      backgroundColor: 'rgba(255,255,255,0.04)',
-      border: '1px solid rgba(255,255,255,0.10)',
-      borderRadius: '8px',
-      padding: '16px'
-    }}>
+    <form onSubmit={handleSubmit} className={styles.commentForm}>
       <textarea
         value={body}
         onChange={(e) => setBody(e.target.value)}
         placeholder="Add a comment..."
         disabled={isSubmitting}
-        style={{
-          width: '100%',
-          minHeight: '100px',
-          padding: '12px',
-          backgroundColor: 'rgba(0,0,0,0.3)',
-          border: '1px solid rgba(255,255,255,0.15)',
-          borderRadius: '6px',
-          color: 'white',
-          fontSize: '14px',
-          lineHeight: '1.5',
-          resize: 'vertical',
-          fontFamily: 'inherit',
-          outline: 'none'
-        }}
+        className={styles.textarea}
         onFocus={(e) => e.target.style.borderColor = 'rgba(22,163,74,0.5)'}
         onBlur={(e) => e.target.style.borderColor = 'rgba(255,255,255,0.15)'}
       />
       
       {error && (
-        <div style={{
-          marginTop: '8px',
-          padding: '8px 12px',
-          backgroundColor: 'rgba(239, 68, 68, 0.1)',
-          border: '1px solid rgba(239, 68, 68, 0.3)',
-          borderRadius: '4px',
-          color: '#F87171',
-          fontSize: '13px'
-        }}>
+        <div className={styles.errorMessage}>
           {error}
         </div>
       )}
       
-      <div style={{
-        marginTop: '12px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
-        <span style={{
-          fontSize: '13px',
-          color: body.length > 2000 ? '#F87171' : 'rgba(255,255,255,0.5)'
-        }}>
+      <div className={styles.footer}>
+        <span 
+          className={styles.charCount}
+          style={{
+            color: body.length > 2000 ? '#F87171' : 'rgba(255,255,255,0.5)'
+          }}
+        >
           {body.length} / 2000
         </span>
         
         <button
           type="submit"
           disabled={isSubmitting || !body.trim()}
+          className={styles.submitButton}
           style={{
-            padding: '8px 20px',
             backgroundColor: isSubmitting || !body.trim() ? 'rgba(255,255,255,0.1)' : 'rgba(22,163,74,0.8)',
-            border: 'none',
-            borderRadius: '6px',
             color: isSubmitting || !body.trim() ? 'rgba(255,255,255,0.4)' : 'white',
-            fontSize: '14px',
-            fontWeight: '600',
-            cursor: isSubmitting || !body.trim() ? 'not-allowed' : 'pointer',
-            transition: 'all 0.2s'
+            cursor: isSubmitting || !body.trim() ? 'not-allowed' : 'pointer'
           }}
           onMouseEnter={(e) => {
             if (!isSubmitting && body.trim()) {

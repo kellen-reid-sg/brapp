@@ -342,8 +342,8 @@
 - ✅ Build successful
 - ✅ Desktop: Upvote works without navigation (drills & sessions)
 - ✅ Desktop: Login prompt shows when not logged in
+- ✅ Mobile: Upvote works correctly (verified on iPhone)
 - ✅ No errors or warnings
-- ⏳ Mobile: Pending production test
 
 ---
 

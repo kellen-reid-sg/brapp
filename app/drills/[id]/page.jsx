@@ -5,6 +5,7 @@ import { createClientComponentClient } from '@/app/lib/supabase'
 import CommentList from '@/components/CommentList'
 import CommentForm from '@/components/CommentForm'
 import Navigation from '@/components/Navigation'
+import styles from '../DrillDetail.module.css'
 
 export default function DrillDetailPage() {
   const supabase = createClientComponentClient()
@@ -17,6 +18,7 @@ export default function DrillDetailPage() {
   const [isFavorited, setIsFavorited] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
+  const [drillDetailsExpanded, setDrillDetailsExpanded] = useState(false)
 
   useEffect(() => {
     fetchDrill()
@@ -267,21 +269,10 @@ export default function DrillDetailPage() {
 
       <div style={{ position: 'relative', zIndex: 2 }}>
         <Navigation />
-        <main className="max-w-4xl mx-auto px-8 py-8">
+        <main className={styles.pageContainer}>
           <button 
             onClick={() => router.push('/drills')}
-            style={{
-              marginBottom: '24px',
-              color: 'white',
-              fontSize: '14px',
-              fontWeight: '600',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}
+            className={styles.backButton}
             onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
             onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
           >
@@ -292,16 +283,9 @@ export default function DrillDetailPage() {
           </button>
 
           {/* Main Drill Card */}
-          <div style={{
-            backgroundColor: 'rgba(255,255,255,0.06)',
-            border: '1px solid rgba(255,255,255,0.10)',
-            borderRadius: '12px',
-            padding: '24px',
-            marginBottom: '16px',
-            position: 'relative'
-          }}>
-            {/* Top Right Actions */}
-            <div style={{ position: 'absolute', top: '24px', right: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div className={styles.drillCard}>
+            {/* Top Right Actions (Desktop Only) */}
+            <div className={styles.topActions}>
               {/* Star/Favorite Icon */}
               <div style={{ position: 'relative' }}>
                 <button
@@ -310,15 +294,9 @@ export default function DrillDetailPage() {
                     toggleFavorite()
                   }}
                   disabled={isUpdating}
+                  className={styles.favoriteButton}
                   style={{
-                    padding: '6px',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    color: isFavorited ? '#EAB308' : 'rgba(255,255,255,0.6)',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                    display: 'flex',
-                    alignItems: 'center'
+                    color: isFavorited ? '#EAB308' : 'rgba(255,255,255,0.6)'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.color = '#EAB308'
@@ -334,21 +312,7 @@ export default function DrillDetailPage() {
                   </svg>
                 </button>
                 {showTooltip && (
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '-32px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    backgroundColor: 'rgba(0,0,0,0.9)',
-                    color: 'white',
-                    padding: '6px 10px',
-                    borderRadius: '4px',
-                    fontSize: '12px',
-                    fontWeight: '500',
-                    whiteSpace: 'nowrap',
-                    zIndex: 1000,
-                    pointerEvents: 'none'
-                  }}>
+                  <div className={styles.tooltip}>
                     Add to Favorites
                   </div>
                 )}
@@ -361,19 +325,9 @@ export default function DrillDetailPage() {
                   console.log('Add to session:', drill.id)
                   // TODO: Implement add to session functionality
                 }}
+                className={styles.addToSessionButton}
                 style={{
-                  padding: '6px 12px',
-                  backgroundColor: 'rgba(255,255,255,0.08)',
-                  border: '1px solid rgba(255,255,255,0.20)',
-                  borderRadius: '4px',
-                  color: 'rgba(255,255,255,0.9)',
-                  fontSize: '12px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px'
+                  color: 'rgba(255,255,255,0.9)'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
@@ -392,49 +346,20 @@ export default function DrillDetailPage() {
             </div>
 
             {/* Subreddit-style header */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '13px',
-              color: 'rgba(255,255,255,0.5)',
-              marginBottom: '16px'
-            }}>
+            <div className={styles.headerInfo}>
               <span>Posted by <span style={{ color: 'rgba(255,255,255,0.7)' }}>{author}</span></span>
               <span>•</span>
               <span>{new Date(drill.created_at).toLocaleDateString()}</span>
             </div>
 
             {/* Drill Title */}
-            <h1 style={{
-              fontFamily: '"Arial Black", "Helvetica Neue", sans-serif',
-              fontSize: '32px',
-              fontWeight: '900',
-              fontStyle: 'italic',
-              color: 'white',
-              textTransform: 'uppercase',
-              marginBottom: '16px',
-              lineHeight: '1.2',
-              paddingRight: '120px'
-            }}>
+            <h1 className={styles.drillTitle}>
               {drill.title}
             </h1>
 
-            {/* Info badges - Duration, Age Group, Category */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '16px',
-              marginBottom: '20px',
-              flexWrap: 'wrap'
-            }}>
-              <span style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '6px',
-                fontSize: '13px',
-                color: 'rgba(255,255,255,0.6)'
-              }}>
+            {/* Info badges - Duration, Age Group, Category, Favorite (mobile) */}
+            <div className={styles.metadataBadges}>
+              <span className={styles.metadataBadge}>
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
                   <path d="M12 6v6l4 2" />
@@ -442,13 +367,7 @@ export default function DrillDetailPage() {
                 {duration} mins
               </span>
               
-              <span style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '6px',
-                fontSize: '13px',
-                color: 'rgba(255,255,255,0.6)'
-              }}>
+              <span className={styles.metadataBadge}>
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                   <circle cx="9" cy="7" r="4" />
@@ -458,40 +377,179 @@ export default function DrillDetailPage() {
                 {ageGroup}
               </span>
 
-              <span style={{ 
-                padding: '4px 12px',
-                backgroundColor: categoryColor.bg,
-                border: `1px solid ${categoryColor.border}`,
-                borderRadius: '4px',
-                color: categoryColor.text,
-                fontSize: '12px',
-                fontWeight: '600'
-              }}>
+              <span 
+                className={styles.categoryBadge}
+                style={{ 
+                  backgroundColor: categoryColor.bg,
+                  border: `1px solid ${categoryColor.border}`,
+                  color: categoryColor.text
+                }}
+              >
                 {category}
               </span>
+
+              {/* Favorite Star - Mobile Only (in metadata row) */}
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  toggleFavorite()
+                }}
+                disabled={isUpdating}
+                className={styles.mobileFavorite}
+                style={{
+                  color: isFavorited ? '#EAB308' : 'rgba(255,255,255,0.6)'
+                }}
+              >
+                <svg width="20" height="20" fill={isFavorited ? '#EAB308' : 'none'} stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              </button>
             </div>
 
             {/* Description */}
             {drill.description && (
-              <p style={{ 
-                color: 'rgba(255,255,255,0.8)', 
-                fontSize: '15px',
-                lineHeight: '1.6',
-                marginBottom: '20px',
-                whiteSpace: 'pre-wrap'
-              }}>
+              <p className={styles.description}>
                 {drill.description}
               </p>
             )}
 
-            {/* Engagement Stats - Reddit style */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              paddingTop: '12px',
-              borderTop: '1px solid rgba(255,255,255,0.08)'
-            }}>
+            {/* Drill Details Toggle */}
+            <div 
+              onClick={() => setDrillDetailsExpanded(!drillDetailsExpanded)}
+              className={styles.drillDetailsToggle}
+            >
+              <span className={styles.drillDetailsToggleText}>
+                Full Drill Details
+              </span>
+              <svg 
+                width="16" 
+                height="16" 
+                fill="none" 
+                stroke="rgba(255,255,255,0.6)" 
+                viewBox="0 0 24 24" 
+                strokeWidth="2"
+                style={{
+                  transform: drillDetailsExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s'
+                }}
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </div>
+
+            {/* Expandable Drill Details */}
+            {drillDetailsExpanded && (
+              <div className={styles.drillDetailsContent}>
+                {/* Left Column - Drill Details */}
+                <div className={styles.drillDetailsLeft}>
+                  {/* Description (repeated for full details) */}
+                  {drill.description && (
+                    <div className={styles.drillDetailSection}>
+                      <h4 className={styles.drillDetailHeading}>
+                        Description
+                      </h4>
+                      <p className={styles.drillDetailText}>
+                        {drill.description}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Equipment */}
+                  <div className={styles.drillDetailSection}>
+                    <h4 className={styles.drillDetailHeading}>
+                      Equipment
+                    </h4>
+                    <p className={styles.drillDetailPlaceholder}>
+                      Equipment list coming soon...
+                    </p>
+                  </div>
+
+                  {/* Setup Instructions */}
+                  <div className={styles.drillDetailSection}>
+                    <h4 className={styles.drillDetailHeading}>
+                      Setup Instructions
+                    </h4>
+                    <p className={styles.drillDetailPlaceholder}>
+                      Setup instructions coming soon...
+                    </p>
+                  </div>
+
+                  {/* Coaching Points */}
+                  <div className={styles.drillDetailSection}>
+                    <h4 className={styles.drillDetailHeading}>
+                      Coaching Points
+                    </h4>
+                    <p className={styles.drillDetailPlaceholder}>
+                      Coaching points coming soon...
+                    </p>
+                  </div>
+
+                  {/* Progressions */}
+                  <div className={styles.drillDetailSection}>
+                    <h4 className={styles.drillDetailHeading}>
+                      Progressions
+                    </h4>
+                    <p className={styles.drillDetailPlaceholder}>
+                      Progression ideas coming soon...
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right Column - Drill Diagram Placeholder */}
+                <div className={styles.drillDiagramPlaceholder}>
+                  <svg width="64" height="64" fill="none" stroke="rgba(255,255,255,0.3)" viewBox="0 0 24 24" strokeWidth="1.5" style={{ marginBottom: '12px' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                  </svg>
+                  <p style={{
+                    fontSize: '13px',
+                    color: 'rgba(255,255,255,0.5)',
+                    fontWeight: '600',
+                    marginBottom: '4px'
+                  }}>
+                    Drill Diagram
+                  </p>
+                  <p style={{
+                    fontSize: '11px',
+                    color: 'rgba(255,255,255,0.4)',
+                    fontStyle: 'italic'
+                  }}>
+                    Visual diagram coming soon
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Add to Session - Full width on mobile, below engagement row */}
+            <div className={styles.addToSessionContainer}>
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  console.log('Add to session:', drill.id)
+                }}
+                className={styles.addToSessionButton}
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.08)',
+                  border: '1px solid rgba(255,255,255,0.20)',
+                  color: 'rgba(255,255,255,0.9)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                }}
+              >
+                <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+                Add to Session
+              </button>
+            </div>
+
+            {/* Engagement Stats - Centered below Add to Session */}
+            <div className={styles.engagementRow}>
               {/* Upvote Button */}
               <button 
                 onClick={async () => {
@@ -529,21 +587,11 @@ export default function DrillDetailPage() {
                       }, { onConflict: 'user_id,content_kind,content_id' })
                   }
                 }}
+                className={styles.engagementButton}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  padding: '8px 16px',
                   backgroundColor: userVote === 1 ? 'rgba(22,163,74,0.15)' : 'rgba(255,255,255,0.04)',
                   border: `1px solid ${userVote === 1 ? 'rgba(22,163,74,0.4)' : 'rgba(255,255,255,0.10)'}`,
-                  borderRadius: '6px',
-                  color: userVote === 1 ? '#22C55E' : 'rgba(255,255,255,0.7)',
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  minWidth: '80px'
+                  color: userVote === 1 ? '#22C55E' : 'rgba(255,255,255,0.7)'
                 }}
                 onMouseEnter={(e) => {
                   if (userVote !== 1) {
@@ -564,21 +612,15 @@ export default function DrillDetailPage() {
                 {score}
               </button>
 
-              <button style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                padding: '8px 16px',
-                backgroundColor: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.10)',
-                borderRadius: '6px',
-                color: 'rgba(255,255,255,0.7)',
-                fontSize: '13px',
-                fontWeight: '600',
-                cursor: 'default',
-                minWidth: '90px'
-              }}>
+              <button 
+                className={styles.engagementButton}
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.10)',
+                  color: 'rgba(255,255,255,0.7)',
+                  cursor: 'default'
+                }}
+              >
                 <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
@@ -587,20 +629,11 @@ export default function DrillDetailPage() {
 
               <button 
                 onClick={handleShare}
+                className={styles.engagementButton}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  padding: '8px 16px',
                   backgroundColor: 'rgba(255,255,255,0.04)',
                   border: '1px solid rgba(255,255,255,0.10)',
-                  borderRadius: '6px',
-                  color: 'rgba(255,255,255,0.7)',
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s'
+                  color: 'rgba(255,255,255,0.7)'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
@@ -620,7 +653,7 @@ export default function DrillDetailPage() {
           </div>
 
           {/* Comment Form */}
-          <div style={{ marginBottom: '16px' }}>
+          <div className={styles.commentFormContainer}>
             <CommentForm 
               contentKind="drill" 
               contentId={params.id} 
@@ -629,12 +662,7 @@ export default function DrillDetailPage() {
           </div>
 
           {/* Comments Section */}
-          <div style={{
-            backgroundColor: 'rgba(255,255,255,0.06)',
-            border: '1px solid rgba(255,255,255,0.10)',
-            borderRadius: '12px',
-            padding: '24px'
-          }}>
+          <div className={styles.commentSection}>
             <CommentList comments={comments} />
           </div>
         </main>
