@@ -392,15 +392,9 @@ export default function SessionViewPage() {
             </div>
 
             {/* Engagement Stats */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              paddingTop: '12px',
-              borderTop: '1px solid rgba(255,255,255,0.08)'
-            }}>
+            <div className={styles.engagementRow}>
               {/* Upvote Button */}
-              <div style={{ position: 'relative' }}>
+              <div style={{ position: 'relative', flex: '1 1 0', minWidth: 0 }}>
                 <button 
                 onClick={async () => {
                   const { data: { user } } = await supabase.auth.getUser()
@@ -437,21 +431,11 @@ export default function SessionViewPage() {
                       }, { onConflict: 'user_id,content_kind,content_id' })
                   }
                 }}
+                className={styles.engagementButton}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  padding: '8px 16px',
-                  backgroundColor: userVote === 1 ? 'rgba(22,163,74,0.15)' : 'rgba(255,255,255,0.04)',
-                  border: `1px solid ${userVote === 1 ? 'rgba(22,163,74,0.4)' : 'rgba(255,255,255,0.10)'}`,
-                  borderRadius: '6px',
-                  color: userVote === 1 ? '#22C55E' : 'rgba(255,255,255,0.7)',
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  minWidth: '80px'
+                backgroundColor: userVote === 1 ? 'rgba(22,163,74,0.15)' : 'rgba(255,255,255,0.04)',
+                border: `1px solid ${userVote === 1 ? 'rgba(22,163,74,0.4)' : 'rgba(255,255,255,0.10)'}`,
+                color: userVote === 1 ? '#22C55E' : 'rgba(255,255,255,0.7)'
                 }}
                 onMouseEnter={(e) => {
                   setShowUpvoteTooltip(true)
@@ -494,24 +478,14 @@ export default function SessionViewPage() {
               )}
               </div>
 
-              <div style={{ position: 'relative' }}>
+              <div style={{ position: 'relative', flex: '1 1 0', minWidth: 0 }}>
                 <button 
                 onClick={toggleFavorite}
+                className={styles.engagementButton}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  padding: '8px 16px',
                   backgroundColor: isFavorited ? 'rgba(234, 179, 8, 0.15)' : 'rgba(255,255,255,0.04)',
                   border: `1px solid ${isFavorited ? 'rgba(234, 179, 8, 0.4)' : 'rgba(255,255,255,0.10)'}`,
-                  borderRadius: '6px',
-                  color: isFavorited ? '#EAB308' : 'rgba(255,255,255,0.7)',
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  minWidth: '90px'
+                  color: isFavorited ? '#EAB308' : 'rgba(255,255,255,0.7)'
                 }}
                 onMouseEnter={(e) => {
                   setShowFavoriteTooltip(true)
@@ -554,25 +528,15 @@ export default function SessionViewPage() {
               )}
               </div>
 
-              <div style={{ position: 'relative' }}>
+              <div style={{ position: 'relative', flex: '1 1 0', minWidth: 0 }}>
                 <button 
                 onClick={scrollToComments}
+                className={styles.engagementButton}
                 style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    padding: '8px 16px',
-                    backgroundColor: 'rgba(255,255,255,0.04)',
-                    border: '1px solid rgba(255,255,255,0.10)',
-                    borderRadius: '6px',
-                    color: 'rgba(255,255,255,0.7)',
-                    fontSize: '13px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s',
-                      minWidth: '90px'
-                  }}
+                  backgroundColor: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.10)',
+                  color: 'rgba(255,255,255,0.7)'
+                }}
                 onMouseEnter={(e) => {
                     setShowCommentTooltip(true)
                     e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
@@ -585,10 +549,10 @@ export default function SessionViewPage() {
                   }}
                 >
                   <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                   {commentCount}
-                </button>
+              </button>
                 {showCommentTooltip && (
                   <div style={{
                     position: 'absolute',
@@ -610,37 +574,29 @@ export default function SessionViewPage() {
                 )}
               </div>
 
-              <button 
-                onClick={handleShare}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  padding: '8px 16px',
-                  backgroundColor: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.10)',
-                  borderRadius: '6px',
-                  color: 'rgba(255,255,255,0.7)',
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.04)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.10)'
-                }}
-              >
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/>
-                </svg>
-                Share
-              </button>
+              <div style={{ flex: '1 1 0', minWidth: 0 }}>
+                <button 
+                  onClick={handleShare}
+                  className={styles.engagementButton}
+                  style={{
+                    backgroundColor: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(255,255,255,0.10)',
+                    color: 'rgba(255,255,255,0.7)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)'
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.20)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.04)'
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.10)'
+                  }}
+                >
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/>
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
 

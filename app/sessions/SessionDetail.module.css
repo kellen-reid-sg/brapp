@@ -123,6 +123,29 @@
   color: #4ADE80;
 }
 
+.engagementRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  flex-wrap: wrap;
+}
+
+.engagementButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
 /* Mobile styles (<640px) */
 @media (max-width: 639px) {
   .pageContainer {
@@ -189,5 +212,15 @@
 
   .metadataBadge {
     font-size: 13px;
+  }
+
+  .engagementRow {
+    gap: 6px;
+  }
+
+  .engagementButton {
+    padding: 10px 8px;
+    font-size: 12px;
+    gap: 4px;
   }
 }
