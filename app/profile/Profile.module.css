@@ -97,7 +97,7 @@
 /* Mobile Optimizations */
 @media (max-width: 639px) {
   .mainContent {
-    padding: 16px 12px;
+    padding: 16px 0;
   }
 
   .pageTitle {
