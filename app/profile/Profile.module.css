@@ -4,17 +4,22 @@
   min-height: 100vh;
   position: relative;
   background-color: #0a0a0a;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .contentWrapper {
   position: relative;
   z-index: 2;
+  width: 100%;
 }
 
 .mainContent {
   max-width: 1280px;
   margin: 0 auto;
   padding: 32px 24px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .pageTitle {
@@ -40,6 +45,8 @@
   grid-template-columns: 380px 1fr;
   gap: 24px;
   align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .contentCard {
@@ -49,6 +56,7 @@
   padding: 24px;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .tabContainer {
