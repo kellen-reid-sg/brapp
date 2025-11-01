@@ -33,10 +33,14 @@ export default function HomePage() {
     const scrollHint = (ref) => {
       if (ref.current && window.innerWidth < 640) {
         setTimeout(() => {
-          ref.current.scrollTo({ left: 100, behavior: 'smooth' })
-          setTimeout(() => {
-            ref.current.scrollTo({ left: 0, behavior: 'smooth' })
-          }, 800)
+          if (ref.current) {
+            ref.current.scrollTo({ left: 100, behavior: 'smooth' })
+            setTimeout(() => {
+              if (ref.current) {
+                ref.current.scrollTo({ left: 0, behavior: 'smooth' })
+              }
+            }, 800)
+          }
         }, 300)
       }
     }

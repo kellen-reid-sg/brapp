@@ -1,0 +1,167 @@
+/* Desktop styles (default) */
+
+.pageContainer {
+  max-width: 896px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.backButton {
+  margin-bottom: 24px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: italic;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sessionCard {
+  background-color: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.drillsListCard {
+  background-color: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.drillItem {
+  background-color: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.2s;
+}
+
+.drillHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.drillExpandedContent {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 24px;
+}
+
+.drillDetailsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.drillDetailSection {
+  margin-bottom: 0;
+}
+
+.drillDetailHeading {
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.drillDetailText {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+}
+
+.drillDetailPlaceholder {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  font-style: italic;
+}
+
+.drillDiagramPlaceholder {
+  background-color: rgba(255,255,255,0.04);
+  border: 2px dashed rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  text-align: center;
+}
+
+/* Mobile styles (<640px) */
+@media (max-width: 639px) {
+  .pageContainer {
+    padding: 12px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .backButton {
+    margin-bottom: 16px;
+    font-size: 13px;
+  }
+
+  .sessionCard {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .drillsListCard {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .drillItem {
+    padding: 12px;
+  }
+
+  .drillHeader {
+    gap: 10px;
+  }
+
+  .drillExpandedContent {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+
+  .drillDetailsColumn {
+    gap: 12px;
+  }
+
+  .drillDetailHeading {
+    font-size: 11px;
+  }
+
+  .drillDetailText {
+    font-size: 13px;
+  }
+
+  .drillDetailPlaceholder {
+    font-size: 12px;
+  }
+
+  .drillDiagramPlaceholder {
+    padding: 20px;
+    min-height: 180px;
+  }
+}

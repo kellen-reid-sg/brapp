@@ -6,6 +6,7 @@ import VoteButtons from '@/components/VoteButtons'
 import CommentList from '@/components/CommentList'
 import CommentForm from '@/components/CommentForm'
 import Navigation from '@/components/Navigation'
+import styles from '../SessionDetail.module.css'
 
 export default function SessionViewPage() {
   const supabase = createClientComponentClient()
@@ -310,38 +311,21 @@ export default function SessionViewPage() {
 
       <div style={{ position: 'relative', zIndex: 2 }}>
         <Navigation />
-        <main className="max-w-4xl mx-auto px-8 py-8">
+        <main className={styles.pageContainer}>
           <button 
-            onClick={() => router.push('/drills')}
-            style={{
-              marginBottom: '24px',
-              color: 'white',
-              fontSize: '14px',
-              fontWeight: '600',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}
+            onClick={() => router.push('/sessions/browse')}
+            className={styles.backButton}
             onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
             onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
           >
             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
-            Back to Drill Library
+            Back to Session Library
           </button>
 
           {/* Main Session Card */}
-          <div style={{
-            backgroundColor: 'rgba(255,255,255,0.06)',
-            border: '1px solid rgba(255,255,255,0.10)',
-            borderRadius: '12px',
-            padding: '24px',
-            marginBottom: '24px'
-          }}>
+          <div className={styles.sessionCard}>
             {/* Top Row: Author info and Duration/Drill count */}
             <div style={{
               display: 'flex',
@@ -673,13 +657,7 @@ export default function SessionViewPage() {
           </div>
 
           {/* Drills List */}
-          <div style={{
-            backgroundColor: 'rgba(255,255,255,0.06)',
-            border: '1px solid rgba(255,255,255,0.10)',
-            borderRadius: '12px',
-            padding: '24px',
-            marginBottom: '16px'
-          }}>
+          <div className={styles.drillsListCard}>
             <h2 style={{
               fontSize: '20px',
               fontWeight: '700',
@@ -702,24 +680,12 @@ export default function SessionViewPage() {
                   return (
                     <div
                       key={sessionDrill.id}
-                      style={{
-                        backgroundColor: 'rgba(255,255,255,0.04)',
-                        border: '1px solid rgba(255,255,255,0.08)',
-                        borderRadius: '8px',
-                        padding: '16px',
-                        transition: 'all 0.2s'
-                      }}
+                      className={styles.drillItem}
                     >
                       {/* Drill Header - Clickable */}
                       <div 
                         onClick={() => toggleDrillExpansion(drill.id)}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          gap: '12px',
-                          marginBottom: '8px',
-                          cursor: 'pointer'
-                        }}
+                        className={styles.drillHeader}
                       >
                         <span style={{
                           fontSize: '16px',
@@ -802,129 +768,61 @@ export default function SessionViewPage() {
 
                       {/* Expandable Content */}
                       {isExpanded && (
-                        <div style={{
-                          marginTop: '12px',
-                          paddingTop: '12px',
-                          borderTop: '1px solid rgba(255,255,255,0.08)',
-                          display: 'grid',
-                          gridTemplateColumns: '1fr 400px',
-                          gap: '24px'
-                        }}>
+                        <div className={styles.drillExpandedContent}>
                           {/* Left Column - Drill Details */}
-                          <div>
+                          <div className={styles.drillDetailsColumn}>
                             {/* Description */}
                             {drill.description && (
-                              <div style={{ marginBottom: '16px' }}>
-                                <h4 style={{
-                                  fontSize: '12px',
-                                  fontWeight: '700',
-                                  color: 'white',
-                                  marginBottom: '6px',
-                                  textTransform: 'uppercase'
-                                }}>
+                              <div className={styles.drillDetailSection}>
+                                <h4 className={styles.drillDetailHeading}>
                                   Description
                                 </h4>
-                                <p style={{
-                                  fontSize: '14px',
-                                  color: 'rgba(255,255,255,0.7)',
-                                  lineHeight: '1.6'
-                                }}>
+                                <p className={styles.drillDetailText}>
                                   {drill.description}
                                 </p>
                               </div>
                             )}
 
                             {/* Placeholder sections - will populate when schema is updated */}
-                            <div style={{ marginBottom: '16px' }}>
-                              <h4 style={{
-                                fontSize: '12px',
-                                fontWeight: '700',
-                                color: 'white',
-                                marginBottom: '6px',
-                                textTransform: 'uppercase'
-                              }}>
+                            <div className={styles.drillDetailSection}>
+                              <h4 className={styles.drillDetailHeading}>
                                 Equipment
                               </h4>
-                              <p style={{
-                                fontSize: '13px',
-                                color: 'rgba(255,255,255,0.5)',
-                                fontStyle: 'italic'
-                              }}>
+                              <p className={styles.drillDetailPlaceholder}>
                                 Equipment list coming soon...
                               </p>
                             </div>
 
-                            <div style={{ marginBottom: '16px' }}>
-                              <h4 style={{
-                                fontSize: '12px',
-                                fontWeight: '700',
-                                color: 'white',
-                                marginBottom: '6px',
-                                textTransform: 'uppercase'
-                              }}>
+                            <div className={styles.drillDetailSection}>
+                              <h4 className={styles.drillDetailHeading}>
                                 Setup Instructions
                               </h4>
-                              <p style={{
-                                fontSize: '13px',
-                                color: 'rgba(255,255,255,0.5)',
-                                fontStyle: 'italic'
-                              }}>
+                              <p className={styles.drillDetailPlaceholder}>
                                 Setup instructions coming soon...
                               </p>
                             </div>
 
-                            <div style={{ marginBottom: '16px' }}>
-                              <h4 style={{
-                                fontSize: '12px',
-                                fontWeight: '700',
-                                color: 'white',
-                                marginBottom: '6px',
-                                textTransform: 'uppercase'
-                              }}>
+                            <div className={styles.drillDetailSection}>
+                              <h4 className={styles.drillDetailHeading}>
                                 Coaching Points
                               </h4>
-                              <p style={{
-                                fontSize: '13px',
-                                color: 'rgba(255,255,255,0.5)',
-                                fontStyle: 'italic'
-                              }}>
+                              <p className={styles.drillDetailPlaceholder}>
                                 Coaching points coming soon...
                               </p>
                             </div>
 
-                            <div>
-                              <h4 style={{
-                                fontSize: '12px',
-                                fontWeight: '700',
-                                color: 'white',
-                                marginBottom: '6px',
-                                textTransform: 'uppercase'
-                              }}>
+                            <div className={styles.drillDetailSection}>
+                              <h4 className={styles.drillDetailHeading}>
                                 Progressions
                               </h4>
-                              <p style={{
-                                fontSize: '13px',
-                                color: 'rgba(255,255,255,0.5)',
-                                fontStyle: 'italic'
-                              }}>
+                              <p className={styles.drillDetailPlaceholder}>
                                 Progression ideas coming soon...
                               </p>
                             </div>
                           </div>
 
                           {/* Right Column - Drill Diagram Placeholder */}
-                          <div style={{
-                            backgroundColor: 'rgba(255,255,255,0.04)',
-                            border: '2px dashed rgba(255,255,255,0.15)',
-                            borderRadius: '8px',
-                            padding: '24px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            minHeight: '250px',
-                            textAlign: 'center'
-                          }}>
+                          <div className={styles.drillDiagramPlaceholder}>
                             <svg width="64" height="64" fill="none" stroke="rgba(255,255,255,0.3)" viewBox="0 0 24 24" strokeWidth="1.5" style={{ marginBottom: '12px' }}>
                               <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                             </svg>
