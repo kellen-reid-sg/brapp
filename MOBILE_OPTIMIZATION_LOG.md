@@ -347,49 +347,183 @@
 
 ---
 
+### 9. Drill Detail Page Mobile Layout (COMPLETED - Jan 31, 2025)
+
+**Problem:** Desktop layout not optimized for mobile; actions overlapping title; no drill details expansion; comments section needs mobile optimization.
+
+**Solution Implemented:**
+- CSS modules for responsive layouts (DrillDetail.module.css, CommentForm.module.css, CommentList.module.css)
+- Desktop & Mobile: Favorite star in metadata row (alongside Duration, Age Group, Category)
+- Desktop & Mobile: Full-width Add to Session button below engagement row
+- Engagement buttons (Upvote, Comments, Share) centered below Add to Session
+- Full Drill Details expandable section added
+  - Desktop: 2-column layout (details left, diagram placeholder right - 400px)
+  - Mobile: Stacked layout (diagram at bottom)
+- Comment form and list fully responsive
+- Back button italicized
+
+**Files Created:**
+- `app/drills/DrillDetail.module.css` - Responsive page and drill details styles
+- `components/CommentForm.module.css` - Responsive comment form styles
+- `components/CommentList.module.css` - Responsive comment list styles
+
+**Files Modified:**
+- `app/drills/[id]/page.jsx` - Applied CSS modules, added expandable drill details
+- `components/CommentForm.jsx` - Applied CSS module classes
+- `components/CommentList.jsx` - Applied CSS module classes
+
+**Technical Details:**
+- CSS media query: `@media (max-width: 639px)` (consistent breakpoint)
+- Container padding: 32px → 12px (mobile)
+- Card padding: 24px → 16px (mobile)
+- Title size: 32px → 24px (mobile)
+- Title padding-right removed (no overlap)
+- Drill details grid: `1fr 400px` → `1fr` (mobile stacked)
+- Comment form footer: Stacked vertically on mobile, submit button full-width
+- Engagement buttons: Centered with equal distribution
+
+**Time Taken:** ~2 hours
+
+**Testing:**
+- ✅ Build successful
+- ✅ Layout optimized for mobile
+- ✅ Drill details expansion works (diagram at bottom on mobile)
+- ✅ Comment section fully responsive
+- ✅ All touch targets accessible
+- ✅ Real device testing complete (verified on iPhone)
+
+---
+
+### 10. Session Detail Page Mobile Layout (COMPLETED - Jan 31, 2025)
+
+**Problem:** Desktop layout not optimized for mobile; drill expansion grid squeezes on mobile (2-column); metadata positioning issues; engagement buttons overflow container.
+
+**Solution Implemented:**
+- CSS modules for responsive layouts (SessionDetail.module.css)
+- Drill expansion grid responsive:
+  - Desktop: 2-column layout (details left, diagram right - 400px)
+  - Mobile: Single column (diagram moves to bottom)
+- Session metadata restructured:
+  - Removed duration/drill count from top-right of header
+  - Moved to metadata badges below description (consistent with drill detail page)
+- Engagement buttons fixed:
+  - All 4 buttons wrapped in equal-width containers
+  - Icons + counts displayed (Share is icon-only)
+  - Desktop & Mobile: Equal width distribution, properly sized
+- Browse Sessions card updated:
+  - Replaced Comments button with Favorite button in metadata row
+  - Metadata: Duration, Drill Count, Favorite
+
+**Files Created:**
+- `app/sessions/SessionDetail.module.css` - Responsive page and drill expansion styles
+
+**Files Modified:**
+- `app/sessions/[id]/page.jsx` - Applied CSS modules, restructured metadata, fixed engagement buttons
+- `components/SessionCard.jsx` - Replaced Comments with Favorite in metadata row
+- `components/SessionCard.module.css` - Removed unused classes
+
+**Technical Details:**
+- CSS media query: `@media (max-width: 639px)` (consistent breakpoint)
+- Container padding: 32px → 12px (mobile)
+- Session card padding: 24px → 16px (mobile)
+- Drills list card padding: 24px → 16px (mobile)
+- Drill item padding: 16px → 12px (mobile)
+- Drill expansion grid: `1fr 400px` → `1fr` (mobile)
+- Engagement buttons: All wrapped in `flex: 1 1 0` containers, `width: 100%`
+- Icon size: 16px, consistent across all buttons
+- Back button: Navigates to `/sessions/browse`, italicized
+
+**Time Taken:** ~1.5 hours
+
+**Testing:**
+- ✅ Build successful
+- ✅ Drill expansion grid stacks on mobile (diagram at bottom)
+- ✅ Engagement buttons equal size (4 buttons in row)
+- ✅ Metadata badges properly positioned
+- ✅ Browse Sessions favorite button works
+- ✅ All touch targets accessible
+- ✅ Real device testing complete (verified on iPhone)
+
+### 11. Login Page Mobile Optimization (COMPLETED - Jan 31, 2025)
+
+**Problem:** Desktop layout not optimized for mobile; card padding too large; excessive spacing on small screens.
+
+**Solution Implemented:**
+- Created `Login.module.css` with responsive media queries
+- Desktop vs Mobile adjustments:
+  - Card padding: 48px → 24px
+  - Navigation padding: 32px → 16px
+  - Main content padding: 60px → 32px
+  - Logo font size: 1.5rem → 1.25rem
+  - Card title: 1.75rem → 1.5rem
+  - Card subtitle: 1rem → 0.875rem
+  - Input spacing: 24px → 20px
+  - Page title margin: 48px → 32px
+  - Submit button padding: 16px → 14px
+  - Border radius: 24px → 16px (card)
+
+**Files Created/Modified:**
+- `app/auth/login/Login.module.css` - New responsive stylesheet
+- `app/auth/login/page.jsx` - Migrated from inline styles to CSS modules
+
+**Technical Details:**
+- CSS media query: `@media (max-width: 639px)` (consistent breakpoint)
+- All form inputs maintain 16px font size (prevents iOS zoom on focus)
+- Touch targets meet accessibility standards
+- Proper `:focus` states maintained via CSS
+- Link hover states handled with CSS only
+- Clean separation: layout/responsive in CSS, logic in JSX
+
+**Time Taken:** ~45 minutes
+
+**Testing:**
+- ✅ Build successful
+- ✅ No diagnostics errors
+- ✅ All CSS module classes applied correctly
+- ✅ Form inputs properly sized for mobile
+- ✅ Navigation properly scaled down
+
+---
+
 ## 🔲 Remaining Tasks (Priority Order)
 
-### 9. Drill Detail Page Mobile Layout (HIGH PRIORITY)
-**Estimated Time:** 1-2 hours
+### 12. Signup Page Mobile Optimization (HIGH PRIORITY)
+**Estimated Time:** 45 minutes
 
 **Issues:**
-- /drills/[id] page not optimized for mobile
-- Layout likely needs responsive adjustments
-- Comments section may need mobile optimization
+- Same issues as login page
+- Card padding too large (48px)
+- Three input fields require more compact spacing
 
 **Plan:**
-- Review current layout on mobile
-- Apply responsive CSS modules
-- Optimize comment section for mobile
-- Ensure all touch targets appropriately sized
+- Create Signup.module.css with media queries
+- Mobile (<640px): Reduce card padding 48px → 24px
+- Mobile: Reduce title font size and logo
+- Mobile: Reduce spacing between inputs (20px → 16px)
+- Mobile: Adjust vertical spacing
+- Ensure all inputs and buttons touch-friendly (≥44px)
 
-### 10. Session Detail Page Mobile Layout (HIGH PRIORITY)
-**Estimated Time:** 1-2 hours
+### 13. Profile Page Mobile Optimization (HIGH PRIORITY)
+**Estimated Time:** 1.5 hours
 
 **Issues:**
-- /sessions/[id] page not optimized for mobile
-- Layout likely needs responsive adjustments
-- Drill list and comments may need mobile optimization
+- Two-column layout (380px sidebar + content) breaks on mobile
+- Title too large (3.5rem/56px)
+- Current breakpoint at 1024px, needs 640px optimization
+- Stats grid (2x2) needs better spacing
+- Tab buttons need touch-friendly sizing
+- Profile header padding too large for small screens
 
 **Plan:**
-- Review current layout on mobile
-- Apply responsive CSS modules
-- Optimize drill list display for mobile
-- Ensure all touch targets appropriately sized
+- Create Profile.module.css with media queries
+- Mobile (<640px): Stack sidebar above content (vertical layout)
+- Mobile: Reduce title 3.5rem → 2rem (32px)
+- Mobile: Reduce container padding 32px/24px → 16px/12px
+- Mobile: Optimize stats grid spacing
+- Mobile: Ensure tab buttons ≥44px touch targets
+- Mobile: Reduce ProfileHeader padding for small screens
 
-### 11. Performance - Background Blur (MEDIUM PRIORITY)
-**Estimated Time:** 1 hour
-
-**Issues:**
-- Full-screen blurred backgrounds on every page drain battery
-- Causes laggy scrolling on mobile
-
-**Plan:**
-- Disable blur filters on mobile (filter: none)
-- Keep dark overlay for readability
-- Use background-attachment: scroll (not fixed)
-
-### 12. My Sessions Grid Fix (LOW PRIORITY)
+### 14. My Sessions Grid Fix (LOW PRIORITY)
 **Estimated Time:** 1 hour
 
 **Issues:**
@@ -415,14 +549,16 @@
 | Browse Drills | 🔴 Critical | ✅ Done | 3h | Jan 31, 2025 |
 | Browse Sessions | 🔴 Critical | ✅ Done | 0.5h | Jan 31, 2025 |
 | Upvote Click-Through Bug | 🔴 Critical | ✅ Done | 0.25h | Jan 31, 2025 |
-| Drill Detail Page | 🟡 High | 📋 Todo | - | - |
-| Session Detail Page | 🟡 High | 📋 Todo | - | - |
-| Performance | 🟢 Medium | 📋 Todo | - | - |
+| Drill Detail Page | 🟡 High | ✅ Done | 2h | Jan 31, 2025 |
+| Session Detail Page | 🟡 High | ✅ Done | 1.5h | Jan 31, 2025 |
+| Login Page | 🔴 High | ✅ Done | 0.75h | Jan 31, 2025 |
+| Signup Page | 🔴 High | 📋 Todo | - | - |
+| Profile Page | 🔴 High | 📋 Todo | - | - |
 | My Sessions | 🟢 Low | 📋 Todo | - | - |
 | Device Testing | 🔴 Critical | 📋 Todo | - | - |
 
-**Total Estimated Remaining:** 4-6 hours  
-**Total Time Spent:** 8.75 hours
+**Total Estimated Remaining:** 3.75 hours (Signup: 0.75h, Profile: 1.5h, My Sessions: 1h, Testing: 0.5h)  
+**Total Time Spent:** 13 hours
 
 ---
 
@@ -432,11 +568,16 @@
 - [x] Session builder usable on mobile ✅
 - [x] Drill browsing smooth on mobile ✅
 - [x] Session browsing smooth on mobile ✅
+- [x] Drill detail page optimized ✅
+- [x] Session detail page optimized ✅
 - [x] All touch targets ≥ 44px (or appropriately sized) ✅
 - [x] No horizontal scrolling ✅
 - [x] Viewport meta tag added ✅
 - [x] Tested on iPhone (Safari) ✅
-- [ ] Smooth scrolling performance (background blur optimization)
+- [x] Login page mobile optimized ✅
+- [ ] Signup page mobile optimized
+- [ ] Profile page mobile optimized
+- [ ] My Sessions page mobile optimized
 - [ ] Tested on Android (Chrome)
 - [ ] Tested on small screens (320px width)
 - [ ] No keyboard overlap issues
@@ -473,7 +614,7 @@
 ---
 
 **Last Updated:** January 31, 2025  
-**Next Priority:** Fix Upvote Click-Through Bug (critical), then Detail Pages Mobile Optimization
+**Next Priority:** Login/Signup page mobile optimization, then Profile page
 
 ---
 
@@ -487,9 +628,12 @@
 - ✅ Pagination (Load More button)
 - ✅ Browse Drills Page (full mobile optimization)
 - ✅ Browse Sessions Page (full mobile optimization)
+- ✅ Drill Detail Page (expandable drill details, responsive comments)
+- ✅ Session Detail Page (expandable drills, metadata badges, equal engagement buttons)
 - ✅ Viewport Meta Tag (critical fix for mobile rendering)
 - ✅ Tooltip Bug Fix (hidden on mobile)
+- ✅ Home Page Scroll Bug Fix (fixed scrollTo error)
 
-**Total Progress:** 7/10 tasks complete (70%)
-**Hours Invested:** 8.5 hours
-**Major Milestone:** All critical browsing pages fully functional on mobile! 🚀
+**Total Progress:** 9/10 tasks complete (90%)
+**Hours Invested:** 12.25 hours
+**Major Milestone:** All critical pages (browse, detail, builder) fully functional on mobile! 🚀
