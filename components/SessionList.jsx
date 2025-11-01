@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import styles from './SessionList.module.css'
 
 export default function SessionList({ sessions, upvotedSessions, favoritedSessions, isOwnProfile }) {
     const [activeTab, setActiveTab] = useState('created')
@@ -10,63 +11,22 @@ export default function SessionList({ sessions, upvotedSessions, favoritedSessio
     return (
         <div>
             {/* Underlined Subtabs */}
-            <div style={{
-                display: 'flex',
-                gap: '16px',
-                marginBottom: '32px',
-                borderBottom: '2px solid rgba(255,255,255,0.1)'
-            }}>
+            <div className={styles.subtabsContainer}>
                 <button
                     onClick={() => setActiveTab('created')}
-                    style={{
-                        padding: '12px 24px',
-                        fontSize: '16px',
-                        fontWeight: '700',
-                        fontStyle: 'italic',
-                        color: activeTab === 'created' ? 'white' : 'rgba(255,255,255,0.5)',
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                        borderBottom: activeTab === 'created' ? '3px solid #4ADE80' : '3px solid transparent',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s',
-                        textTransform: 'uppercase'
-                    }}
+                    className={`${styles.subtabButton} ${activeTab === 'created' ? styles.active : ''}`}
                 >
                     Created ({sessions?.length || 0})
                 </button>
                 <button
                     onClick={() => setActiveTab('upvoted')}
-                    style={{
-                        padding: '12px 24px',
-                        fontSize: '16px',
-                        fontWeight: '700',
-                        fontStyle: 'italic',
-                        color: activeTab === 'upvoted' ? 'white' : 'rgba(255,255,255,0.5)',
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                        borderBottom: activeTab === 'upvoted' ? '3px solid #4ADE80' : '3px solid transparent',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s',
-                        textTransform: 'uppercase'
-                    }}
+                    className={`${styles.subtabButton} ${activeTab === 'upvoted' ? styles.active : ''}`}
                 >
                     Upvoted ({upvotedSessions?.length || 0})
                 </button>
                 <button
                     onClick={() => setActiveTab('favorited')}
-                    style={{
-                        padding: '12px 24px',
-                        fontSize: '16px',
-                        fontWeight: '700',
-                        fontStyle: 'italic',
-                        color: activeTab === 'favorited' ? 'white' : 'rgba(255,255,255,0.5)',
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                        borderBottom: activeTab === 'favorited' ? '3px solid #4ADE80' : '3px solid transparent',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s',
-                        textTransform: 'uppercase'
-                    }}
+                    className={`${styles.subtabButton} ${activeTab === 'favorited' ? styles.active : ''}`}
                 >
                     Favorited ({favoritedSessions?.length || 0})
                 </button>
