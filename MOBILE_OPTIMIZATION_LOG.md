@@ -560,7 +560,20 @@
 - Removed inline style handlers (onMouseEnter/Leave) in favor of CSS :hover
 - Clean separation: all layout/responsive in CSS, logic in JSX
 
-**Time Taken:** ~1.5 hours
+**Key Issue Discovered:**
+- CSS Grid + Safari mobile doesn't respect `calc()` widths on grid items
+- Grid items default to `min-width: auto` which prevents shrinking
+- Oracle consultation revealed: margins must be on CONTAINER, not on grid children
+
+**Final Solution:**
+- Moved horizontal margins to `.mainContent` (padding: 16px on all sides)
+- Removed `calc(100% - 32px)` from cards, set to `width: 100%`
+- Added `min-width: 0` to all grid children and cards (critical for Safari)
+- Created `SessionList.module.css` and `DrillList.module.css` for subtab overflow fix
+- Updated SessionList and DrillList components to use CSS modules
+- Mobile subtabs: font 16px → 12px, padding reduced, `flex: 1` for equal width
+
+**Time Taken:** ~2.5 hours (including debugging and Oracle consultation)
 
 **Testing:**
 - ✅ Build successful
@@ -569,6 +582,11 @@
 - ✅ All touch targets appropriately sized
 - ✅ Page title and subtitle properly scaled
 - ✅ ProfileHeader component fully responsive
+- ✅ Equal 16px margins on left and right sides
+- ✅ No content cutoff on right edge
+- ✅ Both cards same width
+- ✅ Subtabs fit properly without overflow
+- ✅ Tested on actual iPhone (Safari) - working correctly
 
 ---
 
@@ -604,12 +622,12 @@
 | Session Detail Page | 🟡 High | ✅ Done | 1.5h | Jan 31, 2025 |
 | Login Page | 🔴 High | ✅ Done | 0.75h | Jan 31, 2025 |
 | Signup Page | 🔴 High | ✅ Done | 0.5h | Jan 31, 2025 |
-| Profile Page | 🔴 High | ✅ Done | 1.5h | Jan 31, 2025 |
+| Profile Page | 🔴 High | ✅ Done | 2.5h | Jan 31, 2025 |
 | My Sessions | 🟢 Low | 📋 Todo | - | - |
 | Device Testing | 🔴 Critical | 📋 Todo | - | - |
 
 **Total Estimated Remaining:** 1.5 hours (My Sessions: 1h, Testing: 0.5h)  
-**Total Time Spent:** 15 hours
+**Total Time Spent:** 16 hours
 
 ---
 
@@ -665,7 +683,7 @@
 ---
 
 **Last Updated:** January 31, 2025  
-**Next Priority:** Login/Signup page mobile optimization, then Profile page
+**Next Priority:** My Sessions grid fix (low priority), final device testing
 
 ---
 
@@ -684,7 +702,10 @@
 - ✅ Viewport Meta Tag (critical fix for mobile rendering)
 - ✅ Tooltip Bug Fix (hidden on mobile)
 - ✅ Home Page Scroll Bug Fix (fixed scrollTo error)
+- ✅ Login Page Mobile Optimization (CSS modules, proper margins)
+- ✅ Signup Page Mobile Optimization (CSS modules, proper margins)
+- ✅ Profile Page Mobile Optimization (CSS Grid Safari fix, responsive layout)
 
-**Total Progress:** 9/10 tasks complete (90%)
-**Hours Invested:** 12.25 hours
-**Major Milestone:** All critical pages (browse, detail, builder) fully functional on mobile! 🚀
+**Total Progress:** 13/14 tasks complete (93%)
+**Hours Invested:** 16 hours
+**Major Milestone:** All critical auth and profile pages fully functional on mobile! 🚀
