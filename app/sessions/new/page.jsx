@@ -43,7 +43,9 @@ export default function NewSessionPage() {
 
   function updateDuration(index, duration) {
     const newDrills = [...selectedDrills]
-    newDrills[index].custom_duration = parseInt(duration) || 0
+    const parsedDuration = parseInt(duration) || 0
+    // Enforce positive integers only
+    newDrills[index].custom_duration = Math.max(1, parsedDuration)
     setSelectedDrills(newDrills)
   }
 

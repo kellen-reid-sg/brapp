@@ -56,6 +56,11 @@ export default function ProfileHeader({ profile, stats, isOwnProfile, onUpdate }
     }
 
     async function handleSave() {
+        if (formData.bio && formData.bio.length > 500) {
+            alert('Bio must be 500 characters or less')
+            return
+        }
+
         const supabase = createClientComponentClient()
         setSaving(true)
         try {

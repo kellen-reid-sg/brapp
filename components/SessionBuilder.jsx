@@ -46,6 +46,11 @@ export default function SessionBuilder({
       return
     }
 
+    if (sessionTitle.length > 100) {
+      alert('Session title must be 100 characters or less')
+      return
+    }
+
     if (selectedDrills.length === 0) {
       alert('Please add at least one drill to the session')
       return
