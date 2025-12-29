@@ -722,5 +722,43 @@
     ],
     "author": "Matt Danaher (@mattdanaher)",
     "sourceUrl": "https://x.com/mattdanaher/status/2005285902348927233"
+  },
+  {
+    "id": "build-up-01",
+    "name": "Center Back Build Up Play",
+    "component": "Possession",
+    "skillFocus": ["Build Up Play", "Decision Making", "Playing Under Pressure", "Passing"],
+    "difficulty": "Advanced",
+    "description": "An 8v8 game focused on center back build up play. Field is split into a bottom zone (third) and a top zone (split vertically). Game begins 2v2+GK in the bottom zone with CBs looking to play into the top zone. If a blue midfielder drops into the bottom zone, a yellow may track to create 3v3+GK. Once the ball enters the top zone, the game becomes free play.",
+    "duration": 25,
+    "equipment": ["Cones", "Balls", "Bibs", "Full-sized Goal"],
+    "diagramImageUrl": "/images/drills/center-back-build-up.svg",
+    "setupInstructions": [
+      "Mark out a 40x55 meter field",
+      "Split the field with a bottom zone (third) and top zone (remaining two-thirds)",
+      "Split the top zone vertically down the middle",
+      "Position 2 CBs and a GK for Blues in the bottom zone",
+      "Position 4 Blue players in the top zone",
+      "Position 5 Yellow players as pressing team (can track into bottom zone)",
+      "GK at the attacking end for Yellows"
+    ],
+    "coachingPoints": [
+      "Decision making: when to play forward vs retain",
+      "Movements to receive - create passing angles",
+      "Using the goalkeeper to exploit the overload",
+      "Open body shape - see three corner flags",
+      "Weight of pass forward to break lines",
+      "Stay connected and press effectively as a pair",
+      "Screen one, press one with cover shadows",
+      "Force play one way"
+    ],
+    "progressions": [
+      "Allow CBs to dribble into the top zone - recognise when to break lines off the dribble",
+      "Allow Yellows to press freely - increases pressure on CBs",
+      "Extra point if Blues score within 3 passes of entering the top zone - recognise when tempo can change",
+      "Blues must have all players in attacking half for goals to count - rest defense"
+    ],
+    "author": "PMcL Football (@PMcLFootball)",
+    "sourceUrl": "https://x.com/PMcLFootball"
   }
 ]

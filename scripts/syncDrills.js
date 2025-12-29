@@ -33,7 +33,36 @@ async function syncDrills() {
   const newDrills = drills.filter(drill => !existingTitles.has(drill.name))
   
   if (newDrills.length === 0) {
-    console.log('✅ All drills already in database. Nothing to add.')
+    console.log('✅ All drills already in database.')
+    
+    // Update existing drills
+    console.log('🔄 Updating existing drills...')
+    for (const drill of drills) {
+      if (existingTitles.has(drill.name)) {
+        const { error } = await supabase
+          .from('drills')
+          .update({
+            description: drill.description,
+            skill_tags: drill.skillFocus || [],
+            media_url: drill.diagramImageUrl || null,
+            category: drill.component || null,
+            duration: drill.duration || null,
+            difficulty: drill.difficulty || null,
+            equipment: drill.equipment || [],
+            setup_instructions: drill.setupInstructions || [],
+            coaching_points: drill.coachingPoints || [],
+            progressions: drill.progressions || [],
+            author_name: drill.author || null,
+            source_url: drill.sourceUrl || null
+          })
+          .eq('title', drill.name)
+        
+        if (error) {
+          console.error(`   ❌ Failed to update: ${drill.name}`, error.message)
+        }
+      }
+    }
+    console.log('✅ Updated all existing drills.')
     return
   }
   
