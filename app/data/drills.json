@@ -688,5 +688,39 @@
     ],
     "author": "Matt Danaher (@mattdanaher)",
     "sourceUrl": "https://x.com/mattdanaher/status/2004906915839775163"
+  },
+  {
+    "id": "finishing-wa-01",
+    "name": "Attacking from Wide Areas",
+    "component": "Finishing",
+    "skillFocus": ["Crossing", "Combining", "Wide Play", "Finishing"],
+    "difficulty": "Intermediate",
+    "description": "A functional drill focusing on building attacks through wide channels. Features 2v1 situations in each wide channel and 3v2 in the central area. Wide attackers combine to beat defenders and deliver crosses into the box for finishing opportunities.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Bibs", "Full-sized Goal", "Mini Goals (2)"],
+    "diagramImageUrl": "/images/drills/attacking-wide-areas.svg",
+    "setupInstructions": [
+      "Create two wide channels 12x25 yards on each wing, marked at the halfway point",
+      "Central area is everything between the wide channels",
+      "Place a full-sized goal with keeper at the attacking end",
+      "Place mini goals at the bottom of each wide channel for defensive counter-attacks",
+      "Position 2 attackers and 1 defender in each wide channel",
+      "Position 3 attackers and 2 defenders in the central area"
+    ],
+    "coachingPoints": [
+      "Wide attackers should use combinations (give & go, overlaps, underlaps) to beat the defender",
+      "Once in the attacking half of the wide channel, get the cross in quickly",
+      "Central attackers should time their runs into the box for the cross",
+      "Vary the type of cross (driven, floated, cutback) based on defender positioning",
+      "Wide defender must commit to stopping the 2v1 before the halfway line"
+    ],
+    "progressions": [
+      "Allow the wide defender to follow into the attacking half for a contested cross",
+      "Add a third central defender to increase difficulty",
+      "Require a one-touch finish in the box",
+      "Time limit from initial pass to shot on goal"
+    ],
+    "author": "Matt Danaher (@mattdanaher)",
+    "sourceUrl": "https://x.com/mattdanaher/status/2005285902348927233"
   }
 ]
