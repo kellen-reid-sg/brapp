@@ -459,9 +459,15 @@ export default function DrillDetailPage() {
                     <h4 className={styles.drillDetailHeading}>
                       Equipment
                     </h4>
-                    <p className={styles.drillDetailPlaceholder}>
-                      Equipment list coming soon...
-                    </p>
+                    {drill.equipment && drill.equipment.length > 0 ? (
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                        {drill.equipment.map((item, i) => (
+                          <span key={i} style={{ padding: '4px 12px', backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: '4px', color: 'rgba(255,255,255,0.8)', fontSize: '13px' }}>{item}</span>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className={styles.drillDetailPlaceholder}>Equipment list coming soon...</p>
+                    )}
                   </div>
 
                   {/* Setup Instructions */}
@@ -469,9 +475,15 @@ export default function DrillDetailPage() {
                     <h4 className={styles.drillDetailHeading}>
                       Setup Instructions
                     </h4>
-                    <p className={styles.drillDetailPlaceholder}>
-                      Setup instructions coming soon...
-                    </p>
+                    {drill.setup_instructions && drill.setup_instructions.length > 0 ? (
+                      <ol style={{ margin: 0, paddingLeft: '20px', color: 'rgba(255,255,255,0.8)', fontSize: '14px', lineHeight: '1.8' }}>
+                        {drill.setup_instructions.map((step, i) => (
+                          <li key={i}>{step}</li>
+                        ))}
+                      </ol>
+                    ) : (
+                      <p className={styles.drillDetailPlaceholder}>Setup instructions coming soon...</p>
+                    )}
                   </div>
 
                   {/* Coaching Points */}
@@ -479,9 +491,15 @@ export default function DrillDetailPage() {
                     <h4 className={styles.drillDetailHeading}>
                       Coaching Points
                     </h4>
-                    <p className={styles.drillDetailPlaceholder}>
-                      Coaching points coming soon...
-                    </p>
+                    {drill.coaching_points && drill.coaching_points.length > 0 ? (
+                      <ul style={{ margin: 0, paddingLeft: '20px', color: 'rgba(255,255,255,0.8)', fontSize: '14px', lineHeight: '1.8' }}>
+                        {drill.coaching_points.map((point, i) => (
+                          <li key={i}>{point}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className={styles.drillDetailPlaceholder}>Coaching points coming soon...</p>
+                    )}
                   </div>
 
                   {/* Progressions */}
@@ -489,32 +507,49 @@ export default function DrillDetailPage() {
                     <h4 className={styles.drillDetailHeading}>
                       Progressions
                     </h4>
-                    <p className={styles.drillDetailPlaceholder}>
-                      Progression ideas coming soon...
-                    </p>
+                    {drill.progressions && drill.progressions.length > 0 ? (
+                      <ul style={{ margin: 0, paddingLeft: '20px', color: 'rgba(255,255,255,0.8)', fontSize: '14px', lineHeight: '1.8' }}>
+                        {drill.progressions.map((prog, i) => (
+                          <li key={i}>{prog}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className={styles.drillDetailPlaceholder}>Progression ideas coming soon...</p>
+                    )}
                   </div>
+
+                  {/* Source Attribution */}
+                  {drill.author_name && (
+                    <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.1)', fontSize: '13px', color: 'rgba(255,255,255,0.5)' }}>
+                      Drill by {drill.author_name}
+                      {drill.source_url && (
+                        <a href={drill.source_url} target="_blank" rel="noopener noreferrer" style={{ marginLeft: '8px', color: '#00D9FF' }}>View source</a>
+                      )}
+                    </div>
+                  )}
                 </div>
 
-                {/* Right Column - Drill Diagram Placeholder */}
+                {/* Right Column - Drill Diagram */}
                 <div className={styles.drillDiagramPlaceholder}>
-                  <svg width="64" height="64" fill="none" stroke="rgba(255,255,255,0.3)" viewBox="0 0 24 24" strokeWidth="1.5" style={{ marginBottom: '12px' }}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                  </svg>
-                  <p style={{
-                    fontSize: '13px',
-                    color: 'rgba(255,255,255,0.5)',
-                    fontWeight: '600',
-                    marginBottom: '4px'
-                  }}>
-                    Drill Diagram
-                  </p>
-                  <p style={{
-                    fontSize: '11px',
-                    color: 'rgba(255,255,255,0.4)',
-                    fontStyle: 'italic'
-                  }}>
-                    Visual diagram coming soon
-                  </p>
+                  {drill.media_url ? (
+                    <img 
+                      src={drill.media_url} 
+                      alt={`${drill.title} diagram`}
+                      style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+                    />
+                  ) : (
+                    <>
+                      <svg width="64" height="64" fill="none" stroke="rgba(255,255,255,0.3)" viewBox="0 0 24 24" strokeWidth="1.5" style={{ marginBottom: '12px' }}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                      </svg>
+                      <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', fontWeight: '600', marginBottom: '4px' }}>
+                        Drill Diagram
+                      </p>
+                      <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>
+                        Visual diagram coming soon
+                      </p>
+                    </>
+                  )}
                 </div>
               </div>
             )}

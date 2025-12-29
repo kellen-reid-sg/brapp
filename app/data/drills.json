@@ -658,5 +658,35 @@
       "Incorporate overload situations that increase physical demands",
       "Reduce recovery time between games as fitness improves"
     ]
+  },
+  {
+    "id": "poss-cp-01",
+    "name": "6v6 + 3 Counter Pressing",
+    "component": "Possession",
+    "skillFocus": ["Counter Pressing", "Passing", "Transition"],
+    "difficulty": "Advanced",
+    "description": "A possession game where two teams of 6 compete to string passes together while using 3 neutral players. Neutrals can only be used after the 2nd pass, forcing teams to build play first before finding the free man.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Bibs"],
+    "diagramImageUrl": "/images/drills/counter-pressing-6v6.svg",
+    "setupInstructions": [
+      "Mark out a 24x30 yard grid",
+      "Split into two teams of 6 players",
+      "Position 3 neutral players throughout the grid",
+      "Give one team the ball to start"
+    ],
+    "coachingPoints": [
+      "Win the ball back immediately after losing it",
+      "Build through your own team first before using neutrals",
+      "Keep the ball moving to stretch the defense",
+      "Neutrals should position between lines to stay available"
+    ],
+    "progressions": [
+      "Reduce passes needed to score",
+      "Add a time limit per possession",
+      "Limit neutral players to one touch"
+    ],
+    "author": "Matt Danaher (@mattdanaher)",
+    "sourceUrl": "https://x.com/mattdanaher/status/2004906915839775163"
   }
 ]

@@ -343,22 +343,69 @@ export default function DrillModal({ drill, isOpen, onClose, onAddToSession, isI
             </div>
           </div>
 
-          {/* Placeholder for drill steps/details */}
-          <div style={{
-            padding: '24px',
-            backgroundColor: 'rgba(255,255,255,0.04)',
-            borderRadius: '12px',
-            border: '1px solid rgba(255,255,255,0.08)',
-            textAlign: 'center'
-          }}>
-            <div style={{
-              color: 'rgba(255,255,255,0.5)',
-              fontSize: '14px',
-              fontWeight: '500'
-            }}>
-              Drill details and instructions coming soon...
+          {/* Equipment */}
+          {drill.equipment && drill.equipment.length > 0 && (
+            <div style={{ marginBottom: '20px' }}>
+              <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: '600', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Equipment</h4>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {drill.equipment.map((item, i) => (
+                  <span key={i} style={{ padding: '4px 12px', backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: '4px', color: 'rgba(255,255,255,0.8)', fontSize: '13px' }}>{item}</span>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Setup Instructions */}
+          {drill.setup_instructions && drill.setup_instructions.length > 0 && (
+            <div style={{ marginBottom: '20px' }}>
+              <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: '600', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Setup</h4>
+              <ol style={{ margin: 0, paddingLeft: '20px', color: 'rgba(255,255,255,0.8)', fontSize: '14px', lineHeight: '1.8' }}>
+                {drill.setup_instructions.map((step, i) => (
+                  <li key={i}>{step}</li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {/* Coaching Points */}
+          {drill.coaching_points && drill.coaching_points.length > 0 && (
+            <div style={{ marginBottom: '20px' }}>
+              <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: '600', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Coaching Points</h4>
+              <ul style={{ margin: 0, paddingLeft: '20px', color: 'rgba(255,255,255,0.8)', fontSize: '14px', lineHeight: '1.8' }}>
+                {drill.coaching_points.map((point, i) => (
+                  <li key={i}>{point}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Progressions */}
+          {drill.progressions && drill.progressions.length > 0 && (
+            <div style={{ marginBottom: '20px' }}>
+              <h4 style={{ color: '#fff', fontSize: '14px', fontWeight: '600', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Progressions</h4>
+              <ul style={{ margin: 0, paddingLeft: '20px', color: 'rgba(255,255,255,0.8)', fontSize: '14px', lineHeight: '1.8' }}>
+                {drill.progressions.map((prog, i) => (
+                  <li key={i}>{prog}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Source Attribution */}
+          {drill.author_name && (
+            <div style={{ 
+              marginTop: '24px', 
+              paddingTop: '16px', 
+              borderTop: '1px solid rgba(255,255,255,0.1)',
+              fontSize: '13px',
+              color: 'rgba(255,255,255,0.5)'
+            }}>
+              Drill by {drill.author_name}
+              {drill.source_url && (
+                <a href={drill.source_url} target="_blank" rel="noopener noreferrer" style={{ marginLeft: '8px', color: '#00D9FF' }}>View source</a>
+              )}
+            </div>
+          )}
         </div>
         </div>
 
