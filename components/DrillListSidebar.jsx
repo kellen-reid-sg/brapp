@@ -104,7 +104,11 @@ export default function DrillListSidebar({ onAddDrill, onRemoveDrill, selectedDr
       'Finishing': { bg: 'rgba(239, 68, 68, 0.15)', border: 'rgba(239, 68, 68, 0.3)', text: '#F87171' },
       'Defending': { bg: 'rgba(34, 197, 94, 0.15)', border: 'rgba(34, 197, 94, 0.3)', text: '#4ADE80' },
       'Dribbling': { bg: 'rgba(236, 72, 153, 0.15)', border: 'rgba(236, 72, 153, 0.3)', text: '#F472B6' },
-      'Technical': { bg: 'rgba(34, 211, 238, 0.15)', border: 'rgba(34, 211, 238, 0.3)', text: '#22D3EE' }
+      'Technical': { bg: 'rgba(34, 211, 238, 0.15)', border: 'rgba(34, 211, 238, 0.3)', text: '#22D3EE' },
+      'Small Sided Games': { bg: 'rgba(249, 115, 22, 0.15)', border: 'rgba(249, 115, 22, 0.3)', text: '#FB923C' },
+      'Small-Sided Games': { bg: 'rgba(249, 115, 22, 0.15)', border: 'rgba(249, 115, 22, 0.3)', text: '#FB923C' },
+      'Attacking Play': { bg: 'rgba(251, 113, 133, 0.15)', border: 'rgba(251, 113, 133, 0.3)', text: '#FB7185' },
+      'Set Pieces': { bg: 'rgba(163, 230, 53, 0.15)', border: 'rgba(163, 230, 53, 0.3)', text: '#A3E635' }
     }
     return colors[category] || colors['Technical']
   }

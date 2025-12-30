@@ -1,0 +1,58 @@
+<svg viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect x="0" y="0" width="480" height="380" fill="#1a1a1a"/>
+  
+  <!-- TOP DIMENSION LABEL - Length: 24 yards -->
+  <text x="240" y="25" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold" font-family="Arial, sans-serif">24 YARDS</text>
+  <line x1="65" y1="40" x2="415" y2="40" stroke="#ffffff" stroke-width="2"/>
+  <line x1="65" y1="33" x2="65" y2="47" stroke="#ffffff" stroke-width="2"/>
+  <line x1="415" y1="33" x2="415" y2="47" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- RIGHT DIMENSION LABEL - Width: 18 yards -->
+  <text x="450" y="175" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold" font-family="Arial, sans-serif" transform="rotate(90, 450, 175)">18 YARDS</text>
+  <line x1="430" y1="55" x2="430" y2="295" stroke="#ffffff" stroke-width="2"/>
+  <line x1="423" y1="55" x2="437" y2="55" stroke="#ffffff" stroke-width="2"/>
+  <line x1="423" y1="295" x2="437" y2="295" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- Field - 350x240 (24x18 yard ratio), from x=65 to x=415, y=55 to y=295 -->
+  <rect x="65" y="55" width="350" height="240" fill="#2d5a27" stroke="#ffffff" stroke-width="3" rx="4"/>
+  
+  <!-- Mini Goals - Orange, OFF the field, 3-4 yards inside from corners, facing inward -->
+  <!-- Top-Left Goal - facing right (into field) -->
+  <rect x="53" y="75" width="12" height="30" fill="none" stroke="#F59E0B" stroke-width="3" rx="1"/>
+  
+  <!-- Top-Right Goal - facing left (into field) -->
+  <rect x="415" y="75" width="12" height="30" fill="none" stroke="#F59E0B" stroke-width="3" rx="1"/>
+  
+  <!-- Bottom-Left Goal - facing right (into field) -->
+  <rect x="53" y="245" width="12" height="30" fill="none" stroke="#F59E0B" stroke-width="3" rx="1"/>
+  
+  <!-- Bottom-Right Goal - facing left (into field) -->
+  <rect x="415" y="245" width="12" height="30" fill="none" stroke="#F59E0B" stroke-width="3" rx="1"/>
+  
+  <!-- Team 1 (Cyan) - 3 players -->
+  <circle cx="300" cy="110" r="15" fill="#00D9FF" stroke="#fff" stroke-width="2"/>
+  <circle cx="320" cy="175" r="15" fill="#00D9FF" stroke="#fff" stroke-width="2"/>
+  <circle cx="280" cy="240" r="15" fill="#00D9FF" stroke="#fff" stroke-width="2"/>
+  
+  <!-- Team 2 (Red) - 3 players -->
+  <circle cx="150" cy="110" r="15" fill="#EF4444" stroke="#fff" stroke-width="2"/>
+  <circle cx="130" cy="175" r="15" fill="#EF4444" stroke="#fff" stroke-width="2"/>
+  <circle cx="170" cy="240" r="15" fill="#EF4444" stroke="#fff" stroke-width="2"/>
+  
+  <!-- Soccer ball -->
+  <circle cx="300" cy="175" r="10" fill="#fff"/>
+  
+  <!-- Legend - aligned with field -->
+  <rect x="65" y="315" width="350" height="40" fill="#000" rx="6" stroke="#444" stroke-width="1"/>
+  
+  <!-- Legend items -->
+  <circle cx="100" cy="335" r="9" fill="#00D9FF" stroke="#fff" stroke-width="2"/>
+  <text x="145" y="340" text-anchor="middle" fill="#fff" font-size="12" font-family="Arial, sans-serif">Team 1</text>
+  
+  <circle cx="200" cy="335" r="9" fill="#EF4444" stroke="#fff" stroke-width="2"/>
+  <text x="245" y="340" text-anchor="middle" fill="#fff" font-size="12" font-family="Arial, sans-serif">Team 2</text>
+  
+  <rect x="295" y="328" width="10" height="18" fill="none" stroke="#F59E0B" stroke-width="2" rx="1"/>
+  <text x="350" y="340" text-anchor="middle" fill="#fff" font-size="12" font-family="Arial, sans-serif">Mini Goal</text>
+</svg>

@@ -427,6 +427,26 @@ function getCategoryColor(category) {
       bg: 'rgba(34, 211, 238, 0.15)',
       border: 'rgba(34, 211, 238, 0.3)',
       text: '#22D3EE'
+    },
+    'Small Sided Games': {
+      bg: 'rgba(249, 115, 22, 0.15)',
+      border: 'rgba(249, 115, 22, 0.3)',
+      text: '#FB923C'
+    },
+    'Small-Sided Games': {
+      bg: 'rgba(249, 115, 22, 0.15)',
+      border: 'rgba(249, 115, 22, 0.3)',
+      text: '#FB923C'
+    },
+    'Attacking Play': {
+      bg: 'rgba(251, 113, 133, 0.15)',
+      border: 'rgba(251, 113, 133, 0.3)',
+      text: '#FB7185'
+    },
+    'Set Pieces': {
+      bg: 'rgba(163, 230, 53, 0.15)',
+      border: 'rgba(163, 230, 53, 0.3)',
+      text: '#A3E635'
     }
   }
   

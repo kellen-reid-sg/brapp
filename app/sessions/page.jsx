@@ -144,7 +144,11 @@ export default function MySessionsPage() {
       'Finishing': '#F87171',
       'Defending': '#4ADE80',
       'Dribbling': '#F472B6',
-      'Technical': '#22D3EE'
+      'Technical': '#22D3EE',
+      'Small Sided Games': '#FB923C',
+      'Small-Sided Games': '#FB923C',
+      'Attacking Play': '#FB7185',
+      'Set Pieces': '#A3E635'
     }
     return colors[category] || colors['Technical']
   }

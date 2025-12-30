@@ -760,5 +760,38 @@
     ],
     "author": "PMcL Football (@PMcLFootball)",
     "sourceUrl": "https://x.com/PMcLFootball"
+  },
+  {
+    "id": "ssg-01",
+    "name": "3v3 to Mini Goals",
+    "component": "Small Sided Games",
+    "skillFocus": ["Combination Play", "Decision Making", "Movement Off the Ball", "Defending"],
+    "difficulty": "Intermediate",
+    "description": "A 3v3 game with four mini goals positioned in each corner. Both teams attack and defend two goals, creating constant decision-making opportunities. The split goals change the attractors for players, increasing awareness, communication, and movement. High ball-to-player ratio (1:6) ensures maximum touches and engagement.",
+    "duration": 20,
+    "equipment": ["Cones", "Balls", "Bibs", "Mini Goals (4)"],
+    "diagramImageUrl": "/images/drills/3v3-mini-goals.svg",
+    "setupInstructions": [
+      "Mark out a 24x18 yard field",
+      "Place 4 mini goals, one in each corner, positioned 3-4 yards inside from the corner",
+      "Divide players into two teams of 3",
+      "Each team attacks and defends 2 diagonally opposite goals"
+    ],
+    "coachingPoints": [
+      "Players receiving side-on to see the whole field",
+      "Goals scored through combinations or deception, not just dribbling",
+      "One player should always float in the blind side",
+      "Constant angles - never standing behind defenders",
+      "Defenders constantly deciding which goal to protect",
+      "Delay first, then decide which goal to defend",
+      "Compact quickly on loss of possession",
+      "Communication over chasing"
+    ],
+    "progressions": [
+      "Start with any goal = 1 point, restart with scoring team",
+      "Can't score in same goal twice in a row",
+      "1 touch finish = 2 points",
+      "Goal scored within 2 passes = 2 points"
+    ]
   }
 ]
